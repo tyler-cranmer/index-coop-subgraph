@@ -19,3 +19,4 @@
     * ex. feeAccrualHistory inside of Manager entity.
     * currently the code is always setting this value to an empty array.
     * worth analyzing the createManager fn being used to create new managers.
+

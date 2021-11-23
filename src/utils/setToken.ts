@@ -25,12 +25,9 @@ export function fetchTokenTotalSupply(tokenAddress: Address): BigInt {
     let contract = SetToken.bind(tokenAddress)
     // msg below is shown in vscode. reading it we can infer the result t
     // intellisence: (method) SetToken.try_manager(): ethereum.CallResult<Address>
-    let result = contract.try_manager()
+    let result = contract.manager()
     // convert from Address to string so it can be used within Manager.load(string)
-    if(!result.reverted) {
-
-    }
-    return result.value.toHexString()
+    return result.toHexString();
   }
 
   export function getIssuerAddress(tokenAddress: Address): string {

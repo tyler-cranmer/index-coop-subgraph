@@ -696,7 +696,6 @@ export class Fee extends Entity {
     this.set("id", Value.fromString(id));
 
     this.set("timestamp", Value.fromBigInt(BigInt.zero()));
-    this.set("manager", Value.fromString(""));
     this.set("transaction", Value.fromString(""));
   }
 

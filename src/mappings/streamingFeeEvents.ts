@@ -23,7 +23,7 @@ export function handleFeeActualized(event: FeeActualized): void {
   currentManager.feeAccrualHistory = managerFees;
 
   currentManager.save()
-  feeEntity.manager = currentManager.id;
+  // feeEntity.manager = currentManager.id;
 
   feeEntity.save();
 }

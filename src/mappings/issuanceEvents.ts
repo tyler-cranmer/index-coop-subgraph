@@ -147,7 +147,7 @@ export function handleSetTokenIssued(event: SetTokenIssuedEvent): void {
 
   log.debug('currentManager:: saved', [currentManager.id])
 
-  feeEntity.manager = currentManager.id;
+  // feeEntity.manager = currentManager.id;
   feeEntity.save()
 
   let issuerEntity = Issuer.load(id.toHexString())

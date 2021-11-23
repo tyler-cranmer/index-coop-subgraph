@@ -70,7 +70,7 @@ type SetToken @entity {
 type Fee @entity {
   id: ID!
   timestamp: BigInt!
-  manager: Manager! 
+  manager: Manager!  @derivedFrom (field: "feeAccrualHistory")
   managerPayout: BigInt
   protocolPayout: BigInt
   transaction: Transaction!
