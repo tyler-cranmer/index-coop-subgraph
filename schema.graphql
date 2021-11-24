@@ -65,7 +65,20 @@ type SetToken @entity {
   issuer: Issuer!
   issuances: [TokenIssuance!]!
   totalSupply: BigInt!
+  comp: [Bytes!]! #addresses
 }
+
+type SetTokenIssued @entity {
+  id: ID!
+  setToken: SetToken! # address
+  issuer: Issuer! # address
+  purchaser: Bytes! # address
+  _hookContract: Bytes! # address
+  quantity: BigInt! # uint256
+  manager: Manager!
+  protocolFee: BigInt! # uint256
+}
+
 
 type Fee @entity {
   id: ID!
@@ -84,16 +97,6 @@ type Manager @entity {
   setToken: SetToken!
 }
 
-type SetTokenIssued @entity {
-  id: ID!
-  setToken: SetToken! # address
-  issuer: Issuer! # address
-  purchaser: Bytes! # address
-  _hookContract: Bytes! # address
-  quantity: BigInt! # uint256
-  manager: Manager!
-  protocolFee: BigInt! # uint256
-}
 
 type SetTokenRedeemed @entity {
   id: ID!

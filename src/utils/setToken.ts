@@ -16,9 +16,9 @@ export function fetchTokenTotalSupply(tokenAddress: Address): BigInt {
 
   export function fetchUnderlyingComponents(tokenAddress: Address): Address[] {
     let contract = SetToken.bind(tokenAddress)
-    let tokenComponentsResult = contract.try_getComponents()
+    let tokenComponentsResult = contract.getComponents()
     // need to use the .value property to get the return value of ethereum CallResult that we get from try_<methodName>
-    return tokenComponentsResult.value
+    return tokenComponentsResult;
   }
 
   export function fetchManager(tokenAddress: Address): string {

@@ -6,6 +6,7 @@ import {
   Value,
   ValueKind,
   store,
+  Address,
   Bytes,
   BigInt,
   BigDecimal
@@ -607,6 +608,7 @@ export class SetToken extends Entity {
     this.set("issuer", Value.fromString(""));
     this.set("issuances", Value.fromStringArray(new Array(0)));
     this.set("totalSupply", Value.fromBigInt(BigInt.zero()));
+    this.set("comp", Value.fromBytesArray(new Array(0)));
   }
 
   save(): void {
@@ -687,6 +689,119 @@ export class SetToken extends Entity {
 
   set totalSupply(value: BigInt) {
     this.set("totalSupply", Value.fromBigInt(value));
+  }
+
+  get comp(): Array<Bytes> {
+    let value = this.get("comp");
+    return value!.toBytesArray();
+  }
+
+  set comp(value: Array<Bytes>) {
+    this.set("comp", Value.fromBytesArray(value));
+  }
+}
+
+export class SetTokenIssued extends Entity {
+  constructor(id: string) {
+    super();
+    this.set("id", Value.fromString(id));
+
+    this.set("setToken", Value.fromString(""));
+    this.set("issuer", Value.fromString(""));
+    this.set("purchaser", Value.fromBytes(Bytes.empty()));
+    this.set("_hookContract", Value.fromBytes(Bytes.empty()));
+    this.set("quantity", Value.fromBigInt(BigInt.zero()));
+    this.set("manager", Value.fromString(""));
+    this.set("protocolFee", Value.fromBigInt(BigInt.zero()));
+  }
+
+  save(): void {
+    let id = this.get("id");
+    assert(id != null, "Cannot save SetTokenIssued entity without an ID");
+    if (id) {
+      assert(
+        id.kind == ValueKind.STRING,
+        "Cannot save SetTokenIssued entity with non-string ID. " +
+          'Considering using .toHex() to convert the "id" to a string.'
+      );
+      store.set("SetTokenIssued", id.toString(), this);
+    }
+  }
+
+  static load(id: string): SetTokenIssued | null {
+    return changetype<SetTokenIssued | null>(store.get("SetTokenIssued", id));
+  }
+
+  get id(): string {
+    let value = this.get("id");
+    return value!.toString();
+  }
+
+  set id(value: string) {
+    this.set("id", Value.fromString(value));
+  }
+
+  get setToken(): string {
+    let value = this.get("setToken");
+    return value!.toString();
+  }
+
+  set setToken(value: string) {
+    this.set("setToken", Value.fromString(value));
+  }
+
+  get issuer(): string {
+    let value = this.get("issuer");
+    return value!.toString();
+  }
+
+  set issuer(value: string) {
+    this.set("issuer", Value.fromString(value));
+  }
+
+  get purchaser(): Bytes {
+    let value = this.get("purchaser");
+    return value!.toBytes();
+  }
+
+  set purchaser(value: Bytes) {
+    this.set("purchaser", Value.fromBytes(value));
+  }
+
+  get _hookContract(): Bytes {
+    let value = this.get("_hookContract");
+    return value!.toBytes();
+  }
+
+  set _hookContract(value: Bytes) {
+    this.set("_hookContract", Value.fromBytes(value));
+  }
+
+  get quantity(): BigInt {
+    let value = this.get("quantity");
+    return value!.toBigInt();
+  }
+
+  set quantity(value: BigInt) {
+    this.set("quantity", Value.fromBigInt(value));
+  }
+
+  get manager(): string {
+    let value = this.get("manager");
+    return value!.toString();
+  }
+
+  set manager(value: string) {
+    this.set("manager", Value.fromString(value));
+  }
+
+  get protocolFee(): BigInt {
+    let value = this.get("protocolFee");
+    return value!.toBigInt();
+  }
+
+  set protocolFee(value: BigInt) {
+    this.set("protocolFee", Value.fromBigInt(value));
   }
 }
 
@@ -865,110 +980,6 @@ export class Manager extends Entity {
 
   set setToken(value: string) {
     this.set("setToken", Value.fromString(value));
-  }
-}
-
-export class SetTokenIssued extends Entity {
-  constructor(id: string) {
-    super();
-    this.set("id", Value.fromString(id));
-
-    this.set("setToken", Value.fromString(""));
-    this.set("issuer", Value.fromString(""));
-    this.set("purchaser", Value.fromBytes(Bytes.empty()));
-    this.set("_hookContract", Value.fromBytes(Bytes.empty()));
-    this.set("quantity", Value.fromBigInt(BigInt.zero()));
-    this.set("manager", Value.fromString(""));
-    this.set("protocolFee", Value.fromBigInt(BigInt.zero()));
-  }
-
-  save(): void {
-    let id = this.get("id");
-    assert(id != null, "Cannot save SetTokenIssued entity without an ID");
-    if (id) {
-      assert(
-        id.kind == ValueKind.STRING,
-        "Cannot save SetTokenIssued entity with non-string ID. " +
-          'Considering using .toHex() to convert the "id" to a string.'
-      );
-      store.set("SetTokenIssued", id.toString(), this);
-    }
-  }
-
-  static load(id: string): SetTokenIssued | null {
-    return changetype<SetTokenIssued | null>(store.get("SetTokenIssued", id));
-  }
-
-  get id(): string {
-    let value = this.get("id");
-    return value!.toString();
-  }
-
-  set id(value: string) {
-    this.set("id", Value.fromString(value));
-  }
-
-  get setToken(): string {
-    let value = this.get("setToken");
-    return value!.toString();
-  }
-
-  set setToken(value: string) {
-    this.set("setToken", Value.fromString(value));
-  }
-
-  get issuer(): string {
-    let value = this.get("issuer");
-    return value!.toString();
-  }
-
-  set issuer(value: string) {
-    this.set("issuer", Value.fromString(value));
-  }
-
-  get purchaser(): Bytes {
-    let value = this.get("purchaser");
-    return value!.toBytes();
-  }
-
-  set purchaser(value: Bytes) {
-    this.set("purchaser", Value.fromBytes(value));
-  }
-
-  get _hookContract(): Bytes {
-    let value = this.get("_hookContract");
-    return value!.toBytes();
-  }
-
-  set _hookContract(value: Bytes) {
-    this.set("_hookContract", Value.fromBytes(value));
-  }
-
-  get quantity(): BigInt {
-    let value = this.get("quantity");
-    return value!.toBigInt();
-  }
-
-  set quantity(value: BigInt) {
-    this.set("quantity", Value.fromBigInt(value));
-  }
-
-  get manager(): string {
-    let value = this.get("manager");
-    return value!.toString();
-  }
-
-  set manager(value: string) {
-    this.set("manager", Value.fromString(value));
-  }
-
-  get protocolFee(): BigInt {
-    let value = this.get("protocolFee");
-    return value!.toBigInt();
-  }
-
-  set protocolFee(value: BigInt) {
-    this.set("protocolFee", Value.fromBigInt(value));
   }
 }
 
