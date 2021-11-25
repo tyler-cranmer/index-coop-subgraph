@@ -1,12 +1,12 @@
 type AnyoneCallableUpdated @entity {
   id: ID!
-  _status: Boolean! # bool
+  status: Boolean! # bool
 }
 
 type CallerStatusUpdated @entity {
   id: ID!
-  _caller: Bytes! # address
-  _status: Boolean! # bool
+  caller: Bytes! # address
+  status: Boolean! # bool
 }
 
 type Transaction @entity {
@@ -28,20 +28,20 @@ type Transfer @entity {
 
 type FeeRecipientUpdated @entity {
   id: ID!
-  _setToken: Bytes! # address
-  _newFeeRecipient: Bytes! # address
+  setToken: Bytes! # address
+  newFeeRecipient: Bytes! # address
 }
 
 type IssueFeeUpdated @entity {
   id: ID!
-  _setToken: Bytes! # address
-  _newIssueFee: BigInt! # uint256
+  setToken: Bytes! # address
+  newIssueFee: BigInt! # uint256
 }
 
 type RedeemFeeUpdated @entity {
   id: ID!
-  _setToken: Bytes! # address
-  _newRedeemFee: BigInt! # uint256
+  setToken: Bytes! # address
+  newRedeemFee: BigInt! # uint256
 }
 
 type Issuer @entity {
@@ -100,12 +100,12 @@ type Manager @entity {
 
 type SetTokenRedeemed @entity {
   id: ID!
-  _setToken: Bytes! # address
-  _redeemer: Bytes! # address
-  _to: Bytes! # address
-  _quantity: BigInt! # uint256
-  _managerFee: BigInt! # uint256
-  _protocolFee: BigInt! # uint256
+  setToken: Bytes! # address
+  redeemer: Bytes! # address
+  to: Bytes! # address
+  quantity: BigInt! # uint256
+  managerFee: BigInt! # uint256
+  protocolFee: BigInt! # uint256
 }
 
 type Disengaged @entity {
@@ -128,7 +128,7 @@ type Engaged @entity {
 
 type ExchangeAdded @entity {
   id: ID!
-  _exchangeName: String! # string
+  exchangeName: String! # string
   twapMaxTradeSize: BigInt! # uint256
   exchangeLastTradeTimestamp: BigInt! # uint256
   incentivizedTwapMaxTradeSize: BigInt! # uint256
@@ -138,12 +138,12 @@ type ExchangeAdded @entity {
 
 type ExchangeRemoved @entity {
   id: ID!
-  _exchangeName: String! # string
+  exchangeName: String! # string
 }
 
 type ExchangeUpdated @entity {
   id: ID!
-  _exchangeName: String! # string
+  exchangeName: String! # string
   twapMaxTradeSize: BigInt! # uint256
   exchangeLastTradeTimestamp: BigInt! # uint256
   incentivizedTwapMaxTradeSize: BigInt! # uint256
@@ -153,30 +153,30 @@ type ExchangeUpdated @entity {
 
 type ExecutionSettingsUpdated @entity {
   id: ID!
-  _unutilizedLeveragePercentage: BigInt! # uint256
-  _twapMaxTradeSize: BigInt! # uint256
-  _twapCooldownPeriod: BigInt! # uint256
-  _slippageTolerance: BigInt! # uint256
-  _exchangeName: String! # string
-  _exchangeData: Bytes! # bytes
+  unutilizedLeveragePercentage: BigInt! # uint256
+  twapMaxTradeSize: BigInt! # uint256
+  twapCooldownPeriod: BigInt! # uint256
+  slippageTolerance: BigInt! # uint256
+  exchangeName: String! # string
+  exchangeData: Bytes! # bytes
 }
 
 type IncentiveSettingsUpdated @entity {
   id: ID!
-  _etherReward: BigInt! # uint256
-  _incentivizedLeverageRatio: BigInt! # uint256
-  _incentivizedSlippageTolerance: BigInt! # uint256
-  _incentivizedTwapCooldownPeriod: BigInt! # uint256
-  _incentivizedTwapMaxTradeSize: BigInt! # uint256
+  etherReward: BigInt! # uint256
+  incentivizedLeverageRatio: BigInt! # uint256
+  incentivizedSlippageTolerance: BigInt! # uint256
+  incentivizedTwapCooldownPeriod: BigInt! # uint256
+  incentivizedTwapMaxTradeSize: BigInt! # uint256
 }
 
 type MethodologySettingsUpdated @entity {
   id: ID!
-  _targetLeverageRatio: BigInt! # uint256
-  _minLeverageRatio: BigInt! # uint25
-  _maxLeverageRatio: BigInt! # uint256
-  _recenteringSpeed: BigInt! # uint256
-  _rebalanceInterval: BigInt! # uint256
+  targetLeverageRatio: BigInt! # uint256
+  minLeverageRatio: BigInt! # uint25
+  maxLeverageRatio: BigInt! # uint256
+  recenteringSpeed: BigInt! # uint256
+  rebalanceInterval: BigInt! # uint256
 }
 
 type RebalanceIterated @entity {

@@ -29,8 +29,8 @@ export function handleFeeRecipientUpdated(
   let entity = new FeeRecipientUpdated(
     event.transaction.hash.toHex() + '-' + event.logIndex.toString()
   );
-  entity._setToken = event.params._setToken;
-  entity._newFeeRecipient = event.params._newFeeRecipient;
+  entity.setToken = event.params._setToken;
+  entity.newFeeRecipient = event.params._newFeeRecipient;
   entity.save();
 }
 
@@ -38,8 +38,8 @@ export function handleIssueFeeUpdated(event: IssueFeeUpdatedEvent): void {
   let entity = new IssueFeeUpdated(
     event.transaction.hash.toHex() + '-' + event.logIndex.toString()
   );
-  entity._setToken = event.params._setToken;
-  entity._newIssueFee = event.params._newIssueFee;
+  entity.setToken = event.params._setToken;
+  entity.newIssueFee = event.params._newIssueFee;
   entity.save();
 }
 
@@ -47,8 +47,8 @@ export function handleRedeemFeeUpdated(event: RedeemFeeUpdatedEvent): void {
   let entity = new RedeemFeeUpdated(
     event.transaction.hash.toHex() + '-' + event.logIndex.toString()
   );
-  entity._setToken = event.params._setToken;
-  entity._newRedeemFee = event.params._newRedeemFee;
+  entity.setToken = event.params._setToken;
+  entity.newRedeemFee = event.params._newRedeemFee;
   entity.save();
 }
 
@@ -202,11 +202,11 @@ export function handleSetTokenRedeemed(event: SetTokenRedeemedEvent): void {
   let entity = new SetTokenRedeemed(
     event.transaction.hash.toHex() + '-' + event.logIndex.toString()
   );
-  entity._setToken = event.params._setToken;
-  entity._redeemer = event.params._redeemer;
-  entity._to = event.params._to;
-  entity._quantity = event.params._quantity;
-  entity._managerFee = event.params._managerFee;
-  entity._protocolFee = event.params._protocolFee;
+  entity.setToken = event.params._setToken;
+  entity.redeemer = event.params._redeemer;
+  entity.to = event.params._to;
+  entity.quantity = event.params._quantity;
+  entity.managerFee = event.params._managerFee;
+  entity.protocolFee = event.params._protocolFee;
   entity.save();
 }

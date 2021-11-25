@@ -17,7 +17,7 @@ export class AnyoneCallableUpdated extends Entity {
     super();
     this.set("id", Value.fromString(id));
 
-    this.set("_status", Value.fromBoolean(false));
+    this.set("status", Value.fromBoolean(false));
   }
 
   save(): void {
@@ -51,13 +51,13 @@ export class AnyoneCallableUpdated extends Entity {
     this.set("id", Value.fromString(value));
   }
 
-  get _status(): boolean {
-    let value = this.get("_status");
+  get status(): boolean {
+    let value = this.get("status");
     return value!.toBoolean();
   }
 
-  set _status(value: boolean) {
-    this.set("_status", Value.fromBoolean(value));
+  set status(value: boolean) {
+    this.set("status", Value.fromBoolean(value));
   }
 }
 
@@ -66,8 +66,8 @@ export class CallerStatusUpdated extends Entity {
     super();
     this.set("id", Value.fromString(id));
 
-    this.set("_caller", Value.fromBytes(Bytes.empty()));
-    this.set("_status", Value.fromBoolean(false));
+    this.set("caller", Value.fromBytes(Bytes.empty()));
+    this.set("status", Value.fromBoolean(false));
   }
 
   save(): void {
@@ -98,22 +98,22 @@ export class CallerStatusUpdated extends Entity {
     this.set("id", Value.fromString(value));
   }
 
-  get _caller(): Bytes {
-    let value = this.get("_caller");
+  get caller(): Bytes {
+    let value = this.get("caller");
     return value!.toBytes();
   }
 
-  set _caller(value: Bytes) {
-    this.set("_caller", Value.fromBytes(value));
+  set caller(value: Bytes) {
+    this.set("caller", Value.fromBytes(value));
   }
 
-  get _status(): boolean {
-    let value = this.get("_status");
+  get status(): boolean {
+    let value = this.get("status");
     return value!.toBoolean();
   }
 
-  set _status(value: boolean) {
-    this.set("_status", Value.fromBoolean(value));
+  set status(value: boolean) {
+    this.set("status", Value.fromBoolean(value));
   }
 }
 
@@ -308,8 +308,8 @@ export class FeeRecipientUpdated extends Entity {
     super();
     this.set("id", Value.fromString(id));
 
-    this.set("_setToken", Value.fromBytes(Bytes.empty()));
-    this.set("_newFeeRecipient", Value.fromBytes(Bytes.empty()));
+    this.set("setToken", Value.fromBytes(Bytes.empty()));
+    this.set("newFeeRecipient", Value.fromBytes(Bytes.empty()));
   }
 
   save(): void {
@@ -340,22 +340,22 @@ export class FeeRecipientUpdated extends Entity {
     this.set("id", Value.fromString(value));
   }
 
-  get _setToken(): Bytes {
-    let value = this.get("_setToken");
+  get setToken(): Bytes {
+    let value = this.get("setToken");
     return value!.toBytes();
   }
 
-  set _setToken(value: Bytes) {
-    this.set("_setToken", Value.fromBytes(value));
+  set setToken(value: Bytes) {
+    this.set("setToken", Value.fromBytes(value));
   }
 
-  get _newFeeRecipient(): Bytes {
-    let value = this.get("_newFeeRecipient");
+  get newFeeRecipient(): Bytes {
+    let value = this.get("newFeeRecipient");
     return value!.toBytes();
   }
 
-  set _newFeeRecipient(value: Bytes) {
-    this.set("_newFeeRecipient", Value.fromBytes(value));
+  set newFeeRecipient(value: Bytes) {
+    this.set("newFeeRecipient", Value.fromBytes(value));
   }
 }
 
@@ -364,8 +364,8 @@ export class IssueFeeUpdated extends Entity {
     super();
     this.set("id", Value.fromString(id));
 
-    this.set("_setToken", Value.fromBytes(Bytes.empty()));
-    this.set("_newIssueFee", Value.fromBigInt(BigInt.zero()));
+    this.set("setToken", Value.fromBytes(Bytes.empty()));
+    this.set("newIssueFee", Value.fromBigInt(BigInt.zero()));
   }
 
   save(): void {
@@ -394,22 +394,22 @@ export class IssueFeeUpdated extends Entity {
     this.set("id", Value.fromString(value));
   }
 
-  get _setToken(): Bytes {
-    let value = this.get("_setToken");
+  get setToken(): Bytes {
+    let value = this.get("setToken");
     return value!.toBytes();
   }
 
-  set _setToken(value: Bytes) {
-    this.set("_setToken", Value.fromBytes(value));
+  set setToken(value: Bytes) {
+    this.set("setToken", Value.fromBytes(value));
   }
 
-  get _newIssueFee(): BigInt {
-    let value = this.get("_newIssueFee");
+  get newIssueFee(): BigInt {
+    let value = this.get("newIssueFee");
     return value!.toBigInt();
   }
 
-  set _newIssueFee(value: BigInt) {
-    this.set("_newIssueFee", Value.fromBigInt(value));
+  set newIssueFee(value: BigInt) {
+    this.set("newIssueFee", Value.fromBigInt(value));
   }
 }
 
@@ -418,8 +418,8 @@ export class RedeemFeeUpdated extends Entity {
     super();
     this.set("id", Value.fromString(id));
 
-    this.set("_setToken", Value.fromBytes(Bytes.empty()));
-    this.set("_newRedeemFee", Value.fromBigInt(BigInt.zero()));
+    this.set("setToken", Value.fromBytes(Bytes.empty()));
+    this.set("newRedeemFee", Value.fromBigInt(BigInt.zero()));
   }
 
   save(): void {
@@ -450,22 +450,22 @@ export class RedeemFeeUpdated extends Entity {
     this.set("id", Value.fromString(value));
   }
 
-  get _setToken(): Bytes {
-    let value = this.get("_setToken");
+  get setToken(): Bytes {
+    let value = this.get("setToken");
     return value!.toBytes();
   }
 
-  set _setToken(value: Bytes) {
-    this.set("_setToken", Value.fromBytes(value));
+  set setToken(value: Bytes) {
+    this.set("setToken", Value.fromBytes(value));
   }
 
-  get _newRedeemFee(): BigInt {
-    let value = this.get("_newRedeemFee");
+  get newRedeemFee(): BigInt {
+    let value = this.get("newRedeemFee");
     return value!.toBigInt();
   }
 
-  set _newRedeemFee(value: BigInt) {
-    this.set("_newRedeemFee", Value.fromBigInt(value));
+  set newRedeemFee(value: BigInt) {
+    this.set("newRedeemFee", Value.fromBigInt(value));
   }
 }
 
@@ -988,12 +988,12 @@ export class SetTokenRedeemed extends Entity {
     super();
     this.set("id", Value.fromString(id));
 
-    this.set("_setToken", Value.fromBytes(Bytes.empty()));
-    this.set("_redeemer", Value.fromBytes(Bytes.empty()));
-    this.set("_to", Value.fromBytes(Bytes.empty()));
-    this.set("_quantity", Value.fromBigInt(BigInt.zero()));
-    this.set("_managerFee", Value.fromBigInt(BigInt.zero()));
-    this.set("_protocolFee", Value.fromBigInt(BigInt.zero()));
+    this.set("setToken", Value.fromBytes(Bytes.empty()));
+    this.set("redeemer", Value.fromBytes(Bytes.empty()));
+    this.set("to", Value.fromBytes(Bytes.empty()));
+    this.set("quantity", Value.fromBigInt(BigInt.zero()));
+    this.set("managerFee", Value.fromBigInt(BigInt.zero()));
+    this.set("protocolFee", Value.fromBigInt(BigInt.zero()));
   }
 
   save(): void {
@@ -1024,58 +1024,58 @@ export class SetTokenRedeemed extends Entity {
     this.set("id", Value.fromString(value));
   }
 
-  get _setToken(): Bytes {
-    let value = this.get("_setToken");
+  get setToken(): Bytes {
+    let value = this.get("setToken");
     return value!.toBytes();
   }
 
-  set _setToken(value: Bytes) {
-    this.set("_setToken", Value.fromBytes(value));
+  set setToken(value: Bytes) {
+    this.set("setToken", Value.fromBytes(value));
   }
 
-  get _redeemer(): Bytes {
-    let value = this.get("_redeemer");
+  get redeemer(): Bytes {
+    let value = this.get("redeemer");
     return value!.toBytes();
   }
 
-  set _redeemer(value: Bytes) {
-    this.set("_redeemer", Value.fromBytes(value));
+  set redeemer(value: Bytes) {
+    this.set("redeemer", Value.fromBytes(value));
   }
 
-  get _to(): Bytes {
-    let value = this.get("_to");
+  get to(): Bytes {
+    let value = this.get("to");
     return value!.toBytes();
   }
 
-  set _to(value: Bytes) {
-    this.set("_to", Value.fromBytes(value));
+  set to(value: Bytes) {
+    this.set("to", Value.fromBytes(value));
   }
 
-  get _quantity(): BigInt {
-    let value = this.get("_quantity");
+  get quantity(): BigInt {
+    let value = this.get("quantity");
     return value!.toBigInt();
   }
 
-  set _quantity(value: BigInt) {
-    this.set("_quantity", Value.fromBigInt(value));
+  set quantity(value: BigInt) {
+    this.set("quantity", Value.fromBigInt(value));
   }
 
-  get _managerFee(): BigInt {
-    let value = this.get("_managerFee");
+  get managerFee(): BigInt {
+    let value = this.get("managerFee");
     return value!.toBigInt();
   }
 
-  set _managerFee(value: BigInt) {
-    this.set("_managerFee", Value.fromBigInt(value));
+  set managerFee(value: BigInt) {
+    this.set("managerFee", Value.fromBigInt(value));
   }
 
-  get _protocolFee(): BigInt {
-    let value = this.get("_protocolFee");
+  get protocolFee(): BigInt {
+    let value = this.get("protocolFee");
     return value!.toBigInt();
   }
 
-  set _protocolFee(value: BigInt) {
-    this.set("_protocolFee", Value.fromBigInt(value));
+  set protocolFee(value: BigInt) {
+    this.set("protocolFee", Value.fromBigInt(value));
   }
 }
 
@@ -1252,7 +1252,7 @@ export class ExchangeAdded extends Entity {
     super();
     this.set("id", Value.fromString(id));
 
-    this.set("_exchangeName", Value.fromString(""));
+    this.set("exchangeName", Value.fromString(""));
     this.set("twapMaxTradeSize", Value.fromBigInt(BigInt.zero()));
     this.set("exchangeLastTradeTimestamp", Value.fromBigInt(BigInt.zero()));
     this.set("incentivizedTwapMaxTradeSize", Value.fromBigInt(BigInt.zero()));
@@ -1286,13 +1286,13 @@ export class ExchangeAdded extends Entity {
     this.set("id", Value.fromString(value));
   }
 
-  get _exchangeName(): string {
-    let value = this.get("_exchangeName");
+  get exchangeName(): string {
+    let value = this.get("exchangeName");
     return value!.toString();
   }
 
-  set _exchangeName(value: string) {
-    this.set("_exchangeName", Value.fromString(value));
+  set exchangeName(value: string) {
+    this.set("exchangeName", Value.fromString(value));
   }
 
   get twapMaxTradeSize(): BigInt {
@@ -1346,7 +1346,7 @@ export class ExchangeRemoved extends Entity {
     super();
     this.set("id", Value.fromString(id));
 
-    this.set("_exchangeName", Value.fromString(""));
+    this.set("exchangeName", Value.fromString(""));
   }
 
   save(): void {
@@ -1375,13 +1375,13 @@ export class ExchangeRemoved extends Entity {
     this.set("id", Value.fromString(value));
   }
 
-  get _exchangeName(): string {
-    let value = this.get("_exchangeName");
+  get exchangeName(): string {
+    let value = this.get("exchangeName");
     return value!.toString();
   }
 
-  set _exchangeName(value: string) {
-    this.set("_exchangeName", Value.fromString(value));
+  set exchangeName(value: string) {
+    this.set("exchangeName", Value.fromString(value));
   }
 }
 
@@ -1390,7 +1390,7 @@ export class ExchangeUpdated extends Entity {
     super();
     this.set("id", Value.fromString(id));
 
-    this.set("_exchangeName", Value.fromString(""));
+    this.set("exchangeName", Value.fromString(""));
     this.set("twapMaxTradeSize", Value.fromBigInt(BigInt.zero()));
     this.set("exchangeLastTradeTimestamp", Value.fromBigInt(BigInt.zero()));
     this.set("incentivizedTwapMaxTradeSize", Value.fromBigInt(BigInt.zero()));
@@ -1424,13 +1424,13 @@ export class ExchangeUpdated extends Entity {
     this.set("id", Value.fromString(value));
   }
 
-  get _exchangeName(): string {
-    let value = this.get("_exchangeName");
+  get exchangeName(): string {
+    let value = this.get("exchangeName");
     return value!.toString();
   }
 
-  set _exchangeName(value: string) {
-    this.set("_exchangeName", Value.fromString(value));
+  set exchangeName(value: string) {
+    this.set("exchangeName", Value.fromString(value));
   }
 
   get twapMaxTradeSize(): BigInt {
@@ -1484,12 +1484,12 @@ export class ExecutionSettingsUpdated extends Entity {
     super();
     this.set("id", Value.fromString(id));
 
-    this.set("_unutilizedLeveragePercentage", Value.fromBigInt(BigInt.zero()));
-    this.set("_twapMaxTradeSize", Value.fromBigInt(BigInt.zero()));
-    this.set("_twapCooldownPeriod", Value.fromBigInt(BigInt.zero()));
-    this.set("_slippageTolerance", Value.fromBigInt(BigInt.zero()));
-    this.set("_exchangeName", Value.fromString(""));
-    this.set("_exchangeData", Value.fromBytes(Bytes.empty()));
+    this.set("unutilizedLeveragePercentage", Value.fromBigInt(BigInt.zero()));
+    this.set("twapMaxTradeSize", Value.fromBigInt(BigInt.zero()));
+    this.set("twapCooldownPeriod", Value.fromBigInt(BigInt.zero()));
+    this.set("slippageTolerance", Value.fromBigInt(BigInt.zero()));
+    this.set("exchangeName", Value.fromString(""));
+    this.set("exchangeData", Value.fromBytes(Bytes.empty()));
   }
 
   save(): void {
@@ -1523,58 +1523,58 @@ export class ExecutionSettingsUpdated extends Entity {
     this.set("id", Value.fromString(value));
   }
 
-  get _unutilizedLeveragePercentage(): BigInt {
-    let value = this.get("_unutilizedLeveragePercentage");
+  get unutilizedLeveragePercentage(): BigInt {
+    let value = this.get("unutilizedLeveragePercentage");
     return value!.toBigInt();
   }
 
-  set _unutilizedLeveragePercentage(value: BigInt) {
-    this.set("_unutilizedLeveragePercentage", Value.fromBigInt(value));
+  set unutilizedLeveragePercentage(value: BigInt) {
+    this.set("unutilizedLeveragePercentage", Value.fromBigInt(value));
   }
 
-  get _twapMaxTradeSize(): BigInt {
-    let value = this.get("_twapMaxTradeSize");
+  get twapMaxTradeSize(): BigInt {
+    let value = this.get("twapMaxTradeSize");
     return value!.toBigInt();
   }
 
-  set _twapMaxTradeSize(value: BigInt) {
-    this.set("_twapMaxTradeSize", Value.fromBigInt(value));
+  set twapMaxTradeSize(value: BigInt) {
+    this.set("twapMaxTradeSize", Value.fromBigInt(value));
   }
 
-  get _twapCooldownPeriod(): BigInt {
-    let value = this.get("_twapCooldownPeriod");
+  get twapCooldownPeriod(): BigInt {
+    let value = this.get("twapCooldownPeriod");
     return value!.toBigInt();
   }
 
-  set _twapCooldownPeriod(value: BigInt) {
-    this.set("_twapCooldownPeriod", Value.fromBigInt(value));
+  set twapCooldownPeriod(value: BigInt) {
+    this.set("twapCooldownPeriod", Value.fromBigInt(value));
   }
 
-  get _slippageTolerance(): BigInt {
-    let value = this.get("_slippageTolerance");
+  get slippageTolerance(): BigInt {
+    let value = this.get("slippageTolerance");
     return value!.toBigInt();
   }
 
-  set _slippageTolerance(value: BigInt) {
-    this.set("_slippageTolerance", Value.fromBigInt(value));
+  set slippageTolerance(value: BigInt) {
+    this.set("slippageTolerance", Value.fromBigInt(value));
   }
 
-  get _exchangeName(): string {
-    let value = this.get("_exchangeName");
+  get exchangeName(): string {
+    let value = this.get("exchangeName");
     return value!.toString();
   }
 
-  set _exchangeName(value: string) {
-    this.set("_exchangeName", Value.fromString(value));
+  set exchangeName(value: string) {
+    this.set("exchangeName", Value.fromString(value));
   }
 
-  get _exchangeData(): Bytes {
-    let value = this.get("_exchangeData");
+  get exchangeData(): Bytes {
+    let value = this.get("exchangeData");
     return value!.toBytes();
   }
 
-  set _exchangeData(value: Bytes) {
-    this.set("_exchangeData", Value.fromBytes(value));
+  set exchangeData(value: Bytes) {
+    this.set("exchangeData", Value.fromBytes(value));
   }
 }
 
@@ -1583,14 +1583,11 @@ export class IncentiveSettingsUpdated extends Entity {
     super();
     this.set("id", Value.fromString(id));
 
-    this.set("_etherReward", Value.fromBigInt(BigInt.zero()));
-    this.set("_incentivizedLeverageRatio", Value.fromBigInt(BigInt.zero()));
-    this.set("_incentivizedSlippageTolerance", Value.fromBigInt(BigInt.zero()));
-    this.set(
-      "_incentivizedTwapCooldownPeriod",
-      Value.fromBigInt(BigInt.zero())
-    );
-    this.set("_incentivizedTwapMaxTradeSize", Value.fromBigInt(BigInt.zero()));
+    this.set("etherReward", Value.fromBigInt(BigInt.zero()));
+    this.set("incentivizedLeverageRatio", Value.fromBigInt(BigInt.zero()));
+    this.set("incentivizedSlippageTolerance", Value.fromBigInt(BigInt.zero()));
+    this.set("incentivizedTwapCooldownPeriod", Value.fromBigInt(BigInt.zero()));
+    this.set("incentivizedTwapMaxTradeSize", Value.fromBigInt(BigInt.zero()));
   }
 
   save(): void {
@@ -1624,49 +1621,49 @@ export class IncentiveSettingsUpdated extends Entity {
     this.set("id", Value.fromString(value));
   }
 
-  get _etherReward(): BigInt {
-    let value = this.get("_etherReward");
+  get etherReward(): BigInt {
+    let value = this.get("etherReward");
     return value!.toBigInt();
   }
 
-  set _etherReward(value: BigInt) {
-    this.set("_etherReward", Value.fromBigInt(value));
+  set etherReward(value: BigInt) {
+    this.set("etherReward", Value.fromBigInt(value));
   }
 
-  get _incentivizedLeverageRatio(): BigInt {
-    let value = this.get("_incentivizedLeverageRatio");
+  get incentivizedLeverageRatio(): BigInt {
+    let value = this.get("incentivizedLeverageRatio");
     return value!.toBigInt();
   }
 
-  set _incentivizedLeverageRatio(value: BigInt) {
-    this.set("_incentivizedLeverageRatio", Value.fromBigInt(value));
+  set incentivizedLeverageRatio(value: BigInt) {
+    this.set("incentivizedLeverageRatio", Value.fromBigInt(value));
   }
 
-  get _incentivizedSlippageTolerance(): BigInt {
-    let value = this.get("_incentivizedSlippageTolerance");
+  get incentivizedSlippageTolerance(): BigInt {
+    let value = this.get("incentivizedSlippageTolerance");
     return value!.toBigInt();
   }
 
-  set _incentivizedSlippageTolerance(value: BigInt) {
-    this.set("_incentivizedSlippageTolerance", Value.fromBigInt(value));
+  set incentivizedSlippageTolerance(value: BigInt) {
+    this.set("incentivizedSlippageTolerance", Value.fromBigInt(value));
   }
 
-  get _incentivizedTwapCooldownPeriod(): BigInt {
-    let value = this.get("_incentivizedTwapCooldownPeriod");
+  get incentivizedTwapCooldownPeriod(): BigInt {
+    let value = this.get("incentivizedTwapCooldownPeriod");
     return value!.toBigInt();
   }
 
-  set _incentivizedTwapCooldownPeriod(value: BigInt) {
-    this.set("_incentivizedTwapCooldownPeriod", Value.fromBigInt(value));
+  set incentivizedTwapCooldownPeriod(value: BigInt) {
+    this.set("incentivizedTwapCooldownPeriod", Value.fromBigInt(value));
   }
 
-  get _incentivizedTwapMaxTradeSize(): BigInt {
-    let value = this.get("_incentivizedTwapMaxTradeSize");
+  get incentivizedTwapMaxTradeSize(): BigInt {
+    let value = this.get("incentivizedTwapMaxTradeSize");
     return value!.toBigInt();
   }
 
-  set _incentivizedTwapMaxTradeSize(value: BigInt) {
-    this.set("_incentivizedTwapMaxTradeSize", Value.fromBigInt(value));
+  set incentivizedTwapMaxTradeSize(value: BigInt) {
+    this.set("incentivizedTwapMaxTradeSize", Value.fromBigInt(value));
   }
 }
 
@@ -1675,11 +1672,11 @@ export class MethodologySettingsUpdated extends Entity {
     super();
     this.set("id", Value.fromString(id));
 
-    this.set("_targetLeverageRatio", Value.fromBigInt(BigInt.zero()));
-    this.set("_minLeverageRatio", Value.fromBigInt(BigInt.zero()));
-    this.set("_maxLeverageRatio", Value.fromBigInt(BigInt.zero()));
-    this.set("_recenteringSpeed", Value.fromBigInt(BigInt.zero()));
-    this.set("_rebalanceInterval", Value.fromBigInt(BigInt.zero()));
+    this.set("targetLeverageRatio", Value.fromBigInt(BigInt.zero()));
+    this.set("minLeverageRatio", Value.fromBigInt(BigInt.zero()));
+    this.set("maxLeverageRatio", Value.fromBigInt(BigInt.zero()));
+    this.set("recenteringSpeed", Value.fromBigInt(BigInt.zero()));
+    this.set("rebalanceInterval", Value.fromBigInt(BigInt.zero()));
   }
 
   save(): void {
@@ -1713,49 +1710,49 @@ export class MethodologySettingsUpdated extends Entity {
     this.set("id", Value.fromString(value));
   }
 
-  get _targetLeverageRatio(): BigInt {
-    let value = this.get("_targetLeverageRatio");
+  get targetLeverageRatio(): BigInt {
+    let value = this.get("targetLeverageRatio");
     return value!.toBigInt();
   }
 
-  set _targetLeverageRatio(value: BigInt) {
-    this.set("_targetLeverageRatio", Value.fromBigInt(value));
+  set targetLeverageRatio(value: BigInt) {
+    this.set("targetLeverageRatio", Value.fromBigInt(value));
   }
 
-  get _minLeverageRatio(): BigInt {
-    let value = this.get("_minLeverageRatio");
+  get minLeverageRatio(): BigInt {
+    let value = this.get("minLeverageRatio");
     return value!.toBigInt();
   }
 
-  set _minLeverageRatio(value: BigInt) {
-    this.set("_minLeverageRatio", Value.fromBigInt(value));
+  set minLeverageRatio(value: BigInt) {
+    this.set("minLeverageRatio", Value.fromBigInt(value));
   }
 
-  get _maxLeverageRatio(): BigInt {
-    let value = this.get("_maxLeverageRatio");
+  get maxLeverageRatio(): BigInt {
+    let value = this.get("maxLeverageRatio");
     return value!.toBigInt();
   }
 
-  set _maxLeverageRatio(value: BigInt) {
-    this.set("_maxLeverageRatio", Value.fromBigInt(value));
+  set maxLeverageRatio(value: BigInt) {
+    this.set("maxLeverageRatio", Value.fromBigInt(value));
   }
 
-  get _recenteringSpeed(): BigInt {
-    let value = this.get("_recenteringSpeed");
+  get recenteringSpeed(): BigInt {
+    let value = this.get("recenteringSpeed");
     return value!.toBigInt();
   }
 
-  set _recenteringSpeed(value: BigInt) {
-    this.set("_recenteringSpeed", Value.fromBigInt(value));
+  set recenteringSpeed(value: BigInt) {
+    this.set("recenteringSpeed", Value.fromBigInt(value));
   }
 
-  get _rebalanceInterval(): BigInt {
-    let value = this.get("_rebalanceInterval");
+  get rebalanceInterval(): BigInt {
+    let value = this.get("rebalanceInterval");
     return value!.toBigInt();
   }
 
-  set _rebalanceInterval(value: BigInt) {
-    this.set("_rebalanceInterval", Value.fromBigInt(value));
+  set rebalanceInterval(value: BigInt) {
+    this.set("rebalanceInterval", Value.fromBigInt(value));
   }
 }
 
