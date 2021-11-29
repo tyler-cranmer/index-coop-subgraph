@@ -18,6 +18,7 @@ export const createFee = (
   fee.timestamp = timestamp;
   fee.managerPayout = managerPayout;
   fee.protocolPayout = protocolPayout;
+  fee.transaction = id;
   return fee;
 };
 
@@ -64,3 +65,4 @@ export const createIssuer = (address: Address): Issuer => {
   newIssuer.setTokensIssued = [];
   return newIssuer;
 };
+

@@ -3,7 +3,7 @@ import { FeeActualized } from '../../generated/StreamingFeeModule/StreamingFeeMo
 import { StreamingFeeUpdated } from '../../generated/StreamingFeeModule/StreamingFeeModule';
 import { FeeRecipientUpdated } from '../../generated/StreamingFeeModule/StreamingFeeModule';
 import { fetchManager } from '../utils/setToken';
-import { createFee, createManager } from './issuanceEvents';
+import { createFee, createManager } from '../utils/create';
 
 export function handleFeeActualized(event: FeeActualized): void {
   let entity = new Fee(

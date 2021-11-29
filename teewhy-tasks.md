@@ -4,7 +4,9 @@
     * ex. `feeEntity.gasUsed = event.transaction.gasUsed;`
     * look to handleRebelanced fn for example of this.
 
-### Nested Entities
+
+### These are done
+### Nested Entities 
 * Find out how to successfully index nested entities
     * Currently the query below returns null for the manager entity.
     * Ex.

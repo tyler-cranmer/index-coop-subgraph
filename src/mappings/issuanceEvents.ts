@@ -78,8 +78,9 @@ export function handleSetTokenIssued(event: SetTokenIssuedEvent): void {
   log.debug('txnData:: saved', [txn.id])
   let feeEntity = createFee(createGenericId(event),
     timestamp, event.params._managerFee,
-    event.params._protocolFee
+    event.params._protocolFee, 
   )
+
 
   let issuanceEntity =
     createIssuance(createGenericId(event), event.params._to, event.params._quantity)
