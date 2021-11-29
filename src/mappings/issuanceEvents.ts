@@ -21,7 +21,7 @@ import {
 import { SetToken as SetTokenContract } from '../../generated/SetToken/SetToken'
 
 import { bindTokenAddress, fetchManager, fetchTokenTotalSupply, fetchUnderlyingComponents } from '../utils/setToken';
-import { createFee, createManager, updateManager, createIssuance, createGenericId, createTxn, createIssuer } from '../utils/setToken';
+import { createFee, createManager, updateManager, createIssuance, createGenericId, createTxn, createIssuer } from '../utils/create';
 import { Address, BigInt, ByteArray, Bytes, Entity, ethereum, log } from '@graphprotocol/graph-ts';
 
 export function handleFeeRecipientUpdated(
@@ -53,37 +53,6 @@ export function handleRedeemFeeUpdated(event: RedeemFeeUpdatedEvent): void {
   entity.save();
 }
 
-// export const createFee = (id: string, timestamp: BigInt, managerPayout: BigInt, protocolPayout: BigInt): Fee => {
-//   let fee = new Fee(id)
-//   fee.timestamp = timestamp;
-//   fee.managerPayout = managerPayout;
-//   fee.protocolPayout = protocolPayout;
-//   return fee
-// }
-
-// export const createManager = (id: string, address: Address): Manager => {
-//   let manager = new Manager(id)
-//   manager.address = address;
-//   manager.feeAccrualHistory = []
-//   manager.totalFees = BigInt.fromI32(0)
-//   return manager
-// }
-
-// const updateManager = (id: string, address: Address,
-//   fee: Fee): Manager => {
-//   let manager = Manager.load(id)
-//   return manager as Manager
-// }
-
-// const createIssuance = (id: string, buyerAddress: Bytes, quantity: BigInt): TokenIssuance => {
-//   let issuanceEntity = new TokenIssuance(id)
-//   issuanceEntity.buyerAddress = buyerAddress;
-//   issuanceEntity.quantity = quantity
-//   return issuanceEntity
-// }
-// const createGenericId = (event: ethereum.Event): string =>
-//   '' + event.transaction.hash.toHex() + '-' + event.logIndex.toString() + '';
-
 /**
  * We should pull out all "create" functions and place them elsewhere
  * This should also entail each function being assessed for the data it is creating so that:
@@ -93,18 +62,6 @@ export function handleRedeemFeeUpdated(event: RedeemFeeUpdatedEvent): void {
  */
 
 // Update this to include additional info
-// const createTxn = (id: string, timestamp: BigInt): Transaction => {
-//   let txnObject = new Transaction(id)
-//   txnObject.timestamp = timestamp;
-//   return txnObject
-// }
-
-// const createIssuer = (address: Address): Issuer => {
-//   let newIssuer = new Issuer(address.toHexString())
-//   newIssuer.address = address;
-//   newIssuer.setTokensIssued = []
-//   return newIssuer
-// }
 export function handleSetTokenIssued(event: SetTokenIssuedEvent): void {
   let id = event.params._issuer
   let setTokenAddress = event.params._setToken
