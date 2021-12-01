@@ -1,5 +1,5 @@
 /* eslint-disable prefer-const */
-import { Address,BigInt, ByteArray, Bytes, log } from "@graphprotocol/graph-ts"
+import { Address, BigInt, ByteArray, Bytes, DataSourceTemplate, log } from "@graphprotocol/graph-ts"
 import { Manager } from "../../generated/schema"
 import { SetToken } from "../../generated/SetToken/SetToken"
 
@@ -14,10 +14,10 @@ export function fetchTokenTotalSupply(tokenAddress: Address): BigInt {
 
   export const bindTokenAddress = (address: Address): SetToken => SetToken.bind(address);
 
-  export function fetchUnderlyingComponents(tokenAddress: Address): Address[] {
+
+  export function fetchUnderlyingComponents(tokenAddress: Address): Address []{
     let contract = SetToken.bind(tokenAddress)
-    let tokenComponentsResult = contract.getComponents()
-    // need to use the .value property to get the return value of ethereum CallResult that we get from try_<methodName>
+    let tokenComponentsResult = contract.getComponents() // returns Address []
     return tokenComponentsResult;
   }
 

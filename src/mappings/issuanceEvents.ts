@@ -136,16 +136,19 @@ export function handleSetTokenIssued(event: SetTokenIssuedEvent): void {
     setTokenEntity.issuer = issuerEntity.id
     setTokenEntity.issuances = []
     // Tyler
-    setTokenEntity.comp = []
+
+    setTokenEntity.comp = [];
 
     setTokenEntity.totalSupply = BigInt.fromI32(0);
   }
-
+ 
+  // let existingComp = []
+  let temp = fetchUnderlyingComponents(setTokenAddress);
+ log.debug('setTokenEntity saved::', temp);
 
   /** Same process for updating nested managerFees & setTokensIssued arrays */
   // A. create variable equal to the current .issuances array
   let existingIssuances = setTokenEntity.issuances;
-  let newComponents = setTokenEntity.comp
   // B. push the most recent issuanceEntity.id into this array
   existingIssuances.push(issuanceEntity.id);
   // C. reassign setTokenEntity.issuances to be equal to updated array (containing the entity.id added above)
