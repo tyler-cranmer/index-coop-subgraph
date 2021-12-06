@@ -25,7 +25,11 @@ export const bindTokenAddress = (address: Address): SetToken =>
 export function fetchUnderlyingComponents(tokenAddress: Address): Bytes[] {
   let contract = SetToken.bind(tokenAddress);
   let tokenComponentsResult = contract.getComponents(); // returns Address []
-  return tokenComponentsResult;
+  let results: Bytes[] = []
+  for (let i = 0; i < tokenComponentsResult.length; i++) {
+    results.push(tokenComponentsResult[i])
+  }
+  return results;
 }
 
 export function fetchManager(tokenAddress: Address): string {

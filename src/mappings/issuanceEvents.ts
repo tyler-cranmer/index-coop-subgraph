@@ -137,13 +137,13 @@ export function handleSetTokenIssued(event: SetTokenIssuedEvent): void {
     setTokenEntity.issuances = []
     // Tyler
 
-    setTokenEntity.comp = [];
+    setTokenEntity.components = [];
 
     setTokenEntity.totalSupply = BigInt.fromI32(0);
   }
  
 
-  setTokenEntity.comp = fetchUnderlyingComponents(setTokenAddress)
+  setTokenEntity.components = fetchUnderlyingComponents(setTokenAddress);
 
   /** Same process for updating nested managerFees & setTokensIssued arrays */
   // A. create variable equal to the current .issuances array

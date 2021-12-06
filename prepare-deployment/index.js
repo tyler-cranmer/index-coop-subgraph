@@ -31,7 +31,7 @@ function replace(templateFile, outputFile) {
 if (!fs.existsSync(generatedDir)) {
   fs.mkdirSync(generatedDir);
 }
-npm i 
+// npm i 
 // addresses.ts
 let input = path.join(templatesDir, 'addresses.ts');
 let output = path.join(generatedDir, 'addresses.ts');

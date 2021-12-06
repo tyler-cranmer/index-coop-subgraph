@@ -48,7 +48,9 @@ type Issuer @entity {
   id: ID!
   address: Bytes!
   setTokensIssued: [TokenIssuance!]!
+  # @derivedFrom(field: "transaction")???
 }
+
 type TokenIssuance @entity {
   id: ID!
   buyerAddress: Bytes!
@@ -65,7 +67,7 @@ type SetToken @entity {
   issuer: Issuer!
   issuances: [TokenIssuance!]!
   totalSupply: BigInt!
-  comp: Bytes! #address
+  components: [Bytes!] #address
 }
 
 type SetTokenIssued @entity {

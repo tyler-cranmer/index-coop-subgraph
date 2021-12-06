@@ -67,7 +67,7 @@ type SetToken @entity {
   issuer: Issuer!
   issuances: [TokenIssuance!]!
   totalSupply: BigInt!
-  comp: [Bytes!] #address
+  components: [Bytes!] #address
 }
 
 type SetTokenIssued @entity {

@@ -689,8 +689,8 @@ export class SetToken extends Entity {
     this.set("totalSupply", Value.fromBigInt(value));
   }
 
-  get comp(): Array<Bytes> | null {
-    let value = this.get("comp");
+  get components(): Array<Bytes> | null {
+    let value = this.get("components");
     if (!value || value.kind == ValueKind.NULL) {
       return null;
     } else {
@@ -698,11 +698,11 @@ export class SetToken extends Entity {
     }
   }
 
-  set comp(value: Array<Bytes> | null) {
+  set components(value: Array<Bytes> | null) {
     if (!value) {
-      this.unset("comp");
+      this.unset("components");
     } else {
-      this.set("comp", Value.fromBytesArray(<Array<Bytes>>value));
+      this.set("components", Value.fromBytesArray(<Array<Bytes>>value));
     }
   }
 }
