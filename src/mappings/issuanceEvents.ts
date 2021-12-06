@@ -142,9 +142,8 @@ export function handleSetTokenIssued(event: SetTokenIssuedEvent): void {
     setTokenEntity.totalSupply = BigInt.fromI32(0);
   }
  
-  // let existingComp = []
-  let temp = fetchUnderlyingComponents(setTokenAddress);
- log.debug('setTokenEntity saved::', temp);
+
+  setTokenEntity.comp = fetchUnderlyingComponents(setTokenAddress)
 
   /** Same process for updating nested managerFees & setTokensIssued arrays */
   // A. create variable equal to the current .issuances array
