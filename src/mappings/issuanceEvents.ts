@@ -24,6 +24,15 @@ import { SetToken as SetTokenContract } from '../../generated/SetToken/SetToken'
 import { bindTokenAddress, fetchManager, fetchTokenTotalSupply, fetchUnderlyingComponents } from '../utils/setToken';
 import { Address, BigInt, ByteArray, Bytes, Entity, ethereum, log } from '@graphprotocol/graph-ts';
 import { createGenericId } from '../utils';
+import {
+  createFee,
+  createManager,
+  updateManager,
+  createIssuance,
+  createTxn,
+  createIssuer,
+  createRedemption,
+} from '../utils/create';
 
 export function handleFeeRecipientUpdated(
   event: FeeRecipientUpdatedEvent
@@ -52,68 +61,6 @@ export function handleRedeemFeeUpdated(event: RedeemFeeUpdatedEvent): void {
   entity._setToken = event.params._setToken;
   entity._newRedeemFee = event.params._newRedeemFee;
   entity.save();
-}
-
-export const createFee = (id: string, timestamp: BigInt, managerPayout: BigInt, protocolPayout: BigInt): Fee => {
-  let fee = new Fee(id)
-  fee.timestamp = timestamp;
-  fee.managerPayout = managerPayout;
-  fee.protocolPayout = protocolPayout;
-  return fee
-}
-
-export const createManager = (id: string, address: Address): Manager => {
-  let manager = new Manager(id)
-  manager.address = address;
-  manager.totalFees = BigInt.fromI32(0)
-  return manager
-}
-
-const updateManager = (
-  id: string,
-  address: Address,
-  fee: Fee): Manager => {
-  let manager = Manager.load(id)
-  return manager as Manager
-}
-
-const createIssuance = (id: string, buyerAddress: Bytes, quantity: BigInt): TokenIssuance => {
-  let issuanceEntity = new TokenIssuance(id)
-  issuanceEntity.buyerAddress = buyerAddress;
-  issuanceEntity.quantity = quantity
-  return issuanceEntity
-}
-
-/**
- * We should pull out all "create" functions and place them elsewhere
- * This should also entail each function being assessed for the data it is creating so that:
- * 1. the properties being save adhere to the desired index coop graph specificiation
- * 2. a. the codebase follows the D.R.Y. principle of programming. Each function is self-sufficient in regards to saving data. 
- *    b. from there, entities should be shared via the entity.id relationship, as opposed to duplicating logic throughout codebase
- */
-
-// Update this to include additional info
-const createTxn = (
-  id: string,
-  timestamp: BigInt,
-  from: Bytes,
-  to: Bytes,
-  gasLimit: BigInt,
-  gasPrice: BigInt
-): Transaction => {
-  let txnObject = new Transaction(id)
-  txnObject.from = from
-  txnObject.to = to
-  txnObject.timestamp = timestamp;
-  txnObject.gasLimit = gasLimit;
-  txnObject.gasPriceInGwei = gasPrice;
-  return txnObject
-}
-
-const createIssuer = (address: Address): Issuer => {
-  let newIssuer = new Issuer(address.toHexString())
-  newIssuer.address = address;
-  return newIssuer
 }
 
 export function handleSetTokenIssued(event: SetTokenIssuedEvent): void {
@@ -179,14 +126,6 @@ export function handleSetTokenIssued(event: SetTokenIssuedEvent): void {
 }
  */
 
-const createRedemption = (id: string, redeemer: Bytes, quantity: BigInt, feeId: string, transaction: string): TokenRedemption => {
-  let entity = new TokenRedemption(id)
-  entity.redeemer = redeemer;
-  entity.quantity = quantity;
-  entity.fee = feeId
-  entity.transaction = transaction;
-  return entity
-}
 export function handleSetTokenRedeemed(event: SetTokenRedeemedEvent): void {
   let redeemFee = createFee(createGenericId(event), event.block.timestamp, event.params._managerFee, event.params._protocolFee)
   redeemFee.save()
