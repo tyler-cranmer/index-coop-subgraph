@@ -17,6 +17,7 @@ import {
   Fee,
   TokenIssuance,
   Transaction,
+  Component,
 
 } from '../../generated/schema';
 import { SetToken as SetTokenContract } from '../../generated/SetToken/SetToken';
@@ -35,6 +36,7 @@ import {
   createGenericId,
   createTxn,
   createIssuer,
+  createComponent,
 } from '../utils/create';
 import {
   Address,
@@ -162,32 +164,30 @@ export function handleSetTokenIssued(event: SetTokenIssuedEvent): void {
     setTokenEntity.issuer = issuerEntity.id;
     setTokenEntity.issuances = [];
     setTokenEntity.components = [];
-    // setTokenEntity.comp = [];
+
 
     setTokenEntity.totalSupply = BigInt.fromI32(0);
   }
 
-  setTokenEntity.components = fetchUnderlyingComponents(setTokenAddress);
-  // TYLERS HERE!
-  // setTokenEntity.comp = temp(setTokenAddress);
-  // let cp = fetchUnderlyingComponents(setTokenAddress);
-  // for (let i = 0; i < cp.length; i++){
-  //   let componentEntity = Comp.load(cp[i].toHexString());
-  //   if (componentEntity == null) {
-  //     componentEntity = createComp(
-  //       cp[i].toHexString(),
-  //       cp[i]
-  //     );
-  //   }
-  //     let contract = SetToken.bind(setTokenAddress.toHexString())
-  //     let units = contract.getDefaultPositionRealUnit(cp[i]);
-  //     componentEntity.positionValue = units;
-  //     componentEntity.save();
+  // creating and setting component entity.
+  let listComponents = fetchUnderlyingComponents(setTokenAddress);
+  let existingComponents = setTokenEntity.components;
+  let contract = SetTokenContract.bind(setTokenAddress);
+  for (let i = 0; i < listComponents.length; i++) {
+    let componentEntity = Component.load(listComponents[i].toHexString());
+    if (componentEntity == null) {
+      componentEntity = createComponent(
+        listComponents[i].toHexString(),
+        listComponents[i]
+      );
+    }
+    let componentValue = contract.getDefaultPositionRealUnit(listComponents[i]);
+    componentEntity.positionValue = componentValue;
+    componentEntity.save();
 
-  //     let existingComps = setTokenEntity.comp;
-  //     existingComps.push(componentEntity.id);
-  //     setTokenEntity.comp = existingComps;
-  //   }
+    existingComponents.push(componentEntity.id);
+    setTokenEntity.components = existingComponents;
+  }
 
   /** Same process for updating nested managerFees & setTokensIssued arrays */
   // A. create variable equal to the current .issuances array

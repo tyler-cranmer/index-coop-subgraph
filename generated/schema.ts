@@ -671,6 +671,7 @@ export class SetToken extends Entity {
     this.set("issuer", Value.fromString(""));
     this.set("issuances", Value.fromStringArray(new Array(0)));
     this.set("totalSupply", Value.fromBigInt(BigInt.zero()));
+    this.set("components", Value.fromStringArray(new Array(0)));
   }
 
   save(): void {
@@ -753,21 +754,13 @@ export class SetToken extends Entity {
     this.set("totalSupply", Value.fromBigInt(value));
   }
 
-  get components(): Array<string> | null {
+  get components(): Array<string> {
     let value = this.get("components");
-    if (!value || value.kind == ValueKind.NULL) {
-      return null;
-    } else {
-      return value.toStringArray();
-    }
+    return value!.toStringArray();
   }
 
-  set components(value: Array<string> | null) {
-    if (!value) {
-      this.unset("components");
-    } else {
-      this.set("components", Value.fromStringArray(<Array<string>>value));
-    }
+  set components(value: Array<string>) {
+    this.set("components", Value.fromStringArray(value));
   }
 }
 

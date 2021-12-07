@@ -20,44 +20,18 @@ export function fetchTokenTotalSupply(tokenAddress: Address): BigInt {
   return totalSupplyResult.value;
 }
 
-
-// fetches the underlying components by creating Component entity
-export function fetchUnderlyingComponents(tokenAddress: Address): string[] {
-         let contract = SetToken.bind(tokenAddress);
-         let tokenComponentsResult = contract.getComponents(); // returns Address []
-         let results: string[] = [];
-         for (let i = 0; i < tokenComponentsResult.length; i++) {
-           let componentEntity = Component.load(
-             tokenComponentsResult[i].toHexString()
-           );
-           if (componentEntity == null) {
-             componentEntity = createComponent(
-               tokenComponentsResult[i].toHexString(),
-               tokenComponentsResult[i]
-             );
-           }
-           let units = contract.getDefaultPositionRealUnit(
-             tokenComponentsResult[i]
-           );
-           componentEntity.positionValue = units;
-           componentEntity.save();
-           results.push(componentEntity.id);
-         }
-         return results;
-       }
-
 export const bindTokenAddress = (address: Address): SetToken =>
   SetToken.bind(address);
 
-// export function fetchUnderlyingComponents(tokenAddress: Address): Bytes[] {
-//   let contract = SetToken.bind(tokenAddress);
-//   let tokenComponentsResult = contract.getComponents(); // returns Address []
-//   let results: Bytes[] = []
-//   for (let i = 0; i < tokenComponentsResult.length; i++) {
-//     results.push(tokenComponentsResult[i])
-//   }
-//   return results;
-// }
+export function fetchUnderlyingComponents(tokenAddress: Address): Address[] {
+  let contract = SetToken.bind(tokenAddress);
+  let tokenComponentsResult = contract.getComponents(); // returns Address []
+  let results: Address[] = []
+  for (let i = 0; i < tokenComponentsResult.length; i++) {
+    results.push(tokenComponentsResult[i])
+  }
+  return results;
+}
 
 export function fetchManager(tokenAddress: Address): string {
   let contract = SetToken.bind(tokenAddress);
