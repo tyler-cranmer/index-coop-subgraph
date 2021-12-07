@@ -107,14 +107,6 @@ export function handleSetTokenIssued(event: SetTokenIssuedEvent): void {
     event.params._protocolFee
   );
 
-  let issuanceEntity = createIssuance(
-    createGenericId(event),
-    event.params._to,
-    event.params._quantity
-  );
-  issuanceEntity.transaction = txn.id;
-
-  issuanceEntity.save();
 
   let currentManager = Manager.load(fetchManager(setTokenAddress));
 
@@ -137,6 +129,15 @@ export function handleSetTokenIssued(event: SetTokenIssuedEvent): void {
 
   // feeEntity.manager = currentManager.id;
   feeEntity.save();
+
+  let issuanceEntity = createIssuance(
+    createGenericId(event),
+    event.params._to,
+    event.params._quantity
+  );
+  issuanceEntity.transaction = txn.id;
+  // issuanceEntity.save(); took out to add issuanceEntity.setToken on line 202
+ 
 
   let issuerEntity = Issuer.load(id.toHexString());
   if (issuerEntity == null) {
@@ -198,6 +199,8 @@ export function handleSetTokenIssued(event: SetTokenIssuedEvent): void {
   setTokenEntity.issuances = existingIssuances;
   // D. save SetToken
   setTokenEntity.save();
+  issuanceEntity.setToken = setTokenEntity.id
+  issuanceEntity.save();
   log.debug('setTokenEntity saved::', [setTokenEntity.name]);
 }
 
