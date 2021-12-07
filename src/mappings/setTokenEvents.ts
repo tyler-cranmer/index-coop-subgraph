@@ -69,7 +69,7 @@ export function handleExchangeAdded(event: ExchangeAddedEvent): void {
   let entity = new ExchangeAdded(
     event.transaction.hash.toHex() + "-" + event.logIndex.toString()
   )
-  entity._exchangeName = event.params._exchangeName
+  entity.exchangeName = event.params._exchangeName
   entity.twapMaxTradeSize = event.params.twapMaxTradeSize
   entity.exchangeLastTradeTimestamp = event.params.exchangeLastTradeTimestamp
   entity.incentivizedTwapMaxTradeSize =
@@ -83,7 +83,7 @@ export function handleExchangeRemoved(event: ExchangeRemovedEvent): void {
   let entity = new ExchangeRemoved(
     event.transaction.hash.toHex() + "-" + event.logIndex.toString()
   )
-  entity._exchangeName = event.params._exchangeName
+  entity.exchangeName = event.params._exchangeName
   entity.save()
 }
 
@@ -91,7 +91,7 @@ export function handleExchangeUpdated(event: ExchangeUpdatedEvent): void {
   let entity = new ExchangeUpdated(
     event.transaction.hash.toHex() + "-" + event.logIndex.toString()
   )
-  entity._exchangeName = event.params._exchangeName
+  entity.exchangeName = event.params._exchangeName
   entity.twapMaxTradeSize = event.params.twapMaxTradeSize
   entity.exchangeLastTradeTimestamp = event.params.exchangeLastTradeTimestamp
   entity.incentivizedTwapMaxTradeSize =
@@ -107,7 +107,7 @@ export function handleAnyoneCallableUpdated(
   let entity = new AnyoneCallableUpdated(
     event.transaction.hash.toHex() + "-" + event.logIndex.toString()
   )
-  entity._status = event.params._status
+  entity.status = event.params._status
   entity.save()
 }
 
@@ -117,8 +117,8 @@ export function handleCallerStatusUpdated(
   let entity = new CallerStatusUpdated(
     event.transaction.hash.toHex() + "-" + event.logIndex.toString()
   )
-  entity._caller = event.params._caller
-  entity._status = event.params._status
+  entity.caller = event.params._caller
+  entity.status = event.params._status
   entity.save()
 }
 
@@ -152,13 +152,13 @@ export function handleExecutionSettingsUpdated(
   let entity = new ExecutionSettingsUpdated(
     event.transaction.hash.toHex() + "-" + event.logIndex.toString()
   )
-  entity._unutilizedLeveragePercentage =
+  entity.unutilizedLeveragePercentage =
     event.params._unutilizedLeveragePercentage
-  entity._twapMaxTradeSize = event.params._twapMaxTradeSize
-  entity._twapCooldownPeriod = event.params._twapCooldownPeriod
-  entity._slippageTolerance = event.params._slippageTolerance
-  entity._exchangeName = event.params._exchangeName
-  entity._exchangeData = event.params._exchangeData
+  entity.twapMaxTradeSize = event.params._twapMaxTradeSize
+  entity.twapCooldownPeriod = event.params._twapCooldownPeriod
+  entity.slippageTolerance = event.params._slippageTolerance
+  entity.exchangeName = event.params._exchangeName
+  entity.exchangeData = event.params._exchangeData
   entity.save()
 }
 
@@ -168,13 +168,13 @@ export function handleIncentiveSettingsUpdated(
   let entity = new IncentiveSettingsUpdated(
     event.transaction.hash.toHex() + "-" + event.logIndex.toString()
   )
-  entity._etherReward = event.params._etherReward
-  entity._incentivizedLeverageRatio = event.params._incentivizedLeverageRatio
-  entity._incentivizedSlippageTolerance =
+  entity.etherReward = event.params._etherReward
+  entity.incentivizedLeverageRatio = event.params._incentivizedLeverageRatio
+  entity.incentivizedSlippageTolerance =
     event.params._incentivizedSlippageTolerance
-  entity._incentivizedTwapCooldownPeriod =
+  entity.incentivizedTwapCooldownPeriod =
     event.params._incentivizedTwapCooldownPeriod
-  entity._incentivizedTwapMaxTradeSize =
+  entity.incentivizedTwapMaxTradeSize =
     event.params._incentivizedTwapMaxTradeSize
   entity.save()
 }
@@ -185,11 +185,11 @@ export function handleMethodologySettingsUpdated(
   let entity = new MethodologySettingsUpdated(
     event.transaction.hash.toHex() + "-" + event.logIndex.toString()
   )
-  entity._targetLeverageRatio = event.params._targetLeverageRatio
-  entity._minLeverageRatio = event.params._minLeverageRatio
-  entity._maxLeverageRatio = event.params._maxLeverageRatio
-  entity._recenteringSpeed = event.params._recenteringSpeed
-  entity._rebalanceInterval = event.params._rebalanceInterval
+  entity.targetLeverageRatio = event.params._targetLeverageRatio
+  entity.minLeverageRatio = event.params._minLeverageRatio
+  entity.maxLeverageRatio = event.params._maxLeverageRatio
+  entity.recenteringSpeed = event.params._recenteringSpeed
+  entity.rebalanceInterval = event.params._rebalanceInterval
   entity.save()
 }
 

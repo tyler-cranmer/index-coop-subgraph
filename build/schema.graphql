@@ -65,6 +65,13 @@ type TokenIssuance @entity {
   fee: Fee!
 }
 
+type Component @entity {
+  id: ID!
+  name: String!
+  address: Bytes!
+  positionValue: BigInt!
+}
+
 # SetTokenCreator is the contract where we should be populating this entity (or being populating)
 type SetToken @entity {
   id: ID!
@@ -76,6 +83,7 @@ type SetToken @entity {
   totalSupply: BigInt!
   rebalances: [Rebalance!]! @derivedFrom(field: "setToken")
   redemptions: [TokenRedemption!]! @derivedFrom(field: "setToken")
+  components: [Component!]! 
 }
 
 type Fee @entity {

@@ -5,7 +5,7 @@ import {
   TokenIssuance,
   Transaction,
   Issuer,
-//   Component,
+  Component,
   TokenRedemption
 } from '../../generated/schema';
 
@@ -84,3 +84,12 @@ export const createRedemption = (
   entity.transaction = transaction;
   return entity;
 };
+
+export const createComponent = (id: string, address: Address): Component => {
+  let component = new Component(id);
+  component.name = 'name';
+  component.address = address;
+  component.positionValue = BigInt.fromI32(0);
+
+  return component;
+}; 

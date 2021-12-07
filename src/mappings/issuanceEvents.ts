@@ -18,6 +18,7 @@ import {
   TokenIssuance,
   Transaction,
   TokenRedemption,
+  Component
 } from '../../generated/schema';
 import { SetToken as SetTokenContract } from '../../generated/SetToken/SetToken'
 
@@ -32,6 +33,7 @@ import {
   createTxn,
   createIssuer,
   createRedemption,
+  createComponent,
 } from '../utils/create';
 
 export function handleFeeRecipientUpdated(
@@ -40,8 +42,8 @@ export function handleFeeRecipientUpdated(
   let entity = new FeeRecipientUpdated(
     event.transaction.hash.toHex() + '-' + event.logIndex.toString()
   );
-  entity._setToken = event.params._setToken;
-  entity._newFeeRecipient = event.params._newFeeRecipient;
+  entity.setToken = event.params._setToken;
+  entity.newFeeRecipient = event.params._newFeeRecipient;
   entity.save();
 }
 
@@ -49,8 +51,8 @@ export function handleIssueFeeUpdated(event: IssueFeeUpdatedEvent): void {
   let entity = new IssueFeeUpdated(
     event.transaction.hash.toHex() + '-' + event.logIndex.toString()
   );
-  entity._setToken = event.params._setToken;
-  entity._newIssueFee = event.params._newIssueFee;
+  entity.setToken = event.params._setToken;
+  entity.newIssueFee = event.params._newIssueFee;
   entity.save();
 }
 
@@ -58,8 +60,8 @@ export function handleRedeemFeeUpdated(event: RedeemFeeUpdatedEvent): void {
   let entity = new RedeemFeeUpdated(
     event.transaction.hash.toHex() + '-' + event.logIndex.toString()
   );
-  entity._setToken = event.params._setToken;
-  entity._newRedeemFee = event.params._newRedeemFee;
+  entity.setToken = event.params._setToken;
+  entity.newRedeemFee = event.params._newRedeemFee;
   entity.save();
 }
 
@@ -108,7 +110,29 @@ export function handleSetTokenIssued(event: SetTokenIssuedEvent): void {
     setTokenEntity.manager = currentManager.id
     // NESTED ENTITY --> set using entity.id
     setTokenEntity.totalSupply = BigInt.fromI32(0);
+    setTokenEntity.components = [];
   }
+
+   // creating and setting component entity.
+  let listComponents = fetchUnderlyingComponents(setTokenAddress);
+  let existingComponents = setTokenEntity.components;
+  let contract = SetTokenContract.bind(setTokenAddress);
+  for (let i = 0; i < listComponents.length; i++) {
+    let componentEntity = Component.load(listComponents[i].toHexString());
+    if (componentEntity == null) {
+      componentEntity = createComponent(
+        listComponents[i].toHexString(),
+        listComponents[i]
+      );
+    }
+    let componentValue = contract.getDefaultPositionRealUnit(listComponents[i]);
+    componentEntity.positionValue = componentValue;
+    componentEntity.save();
+
+    existingComponents.push(componentEntity.id);
+    setTokenEntity.components = existingComponents;
+  }
+
 
   // D. save SetToken
   setTokenEntity.save()
