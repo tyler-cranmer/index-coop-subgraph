@@ -5,8 +5,16 @@ import {
     log,
   ethereum
 } from '@graphprotocol/graph-ts';
-import { Manager, Fee, TokenIssuance, Transaction, Issuer } from '../../generated/schema';
+import { Manager, Fee, TokenIssuance, Transaction, Issuer, Component } from '../../generated/schema';
 
+export const createComponent = (id: string, address: Address): Component => {
+  let component = new Component(id);
+  component.name = 'name';
+  component.address = address;
+  component.positionValue = BigInt.fromI32(0);
+
+  return component;
+}; 
 
 export const createFee = (
   id: string,

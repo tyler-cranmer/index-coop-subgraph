@@ -596,6 +596,70 @@ export class TokenIssuance extends Entity {
   }
 }
 
+export class Component extends Entity {
+  constructor(id: string) {
+    super();
+    this.set("id", Value.fromString(id));
+
+    this.set("name", Value.fromString(""));
+    this.set("address", Value.fromBytes(Bytes.empty()));
+    this.set("positionValue", Value.fromBigInt(BigInt.zero()));
+  }
+
+  save(): void {
+    let id = this.get("id");
+    assert(id != null, "Cannot save Component entity without an ID");
+    if (id) {
+      assert(
+        id.kind == ValueKind.STRING,
+        "Cannot save Component entity with non-string ID. " +
+          'Considering using .toHex() to convert the "id" to a string.'
+      );
+      store.set("Component", id.toString(), this);
+    }
+  }
+
+  static load(id: string): Component | null {
+    return changetype<Component | null>(store.get("Component", id));
+  }
+
+  get id(): string {
+    let value = this.get("id");
+    return value!.toString();
+  }
+
+  set id(value: string) {
+    this.set("id", Value.fromString(value));
+  }
+
+  get name(): string {
+    let value = this.get("name");
+    return value!.toString();
+  }
+
+  set name(value: string) {
+    this.set("name", Value.fromString(value));
+  }
+
+  get address(): Bytes {
+    let value = this.get("address");
+    return value!.toBytes();
+  }
+
+  set address(value: Bytes) {
+    this.set("address", Value.fromBytes(value));
+  }
+
+  get positionValue(): BigInt {
+    let value = this.get("positionValue");
+    return value!.toBigInt();
+  }
+
+  set positionValue(value: BigInt) {
+    this.set("positionValue", Value.fromBigInt(value));
+  }
+}
+
 export class SetToken extends Entity {
   constructor(id: string) {
     super();
@@ -689,20 +753,20 @@ export class SetToken extends Entity {
     this.set("totalSupply", Value.fromBigInt(value));
   }
 
-  get components(): Array<Bytes> | null {
+  get components(): Array<string> | null {
     let value = this.get("components");
     if (!value || value.kind == ValueKind.NULL) {
       return null;
     } else {
-      return value.toBytesArray();
+      return value.toStringArray();
     }
   }
 
-  set components(value: Array<Bytes> | null) {
+  set components(value: Array<string> | null) {
     if (!value) {
       this.unset("components");
     } else {
-      this.set("components", Value.fromBytesArray(<Array<Bytes>>value));
+      this.set("components", Value.fromStringArray(<Array<string>>value));
     }
   }
 }

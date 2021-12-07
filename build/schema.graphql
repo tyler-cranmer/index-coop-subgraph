@@ -59,6 +59,13 @@ type TokenIssuance @entity {
   transaction: Transaction!
 }
 
+type Component @entity {
+  id: ID!
+  name: String!
+  address: Bytes!
+  positionValue: BigInt!
+}
+
 type SetToken @entity {
   id: ID!
   address: Bytes!
@@ -67,7 +74,7 @@ type SetToken @entity {
   issuer: Issuer!
   issuances: [TokenIssuance!]!
   totalSupply: BigInt!
-  components: [Bytes!] #address
+  components: [Component!] 
 }
 
 type SetTokenIssued @entity {
