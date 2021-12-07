@@ -655,7 +655,6 @@ export class Component extends Entity {
     super();
     this.set("id", Value.fromString(id));
 
-    this.set("name", Value.fromString(""));
     this.set("address", Value.fromBytes(Bytes.empty()));
     this.set("positionValue", Value.fromBigInt(BigInt.zero()));
   }
@@ -684,15 +683,6 @@ export class Component extends Entity {
 
   set id(value: string) {
     this.set("id", Value.fromString(value));
-  }
-
-  get name(): string {
-    let value = this.get("name");
-    return value!.toString();
-  }
-
-  set name(value: string) {
-    this.set("name", Value.fromString(value));
   }
 
   get address(): Bytes {

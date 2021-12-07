@@ -24,7 +24,7 @@ import { SetToken as SetTokenContract } from '../../generated/SetToken/SetToken'
 
 import { bindTokenAddress, fetchManager, fetchTokenTotalSupply, fetchUnderlyingComponents } from '../utils/setToken';
 import { Address, BigInt, ByteArray, Bytes, Entity, ethereum, log } from '@graphprotocol/graph-ts';
-import { createGenericId } from '../utils';
+import { createGenericId, createComponentId } from '../utils';
 import {
   createFee,
   createManager,
@@ -121,7 +121,7 @@ export function handleSetTokenIssued(event: SetTokenIssuedEvent): void {
     let componentEntity = Component.load(listComponents[i].toHexString());
     if (componentEntity == null) {
       componentEntity = createComponent(
-        listComponents[i].toHexString(),
+        createComponentId(listComponents[i], timestamp.toHexString()),
         listComponents[i]
       );
     }

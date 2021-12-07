@@ -45,6 +45,7 @@ type RedeemFeeUpdated @entity {
   setToken: Bytes! # address
   newRedeemFee: BigInt! # uint256
 }
+
 # Might be unneccesary to grab
 # Issuer is the person the token is being issued to.
 type Issuer @entity {
@@ -53,7 +54,6 @@ type Issuer @entity {
   setTokensIssued: [TokenIssuance!]!
 }
 
-# 
 type TokenIssuance @entity {
   id: ID!
   # buyerAddress is the Issuer
@@ -67,7 +67,6 @@ type TokenIssuance @entity {
 
 type Component @entity {
   id: ID!
-  name: String!
   address: Bytes!
   positionValue: BigInt!
 }

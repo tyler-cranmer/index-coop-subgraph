@@ -87,7 +87,6 @@ export const createRedemption = (
 
 export const createComponent = (id: string, address: Address): Component => {
   let component = new Component(id);
-  component.name = 'name';
   component.address = address;
   component.positionValue = BigInt.fromI32(0);
 
