@@ -14,13 +14,6 @@ export function fetchTokenTotalSupply(tokenAddress: Address): BigInt {
 
   export const bindTokenAddress = (address: Address): SetToken => SetToken.bind(address);
 
-  // export function fetchUnderlyingComponents(tokenAddress: Address): Address[] {
-  //   let contract = SetToken.bind(tokenAddress)
-  //   let tokenComponentsResult = contract.try_getComponents()
-  //   // need to use the .value property to get the return value of ethereum CallResult that we get from try_<methodName>
-  //   return tokenComponentsResult.value
-  // }
-
   export function fetchUnderlyingComponents(tokenAddress: Address): Address[] {
     let contract = SetToken.bind(tokenAddress);
     let tokenComponentsResult = contract.getComponents(); // returns Address []
