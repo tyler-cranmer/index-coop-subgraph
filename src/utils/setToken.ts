@@ -7,9 +7,7 @@ import {
   DataSourceTemplate,
   log,
 } from '@graphprotocol/graph-ts';
-import { Manager, Component } from '../../generated/schema';
 import { SetToken } from '../../generated/SetToken/SetToken';
-import { createComponent } from './create';
 
 export function fetchTokenTotalSupply(tokenAddress: Address): BigInt {
   let contract = SetToken.bind(tokenAddress);
@@ -26,11 +24,7 @@ export const bindTokenAddress = (address: Address): SetToken =>
 export function fetchUnderlyingComponents(tokenAddress: Address): Address[] {
   let contract = SetToken.bind(tokenAddress);
   let tokenComponentsResult = contract.getComponents(); // returns Address []
-  let results: Address[] = []
-  for (let i = 0; i < tokenComponentsResult.length; i++) {
-    results.push(tokenComponentsResult[i])
-  }
-  return results;
+  return tokenComponentsResult;
 }
 
 export function fetchManager(tokenAddress: Address): string {
