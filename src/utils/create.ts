@@ -6,7 +6,8 @@ import {
   Transaction,
   Issuer,
   Component,
-  TokenRedemption
+    TokenRedemption,
+  RebalanceDetails
 } from '../../generated/schema';
 
 export const createFee = (
@@ -91,4 +92,19 @@ export const createComponent = (id: string, address: Address): Component => {
   component.positionValue = BigInt.fromI32(0);
 
   return component;
-}; 
+};
+
+export const createRebalanceDetails = (
+  id: string,
+  _currentLeverageRatio: BigInt,
+  _newLeverageRatio: BigInt,
+  _totalRebalanceNotional: BigInt,
+  _chunkRebalanceNotional: BigInt
+): RebalanceDetails => {
+  let entity = new RebalanceDetails(id);
+  entity.currentLeverageRatio = _currentLeverageRatio;
+  entity.newLeverageRatio = _newLeverageRatio;
+  entity.chunkRebalanceNotional = _chunkRebalanceNotional;
+  entity.totalRebalanceNotional = _totalRebalanceNotional;
+  return entity;
+};

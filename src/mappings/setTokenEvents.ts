@@ -32,7 +32,6 @@ import {
   Transfer as TransferEntity,
   Rebalance,
   Transaction,
-  RebalanceDetails
 } from "../../generated/schema"
 import {
   Approval,
@@ -53,6 +52,7 @@ import {
   Transfer
 } from "../../generated/SetToken/SetToken"
 import { createGenericId } from "../utils";
+import { createRebalanceDetails } from "../utils/create"
 
 export function handleTransfer(event: Transfer): void {
   let id = event.transaction.hash.toHexString();
@@ -193,14 +193,14 @@ export function handleMethodologySettingsUpdated(
   entity.save()
 }
 
-const createRebalanceDetails = (id: string, _currentLeverageRatio: BigInt, _newLeverageRatio: BigInt, _totalRebalanceNotional: BigInt, _chunkRebalanceNotional: BigInt ): RebalanceDetails => {
-  let entity = new RebalanceDetails(id)
-  entity.currentLeverageRatio= _currentLeverageRatio
-  entity.newLeverageRatio= _newLeverageRatio
-  entity.chunkRebalanceNotional= _chunkRebalanceNotional
-  entity.totalRebalanceNotional= _totalRebalanceNotional
-  return entity
-}
+// const createRebalanceDetails = (id: string, _currentLeverageRatio: BigInt, _newLeverageRatio: BigInt, _totalRebalanceNotional: BigInt, _chunkRebalanceNotional: BigInt ): RebalanceDetails => {
+//   let entity = new RebalanceDetails(id)
+//   entity.currentLeverageRatio= _currentLeverageRatio
+//   entity.newLeverageRatio= _newLeverageRatio
+//   entity.chunkRebalanceNotional= _chunkRebalanceNotional
+//   entity.totalRebalanceNotional= _totalRebalanceNotional
+//   return entity
+// }
 
 export function handleRebalanceIteratedEvent(event: RebalanceIteratedEvent): void {
   const id = createGenericId(event);
