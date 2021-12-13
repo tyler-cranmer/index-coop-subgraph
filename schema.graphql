@@ -68,7 +68,6 @@ type SetToken @entity {
   address: Bytes!
   name: String!
   manager: Manager!
-  # fees: [Fee!]! 
   issuances: [TokenIssuance!]! @derivedFrom(field: "setToken")
   totalSupply: BigInt!
   rebalances: [Rebalance!]! @derivedFrom(field: "setToken")

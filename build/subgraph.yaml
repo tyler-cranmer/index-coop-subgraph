@@ -22,10 +22,6 @@ dataSources:
         - name: FlexibleLeverageStrategyAdapter
           file: FlexibleLeverageStrategyAdapter/abis/FlexibleLeverageStrategyAdapter.json
       eventHandlers:
-        - event: AnyoneCallableUpdated(indexed bool)
-          handler: handleAnyoneCallableUpdated
-        - event: CallerStatusUpdated(indexed address,bool)
-          handler: handleCallerStatusUpdated
         - event: Disengaged(uint256,uint256,uint256,uint256)
           handler: handleDisengaged
         - event: Engaged(uint256,uint256,uint256,uint256)

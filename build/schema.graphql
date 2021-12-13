@@ -1,13 +1,4 @@
-type AnyoneCallableUpdated @entity {
-  id: ID!
-  status: Boolean! # bool
-}
 
-type CallerStatusUpdated @entity {
-  id: ID!
-  caller: Bytes! # address
-  status: Boolean! # bool
-}
 
 type Transaction @entity {
   id: ID!
@@ -77,7 +68,6 @@ type SetToken @entity {
   address: Bytes!
   name: String!
   manager: Manager!
-  # fees: [Fee!]! 
   issuances: [TokenIssuance!]! @derivedFrom(field: "setToken")
   totalSupply: BigInt!
   rebalances: [Rebalance!]! @derivedFrom(field: "setToken")
