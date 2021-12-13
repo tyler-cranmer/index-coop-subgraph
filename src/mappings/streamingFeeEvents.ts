@@ -1,7 +1,5 @@
 import { Fee, Manager } from '../../generated/schema';
 import { FeeActualized } from '../../generated/StreamingFeeModule/StreamingFeeModule';
-import { StreamingFeeUpdated } from '../../generated/StreamingFeeModule/StreamingFeeModule';
-import { FeeRecipientUpdated } from '../../generated/StreamingFeeModule/StreamingFeeModule';
 import { fetchManager } from '../utils/setToken';
 import { createFee, createManager } from '../utils/create';
 
