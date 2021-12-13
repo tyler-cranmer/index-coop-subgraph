@@ -1,13 +1,4 @@
-type AnyoneCallableUpdated @entity {
-  id: ID!
-  status: Boolean! # bool
-}
 
-type CallerStatusUpdated @entity {
-  id: ID!
-  caller: Bytes! # address
-  status: Boolean! # bool
-}
 
 type Transaction @entity {
   id: ID!

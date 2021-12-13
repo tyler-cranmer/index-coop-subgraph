@@ -1,4 +1,4 @@
-import { BigInt, ethereum } from "@graphprotocol/graph-ts";
+
 import {
   AnyoneCallableUpdated as AnyoneCallableUpdatedEvent,
   CallerStatusUpdated as CallerStatusUpdatedEvent,
@@ -101,26 +101,6 @@ export function handleExchangeUpdated(event: ExchangeUpdatedEvent): void {
   entity.save()
 }
 
-export function handleAnyoneCallableUpdated(
-  event: AnyoneCallableUpdatedEvent
-): void {
-  let entity = new AnyoneCallableUpdated(
-    event.transaction.hash.toHex() + "-" + event.logIndex.toString()
-  )
-  entity.status = event.params._status
-  entity.save()
-}
-
-export function handleCallerStatusUpdated(
-  event: CallerStatusUpdatedEvent
-): void {
-  let entity = new CallerStatusUpdated(
-    event.transaction.hash.toHex() + "-" + event.logIndex.toString()
-  )
-  entity.caller = event.params._caller
-  entity.status = event.params._status
-  entity.save()
-}
 
 export function handleDisengaged(event: DisengagedEvent): void {
   let entity = new Disengaged(
