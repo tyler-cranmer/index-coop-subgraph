@@ -1,7 +1,4 @@
-
 import {
-  AnyoneCallableUpdated as AnyoneCallableUpdatedEvent,
-  CallerStatusUpdated as CallerStatusUpdatedEvent,
   Disengaged as DisengagedEvent,
   Engaged as EngagedEvent,
   ExecutionSettingsUpdated as ExecutionSettingsUpdatedEvent,
@@ -10,7 +7,6 @@ import {
   RebalanceIterated as RebalanceIteratedEvent,
   Rebalanced as RebalancedEvent,
   RipcordCalled as RipcordCalledEvent,
-  Rebalanced
 } from "../../generated/FlexibleLeverageStrategyAdapter/FlexibleLeverageStrategyAdapter"
 import {
   ExchangeAdded as ExchangeAddedEvent,
@@ -18,8 +14,6 @@ import {
   ExchangeUpdated as ExchangeUpdatedEvent
 } from "../../generated/FlexibleLeverageStrategyExtension/FlexibleLeverageStrategyExtension"
 import {
-  AnyoneCallableUpdated,
-  CallerStatusUpdated,
   Disengaged,
   Engaged,
   ExchangeAdded,
@@ -34,21 +28,6 @@ import {
   Transaction,
 } from "../../generated/schema"
 import {
-  Approval,
-  ComponentAdded,
-  ComponentRemoved,
-  DefaultPositionUnitEdited,
-  ExternalPositionDataEdited,
-  ExternalPositionUnitEdited,
-  Invoked,
-  ManagerEdited,
-  ModuleAdded,
-  ModuleInitialized,
-  ModuleRemoved,
-  PendingModuleRemoved,
-  PositionModuleAdded,
-  PositionModuleRemoved,
-  PositionMultiplierEdited,
   Transfer
 } from "../../generated/SetToken/SetToken"
 import { createGenericId } from "../utils";
