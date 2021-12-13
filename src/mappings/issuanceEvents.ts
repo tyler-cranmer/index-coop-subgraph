@@ -1,6 +1,5 @@
 import {
   FeeRecipientUpdated as FeeRecipientUpdatedEvent,
-  IssueCall,
   IssueFeeUpdated as IssueFeeUpdatedEvent,
   RedeemFeeUpdated as RedeemFeeUpdatedEvent,
   SetTokenIssued as SetTokenIssuedEvent,
@@ -10,28 +9,24 @@ import {
   FeeRecipientUpdated,
   IssueFeeUpdated,
   RedeemFeeUpdated,
-  Issuer,
   SetToken,
-  SetTokenRedeemed,
   Manager,
-  Fee,
-  TokenIssuance,
-  Transaction,
-  TokenRedemption,
-  Component
+  Component,
 } from '../../generated/schema';
-import { SetToken as SetTokenContract } from '../../generated/SetToken/SetToken'
+import { SetToken as SetTokenContract } from '../../generated/SetToken/SetToken';
 
-import { bindTokenAddress, fetchManager, fetchTokenTotalSupply, fetchUnderlyingComponents } from '../utils/setToken';
-import { Address, BigInt, ByteArray, Bytes, Entity, ethereum, log } from '@graphprotocol/graph-ts';
+import {
+  bindTokenAddress,
+  fetchManager,
+  fetchUnderlyingComponents,
+} from '../utils/setToken';
+import { BigInt, log } from '@graphprotocol/graph-ts';
 import { createGenericId, createComponentId } from '../utils';
 import {
   createFee,
   createManager,
-  updateManager,
   createIssuance,
   createTxn,
-  createIssuer,
   createRedemption,
   createComponent,
 } from '../utils/create';
@@ -66,54 +61,69 @@ export function handleRedeemFeeUpdated(event: RedeemFeeUpdatedEvent): void {
 }
 
 export function handleSetTokenIssued(event: SetTokenIssuedEvent): void {
-  let id = event.params._issuer
-  let setTokenAddress = event.params._setToken
+  let id = event.params._issuer;
+  let setTokenAddress = event.params._setToken;
   let timestamp = event.block.timestamp;
   let eventTxnData = event.transaction;
 
-  const txn = createTxn(createGenericId(event), timestamp, event.params._issuer, event.params._to, eventTxnData.gasLimit, eventTxnData.gasPrice)
+  const txn = createTxn(
+    createGenericId(event),
+    timestamp,
+    event.params._issuer,
+    event.params._to,
+    eventTxnData.gasLimit,
+    eventTxnData.gasPrice
+  );
 
-  txn.save()
+  txn.save();
 
-  log.debug('txnData:: saved', [txn.id])
-  let feeEntity = createFee(createGenericId(event),
-    timestamp, event.params._managerFee,
+  log.debug('txnData:: saved', [txn.id]);
+  let feeEntity = createFee(
+    createGenericId(event),
+    timestamp,
+    event.params._managerFee,
     event.params._protocolFee
-  )
+  );
 
-  let issuanceEntity =
-    createIssuance(createGenericId(event), event.params._to, event.params._quantity)
+  let issuanceEntity = createIssuance(
+    createGenericId(event),
+    event.params._to,
+    event.params._quantity
+  );
   issuanceEntity.transaction = txn.id;
 
   issuanceEntity.save();
 
-  let currentSetTokenContract = bindTokenAddress(setTokenAddress)
+  let currentSetTokenContract = bindTokenAddress(setTokenAddress);
 
-  let currentManager = Manager.load(currentSetTokenContract.manager.toString())
+  let currentManager = Manager.load(currentSetTokenContract.manager.toString());
 
   if (currentManager == null) {
-    currentManager = createManager(fetchManager(setTokenAddress), setTokenAddress)
+    currentManager = createManager(
+      fetchManager(setTokenAddress),
+      setTokenAddress
+    );
   }
-  currentManager.save()
+  currentManager.save();
 
-  log.debug('currentManager:: saved', [currentManager.id])
+  log.debug('currentManager:: saved', [currentManager.id]);
 
   feeEntity.manager = currentManager.id;
-  feeEntity.save()
+  feeEntity.save();
 
-  let setTokenEntity = SetToken.load(setTokenAddress.toHexString())
+  let setTokenEntity = SetToken.load(setTokenAddress.toHexString());
   if (setTokenEntity == null) {
-    setTokenEntity = new SetToken(setTokenAddress.toHexString())
-    setTokenEntity.address = setTokenAddress
-    setTokenEntity.name = currentSetTokenContract.name()
+    setTokenEntity = new SetToken(setTokenAddress.toHexString());
+    setTokenEntity.address = setTokenAddress;
+    setTokenEntity.name = currentSetTokenContract.name();
     // NESTED ENTITY --> set using entity.id
-    setTokenEntity.manager = currentManager.id
+    setTokenEntity.manager = currentManager.id;
     // NESTED ENTITY --> set using entity.id
     setTokenEntity.totalSupply = BigInt.fromI32(0);
     setTokenEntity.components = [];
   }
 
-   // creating and setting component entity.
+  // creating and setting component entity.
   let listComponents = fetchUnderlyingComponents(setTokenAddress);
   let existingComponents = setTokenEntity.components;
   let contract = SetTokenContract.bind(setTokenAddress);
@@ -133,11 +143,9 @@ export function handleSetTokenIssued(event: SetTokenIssuedEvent): void {
     setTokenEntity.components = existingComponents;
   }
 
-
   // D. save SetToken
-  setTokenEntity.save()
-  log.debug('setTokenEntity saved::', [setTokenEntity.name])
-
+  setTokenEntity.save();
+  log.debug('setTokenEntity saved::', [setTokenEntity.name]);
 }
 /**
  * type TokenRedemption @entity {
@@ -151,16 +159,31 @@ export function handleSetTokenIssued(event: SetTokenIssuedEvent): void {
  */
 
 export function handleSetTokenRedeemed(event: SetTokenRedeemedEvent): void {
-  let redeemFee = createFee(createGenericId(event), event.block.timestamp, event.params._managerFee, event.params._protocolFee)
-  redeemFee.save()
+  let redeemFee = createFee(
+    createGenericId(event),
+    event.block.timestamp,
+    event.params._managerFee,
+    event.params._protocolFee
+  );
+  redeemFee.save();
 
-  const txn = createTxn(createGenericId(event),
-    event.block.timestamp, event.params._redeemer, event.params._to, event.transaction.gasLimit, event.transaction.gasPrice)
+  const txn = createTxn(
+    createGenericId(event),
+    event.block.timestamp,
+    event.params._redeemer,
+    event.params._to,
+    event.transaction.gasLimit,
+    event.transaction.gasPrice
+  );
 
-  txn.save()
+  txn.save();
 
-  let entity = createRedemption(createGenericId(event), event.params._redeemer, event.params._quantity, redeemFee.id,
+  let entity = createRedemption(
+    createGenericId(event),
+    event.params._redeemer,
+    event.params._quantity,
+    redeemFee.id,
     txn.id
-  )
+  );
   entity.save();
 }
