@@ -14,7 +14,8 @@ import {
   ExchangeRemoved as ExchangeRemovedEvent,
   ExchangeUpdated as ExchangeUpdatedEvent
 } from "../../generated/FlexibleLeverageStrategyExtension/FlexibleLeverageStrategyExtension"
-import {
+import { BaseManagerEth } from '../../generated/FlexibleLeverageStrategyAdapter/BaseManagerEth';
+import { 
   Disengaged,
   Engaged,
   ExchangeAdded,

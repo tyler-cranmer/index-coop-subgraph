@@ -21,6 +21,8 @@ dataSources:
           file: ./abis/SetToken.json
         - name: FlexibleLeverageStrategyAdapter
           file: ./abis/FlexibleLeverageStrategyAdapter.json
+        - name: BaseManagerEth
+          file: ./abis/BaseManagerEth.json
       eventHandlers:
         - event: Disengaged(uint256,uint256,uint256,uint256)
           handler: handleDisengaged
