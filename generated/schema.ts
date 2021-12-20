@@ -889,6 +889,7 @@ export class Rebalance extends Entity {
     super();
     this.set("id", Value.fromString(id));
 
+    this.set("setToken", Value.fromString(""));
     this.set("rebalanceDetails", Value.fromString(""));
     this.set("transaction", Value.fromString(""));
     this.set("transactionHash", Value.fromBytes(Bytes.empty()));

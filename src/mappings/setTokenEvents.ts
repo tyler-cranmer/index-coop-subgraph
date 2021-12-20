@@ -1,3 +1,4 @@
+import { Address } from "@graphprotocol/graph-ts";
 import {
   Disengaged as DisengagedEvent,
   Engaged as EngagedEvent,
@@ -171,6 +172,7 @@ export function handleRebalanceIteratedEvent(event: RebalanceIteratedEvent): voi
 
 export function handleRebalanceEvent(event: RebalancedEvent): void {
   const id = createGenericId(event);
+  let setTokenAddress: string = `0xaa6e8127831c9de45ae56bb1b0d4d4da6e5665bd`; 
   let entity = new Rebalance(`${id}--${event.block.timestamp.toHexString()}`)
   const txn = new Transaction(event.transaction.hash.toHex() + '--' + 'rebalance-txn')
   txn.timestamp = event.block.timestamp;
@@ -181,6 +183,7 @@ export function handleRebalanceEvent(event: RebalancedEvent): void {
   rebalanceDetailsEntity.save()
   entity.transaction = txn.id;
   entity.transactionHash = event.transaction.hash;
+  entity.setToken = setTokenAddress;
   entity.rebalanceDetails = rebalanceDetailsEntity.id
   entity.save()
 }

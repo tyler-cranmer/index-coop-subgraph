@@ -5,6 +5,8 @@ import {
   SetTokenIssued as SetTokenIssuedEvent,
   SetTokenRedeemed as SetTokenRedeemedEvent,
 } from '../../generated/DebtIssuanceModule/DebtIssuanceModule';
+
+import { SetTokenIssued as BasicSetTokenIssuedEvent } from '../../generated/DebtIssuanceModule/BasicIssuanceModule';
 import {
   FeeRecipientUpdated,
   IssueFeeUpdated,
@@ -148,18 +150,11 @@ export function handleSetTokenIssued(event: SetTokenIssuedEvent): void {
   setTokenEntity.save();
   log.debug('setTokenEntity saved::', [setTokenEntity.name]);
 }
-/**
- * type TokenRedemption @entity {
-  id: ID!
-  setToken: SetToken!  @derivedFrom(field: "redemptions")
-  redeemer: Bytes!
-  transaction: Transaction!
-  quantity: BigInt!
-  fee: Fee!
-}
- */
+
+
 
 export function handleSetTokenRedeemed(event: SetTokenRedeemedEvent): void {
+  const setTokenAddress: string = `0xaa6e8127831c9de45ae56bb1b0d4d4da6e5665bd`; 
   let redeemFee = createFee(
     createGenericId(event),
     event.block.timestamp,
@@ -186,5 +181,6 @@ export function handleSetTokenRedeemed(event: SetTokenRedeemedEvent): void {
     redeemFee.id,
     txn.id
   );
+  entity.setToken = setTokenAddress;
   entity.save();
 }
