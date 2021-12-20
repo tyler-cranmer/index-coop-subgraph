@@ -91,6 +91,7 @@ export function handleSetTokenIssued(event: SetTokenIssuedEvent): void {
     event.params._quantity
   );
   issuanceEntity.transaction = txn.id;
+  issuanceEntity.setToken = setTokenAddress.toHexString();
 
   issuanceEntity.save();
 
