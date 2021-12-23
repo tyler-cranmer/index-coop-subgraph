@@ -58,6 +58,7 @@ type TokenIssuance @entity {
 
 type Component @entity {
   id: ID!
+  # setToken: SetToken!
   address: Bytes!
   positionValue: BigInt!
 }
@@ -72,7 +73,7 @@ type SetToken @entity {
   totalSupply: BigInt!
   rebalances: [Rebalance!]! @derivedFrom(field: "setToken")
   redemptions: [TokenRedemption!]! @derivedFrom(field: "setToken")
-  components: [Component!]! 
+  components: [Component!]! # @derivedFrom(field: "setToken")
 }
 
 type Fee @entity {
@@ -112,10 +113,12 @@ type TokenRedemption @entity {
   id: ID!
   setToken: SetToken!
   redeemer: Bytes!
-  transaction: Transaction!
+  # transaction: Transaction! // transaction is held is fee info. 
   quantity: BigInt!
   fee: Fee!
 }
+
+
 type SetTokenRedeemed @entity {
   id: ID!
   setToken: Bytes! # address
