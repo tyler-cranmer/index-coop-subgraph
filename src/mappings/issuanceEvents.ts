@@ -154,7 +154,7 @@ export function handleSetTokenIssued(event: SetTokenIssuedEvent): void {
 
 
 export function handleSetTokenRedeemed(event: SetTokenRedeemedEvent): void {
-  const setTokenAddress: string = `0xaa6e8127831c9de45ae56bb1b0d4d4da6e5665bd`; 
+  const setTokenAddress = event.params._setToken;
   let redeemFee = createFee(
     createGenericId(event),
     event.block.timestamp,
@@ -181,6 +181,6 @@ export function handleSetTokenRedeemed(event: SetTokenRedeemedEvent): void {
     redeemFee.id,
     txn.id
   );
-  entity.setToken = setTokenAddress;
+  entity.setToken = setTokenAddress.toHexString();
   entity.save();
 }
