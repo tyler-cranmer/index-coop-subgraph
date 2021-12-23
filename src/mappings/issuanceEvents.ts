@@ -155,13 +155,6 @@ export function handleSetTokenIssued(event: SetTokenIssuedEvent): void {
 
 export function handleSetTokenRedeemed(event: SetTokenRedeemedEvent): void {
   const setTokenAddress = event.params._setToken;
-  let redeemFee = createFee(
-    createGenericId(event),
-    event.block.timestamp,
-    event.params._managerFee,
-    event.params._protocolFee
-  );
-  redeemFee.save();
 
   const txn = createTxn(
     createGenericId(event),
@@ -172,14 +165,23 @@ export function handleSetTokenRedeemed(event: SetTokenRedeemedEvent): void {
     event.transaction.gasPrice
   );
 
-  txn.save();
+    txn.save();
+
+    let redeemFee = createFee(
+      createGenericId(event),
+      event.block.timestamp,
+      event.params._managerFee,
+      event.params._protocolFee
+    );
+    redeemFee.transaction = txn.id
+    redeemFee.save();
+
 
   let entity = createRedemption(
     createGenericId(event),
     event.params._redeemer,
     event.params._quantity,
     redeemFee.id,
-    txn.id
   );
   entity.setToken = setTokenAddress.toHexString();
   entity.save();
