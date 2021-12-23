@@ -181,7 +181,7 @@ export function handleSetTokenRedeemed(event: SetTokenRedeemedEvent): void {
     createGenericId(event),
     event.params._redeemer,
     event.params._quantity,
-    redeemFee.id,
+    redeemFee.id
   );
   entity.setToken = setTokenAddress.toHexString();
   entity.save();

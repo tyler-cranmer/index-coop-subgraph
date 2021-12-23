@@ -76,13 +76,13 @@ export const createRedemption = (
   redeemer: Bytes,
   quantity: BigInt,
   feeId: string,
-  transaction: string
+  // transaction: string
 ): TokenRedemption => {
   let entity = new TokenRedemption(id);
   entity.redeemer = redeemer;
   entity.quantity = quantity;
   entity.fee = feeId;
-  entity.transaction = transaction;
+  // entity.transaction = transaction;
   return entity;
 };
 

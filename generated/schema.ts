@@ -1045,7 +1045,6 @@ export class TokenRedemption extends Entity {
 
     this.set("setToken", Value.fromString(""));
     this.set("redeemer", Value.fromBytes(Bytes.empty()));
-    this.set("transaction", Value.fromString(""));
     this.set("quantity", Value.fromBigInt(BigInt.zero()));
     this.set("fee", Value.fromString(""));
   }
@@ -1092,15 +1091,6 @@ export class TokenRedemption extends Entity {
 
   set redeemer(value: Bytes) {
     this.set("redeemer", Value.fromBytes(value));
-  }
-
-  get transaction(): string {
-    let value = this.get("transaction");
-    return value!.toString();
-  }
-
-  set transaction(value: string) {
-    this.set("transaction", Value.fromString(value));
   }
 
   get quantity(): BigInt {
