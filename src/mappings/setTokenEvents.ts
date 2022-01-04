@@ -8,13 +8,13 @@ import {
   RebalanceIterated as RebalanceIteratedEvent,
   Rebalanced as RebalancedEvent,
   RipcordCalled as RipcordCalledEvent,
+  FlexibleLeverageStrategyAdapter
 } from "../../generated/FlexibleLeverageStrategyAdapter/FlexibleLeverageStrategyAdapter"
 import {
   ExchangeAdded as ExchangeAddedEvent,
   ExchangeRemoved as ExchangeRemovedEvent,
   ExchangeUpdated as ExchangeUpdatedEvent
 } from "../../generated/FlexibleLeverageStrategyExtension/FlexibleLeverageStrategyExtension"
-import { BaseManagerEth } from '../../generated/FlexibleLeverageStrategyAdapter/BaseManagerEth';
 import { 
   Disengaged,
   Engaged,
@@ -34,6 +34,7 @@ import {
 } from "../../generated/SetToken/SetToken"
 import { createGenericId } from "../utils";
 import { createRebalanceDetails } from "../utils/create"
+import { fetchBaseManager } from "../utils/setToken";
 
 export function handleTransfer(event: Transfer): void {
   let id = event.transaction.hash.toHexString();

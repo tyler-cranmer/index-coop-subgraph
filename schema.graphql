@@ -106,7 +106,7 @@ type Manager @entity {
   address: Bytes!
   feeAccrualHistory: [Fee!]! @derivedFrom(field: "manager")
   totalFees: BigInt
-  setToken: SetToken!
+  # setToken: SetToken! # might want to take out. creates infinite loop from setToken
 }
 
 type TokenRedemption @entity {

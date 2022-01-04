@@ -6,8 +6,8 @@ import {
   Transaction,
   Issuer,
   Component,
-    TokenRedemption,
-  RebalanceDetails
+  TokenRedemption,
+  RebalanceDetails,
 } from '../../generated/schema';
 
 export const createFee = (
@@ -23,16 +23,19 @@ export const createFee = (
   return fee;
 };
 
-
 export const createManager = (id: string, address: Address): Manager => {
   let manager = new Manager(id);
   manager.address = address;
   manager.totalFees = BigInt.fromI32(0);
+  // manager.setToken = address.toHexString();
   return manager;
 };
 
-
-export const updateManager = (id: string, address: Address, fee: Fee): Manager => {
+export const updateManager = (
+  id: string,
+  address: Address,
+  fee: Fee
+): Manager => {
   let manager = Manager.load(id);
   return manager as Manager;
 };
@@ -75,7 +78,7 @@ export const createRedemption = (
   id: string,
   redeemer: Bytes,
   quantity: BigInt,
-  feeId: string,
+  feeId: string
   // transaction: string
 ): TokenRedemption => {
   let entity = new TokenRedemption(id);
