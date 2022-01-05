@@ -10,6 +10,8 @@ import { Manager } from '../../generated/schema';
 import { SetToken } from '../../generated/SetToken/SetToken';
 import { BaseManagerEth } from '../../generated/FlexibleLeverageStrategyAdapter/BaseManagerEth';
 
+
+// fetches the basemanager token address for FLIadapters"
 export function fetchBaseManagerSetToken(baseManagerAddress: Address): string {
   let baseMan = BaseManagerEth.bind(baseManagerAddress);
   let token = baseMan.setToken();

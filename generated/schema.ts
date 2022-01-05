@@ -964,7 +964,6 @@ export class Manager extends Entity {
     this.set("id", Value.fromString(id));
 
     this.set("address", Value.fromBytes(Bytes.empty()));
-    this.set("setToken", Value.fromString(""));
   }
 
   save(): void {
@@ -1026,15 +1025,6 @@ export class Manager extends Entity {
     } else {
       this.set("totalFees", Value.fromBigInt(<BigInt>value));
     }
-  }
-
-  get setToken(): string {
-    let value = this.get("setToken");
-    return value!.toString();
-  }
-
-  set setToken(value: string) {
-    this.set("setToken", Value.fromString(value));
   }
 }
 

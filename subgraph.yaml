@@ -56,6 +56,8 @@ dataSources:
           file: ./abis/FlexibleLeverageStrategyExtension.json
         - name: SetToken
           file: ./abis/SetToken.json
+        - name: BaseManagerEth
+          file: ./abis/BaseManagerEth.json
       apiVersion: 0.0.5
       entities:
         - Rebalance
@@ -81,10 +83,10 @@ dataSources:
           handler: handleIncentiveSettingsUpdated
         - event: 'MethodologySettingsUpdated(uint256,uint256,uint256,uint256,uint256)'
           handler: handleMethodologySettingsUpdated
-        - event: 'RebalanceIterated(uint256,uint256,uint256,uint256)'
-          handler: handleRebalanceIteratedEvent
-        - event: 'Rebalanced(uint256,uint256,uint256,uint256)'
-          handler: handleRebalanceEvent
+        - event: RebalanceIterated(uint256,uint256,uint256,uint256)
+          handler: handleRebalanceIteratedV3
+        - event: Rebalanced(uint256,uint256,uint256,uint256)
+          handler: handleRebalanceV3
         - event: 'RipcordCalled(uint256,uint256,uint256,uint256)'
           handler: handleRipcordCalled
       file: ./src/mappings/setTokenEvents.ts
