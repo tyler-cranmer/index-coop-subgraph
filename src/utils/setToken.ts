@@ -11,10 +11,8 @@ import { SetToken } from '../../generated/SetToken/SetToken';
 import { FlexibleLeverageStrategyAdapter } from '../../generated/FlexibleLeverageStrategyAdapter/FlexibleLeverageStrategyAdapter';
 import { BaseManagerEth } from '../../generated/FlexibleLeverageStrategyAdapter/BaseManagerEth';
 
-export function fetchBaseManager(flexAddress: Address): string {
-  let contract = FlexibleLeverageStrategyAdapter.bind(flexAddress);
-  let baseAddress = contract.manager();
-  let baseMan = BaseManagerEth.bind(baseAddress);
+export function fetchBaseManagerSetToken(baseManagerAddress: Address): string {
+  let baseMan = BaseManagerEth.bind(baseManagerAddress);
   let token = baseMan.setToken();
 
   return token.toHexString();

@@ -158,6 +158,9 @@ export function handleMethodologySettingsUpdated(
 
 export function handleRebalanceIteratedEvent(event: RebalanceIteratedEvent): void {
   const id = createGenericId(event);
+
+  let c = FlexibleLeverageStrategyAdapter.bind()
+
   let entity = new Rebalance(`${id}--${event.block.timestamp.toHexString()}`)
   const txn = new Transaction(event.transaction.hash.toHex() + '--' + 'rebalance-txn')
   txn.timestamp = event.block.timestamp;
