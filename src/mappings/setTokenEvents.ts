@@ -1,4 +1,4 @@
-import { Address } from "@graphprotocol/graph-ts";
+import { dataSource } from "@graphprotocol/graph-ts";
 import {
   Disengaged as DisengagedEvent,
   Engaged as EngagedEvent,
@@ -34,7 +34,7 @@ import {
 } from "../../generated/SetToken/SetToken"
 import { createGenericId } from "../utils";
 import { createRebalanceDetails } from "../utils/create"
-import { fetchBaseManager } from "../utils/setToken";
+import { fetchBaseManagerSetToken } from "../utils/setToken";
 
 export function handleTransfer(event: Transfer): void {
   let id = event.transaction.hash.toHexString();
@@ -159,7 +159,9 @@ export function handleMethodologySettingsUpdated(
 export function handleRebalanceIteratedEvent(event: RebalanceIteratedEvent): void {
   const id = createGenericId(event);
 
-  let c = FlexibleLeverageStrategyAdapter.bind()
+  let c = FlexibleLeverageStrategyAdapter.bind(dataSource.address())
+  let baseManager = c.manager();
+  let setTokenAddress = fetchBaseManagerSetToken(baseManager);
 
   let entity = new Rebalance(`${id}--${event.block.timestamp.toHexString()}`)
   const txn = new Transaction(event.transaction.hash.toHex() + '--' + 'rebalance-txn')
@@ -172,12 +174,15 @@ export function handleRebalanceIteratedEvent(event: RebalanceIteratedEvent): voi
   entity.transaction = txn.id;
   entity.transactionHash = event.transaction.hash;
   entity.rebalanceDetails = rebalanceDetailsEntity.id
+  entity.setToken = setTokenAddress;
   entity.save()
 }
 
 export function handleRebalanceEvent(event: RebalancedEvent): void {
   const id = createGenericId(event);
-  let setTokenAddress: string = `0xaa6e8127831c9de45ae56bb1b0d4d4da6e5665bd`; 
+  let c = FlexibleLeverageStrategyAdapter.bind(dataSource.address());
+  let baseManager = c.manager();
+  let setTokenAddress = fetchBaseManagerSetToken(baseManager);
   let entity = new Rebalance(`${id}--${event.block.timestamp.toHexString()}`)
   const txn = new Transaction(event.transaction.hash.toHex() + '--' + 'rebalance-txn')
   txn.timestamp = event.block.timestamp;

@@ -8,7 +8,6 @@ import {
 } from '@graphprotocol/graph-ts';
 import { Manager } from '../../generated/schema';
 import { SetToken } from '../../generated/SetToken/SetToken';
-import { FlexibleLeverageStrategyAdapter } from '../../generated/FlexibleLeverageStrategyAdapter/FlexibleLeverageStrategyAdapter';
 import { BaseManagerEth } from '../../generated/FlexibleLeverageStrategyAdapter/BaseManagerEth';
 
 export function fetchBaseManagerSetToken(baseManagerAddress: Address): string {
