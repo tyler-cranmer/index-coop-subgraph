@@ -8,8 +8,7 @@ import {
 } from '@graphprotocol/graph-ts';
 import { Manager } from '../../generated/schema';
 import { SetToken } from '../../generated/SetToken/SetToken';
-import { BaseManagerEth } from '../../generated/FlexibleLeverageStrategyAdapter/BaseManagerEth';
-
+import { BaseManagerEth } from '../../generated/FlexibleLeverageStrategyExtension/BaseManagerEth';
 
 // fetches the basemanager token address for FLIadapters"
 export function fetchBaseManagerSetToken(baseManagerAddress: Address): string {
