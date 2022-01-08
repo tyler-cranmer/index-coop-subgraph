@@ -40,7 +40,7 @@ export class ComponentAdded extends ethereum.Event {
   get params(): ComponentAdded__Params {
     return new ComponentAdded__Params(this);
   }
-} 
+}
 
 export class ComponentAdded__Params {
   _event: ComponentAdded;

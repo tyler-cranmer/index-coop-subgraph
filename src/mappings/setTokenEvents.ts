@@ -33,7 +33,7 @@ import {
   Transaction,
 } from '../../generated/schema';
 import { Transfer } from '../../generated/SetToken/SetToken';
-import { createGenericId } from '../utils';
+import { createGenericId } from '../utils/index';
 import { createRebalanceDetails } from '../utils/create';
 import { fetchBaseManagerSetToken } from '../utils/setToken';
 
