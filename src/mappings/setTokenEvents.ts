@@ -1,23 +1,23 @@
 import { dataSource, log } from '@graphprotocol/graph-ts';
-// import {
-//   Disengaged as DisengagedEvent,
-//   Engaged as EngagedEvent,
-//   ExecutionSettingsUpdated as ExecutionSettingsUpdatedEvent,
-//   IncentiveSettingsUpdated as IncentiveSettingsUpdatedEvent,
-//   MethodologySettingsUpdated as MethodologySettingsUpdatedEvent,
-//   RebalanceIterated as RebalanceIteratedEvent,
-//   Rebalanced as RebalancedEvent,
-//   RipcordCalled as RipcordCalledEvent,
-//   FlexibleLeverageStrategyAdapter,
-// } from '../../generated/FlexibleLeverageStrategyAdapter/FlexibleLeverageStrategyAdapter';
 import {
-  ExchangeAdded as ExchangeAddedEvent,
-  ExchangeRemoved as ExchangeRemovedEvent,
-  ExchangeUpdated as ExchangeUpdatedEvent,
-  RebalanceIterated as RebalanceIteratedEventV3,
-  Rebalanced,
-  FlexibleLeverageStrategyExtension,
-} from '../../generated/FlexibleLeverageStrategyExtension/FlexibleLeverageStrategyExtension';
+  // Disengaged as DisengagedEvent,
+  // Engaged as EngagedEvent,
+  // ExecutionSettingsUpdated as ExecutionSettingsUpdatedEvent,
+  // IncentiveSettingsUpdated as IncentiveSettingsUpdatedEvent,
+  // MethodologySettingsUpdated as MethodologySettingsUpdatedEvent,
+  RebalanceIterated as RebalanceIteratedEvent,
+  Rebalanced as RebalancedEvent,
+  // RipcordCalled as RipcordCalledEvent,
+  FlexibleLeverageStrategyAdapter,
+} from '../../generated/FlexibleLeverageStrategyAdapter/FlexibleLeverageStrategyAdapter';
+// import {
+//   ExchangeAdded as ExchangeAddedEvent,
+//   ExchangeRemoved as ExchangeRemovedEvent,
+//   ExchangeUpdated as ExchangeUpdatedEvent,
+//   RebalanceIterated as RebalanceIteratedEventV3,
+//   Rebalanced,
+//   FlexibleLeverageStrategyExtension,
+// } from '../../generated/FlexibleLeverageStrategyExtension/FlexibleLeverageStrategyExtension';
 import {
   Disengaged,
   Engaged,
@@ -48,41 +48,7 @@ export function handleTransfer(event: Transfer): void {
   FliTransferEntity.save();
 }
 
-export function handleExchangeAdded(event: ExchangeAddedEvent): void {
-  let entity = new ExchangeAdded(
-    event.transaction.hash.toHex() + '-' + event.logIndex.toString()
-  );
-  entity.exchangeName = event.params._exchangeName;
-  entity.twapMaxTradeSize = event.params.twapMaxTradeSize;
-  entity.exchangeLastTradeTimestamp = event.params.exchangeLastTradeTimestamp;
-  entity.incentivizedTwapMaxTradeSize =
-    event.params.incentivizedTwapMaxTradeSize;
-  entity.leverExchangeData = event.params.leverExchangeData;
-  entity.deleverExchangeData = event.params.deleverExchangeData;
-  entity.save();
-}
 
-export function handleExchangeRemoved(event: ExchangeRemovedEvent): void {
-  let entity = new ExchangeRemoved(
-    event.transaction.hash.toHex() + '-' + event.logIndex.toString()
-  );
-  entity.exchangeName = event.params._exchangeName;
-  entity.save();
-}
-
-export function handleExchangeUpdated(event: ExchangeUpdatedEvent): void {
-  let entity = new ExchangeUpdated(
-    event.transaction.hash.toHex() + '-' + event.logIndex.toString()
-  );
-  entity.exchangeName = event.params._exchangeName;
-  entity.twapMaxTradeSize = event.params.twapMaxTradeSize;
-  entity.exchangeLastTradeTimestamp = event.params.exchangeLastTradeTimestamp;
-  entity.incentivizedTwapMaxTradeSize =
-    event.params.incentivizedTwapMaxTradeSize;
-  entity.leverExchangeData = event.params.leverExchangeData;
-  entity.deleverExchangeData = event.params.deleverExchangeData;
-  entity.save();
-}
 
 // export function handleDisengaged(event: DisengagedEvent): void {
 //   let entity = new Disengaged(
@@ -155,76 +121,46 @@ export function handleExchangeUpdated(event: ExchangeUpdatedEvent): void {
 //   entity.save();
 // }
 
-// export function handleRebalanceIteratedEvent(
-//   event: RebalanceIteratedEvent
-// ): void {
-//   const id = createGenericId(event);
-
-//   let c = FlexibleLeverageStrategyAdapter.bind(dataSource.address());
-//   let baseManager = c.manager();
-//   let setTokenAddress = fetchBaseManagerSetToken(baseManager);
-
-//   let entity = new Rebalance(`${id}--${event.block.timestamp.toHexString()}`);
-//   const txn = new Transaction(
-//     event.transaction.hash.toHex() + '--' + 'rebalanceIterated-txn'
-//   );
-//   txn.timestamp = event.block.timestamp;
-//   txn.gasLimit = event.transaction.gasLimit;
-//   txn.gasPriceInGwei = event.transaction.gasPrice;
-//   txn.save();
-//   let rebalanceDetailsEntity = createRebalanceDetails(
-//     id,
-//     event.params._currentLeverageRatio,
-//     event.params._newLeverageRatio,
-//     event.params._totalRebalanceNotional,
-//     event.params._chunkRebalanceNotional
-//   );
-//   rebalanceDetailsEntity.save();
-//   entity.transaction = txn.id;
-//   entity.transactionHash = event.transaction.hash;
-//   entity.rebalanceDetails = rebalanceDetailsEntity.id;
-//   entity.setToken = setTokenAddress;
-//   entity.save();
-// }
-
-// export function handleRebalanceEvent(event: RebalancedEvent): void {
-//   const id = createGenericId(event);
-//   let c = FlexibleLeverageStrategyAdapter.bind(dataSource.address());
-//   let baseManager = c.manager();
-//   let setTokenAddress = fetchBaseManagerSetToken(baseManager);
-//   let entity = new Rebalance(`${id}--${event.block.timestamp.toHexString()}`);
-//   const txn = new Transaction(
-//     event.transaction.hash.toHex() + '--' + 'rebalance-txn'
-//   );
-//   txn.timestamp = event.block.timestamp;
-//   txn.gasLimit = event.transaction.gasLimit;
-//   txn.gasPriceInGwei = event.transaction.gasPrice;
-//   txn.save();
-//   let rebalanceDetailsEntity = createRebalanceDetails(
-//     id,
-//     event.params._currentLeverageRatio,
-//     event.params._newLeverageRatio,
-//     event.params._totalRebalanceNotional,
-//     event.params._chunkRebalanceNotional
-//   );
-//   rebalanceDetailsEntity.save();
-//   entity.transaction = txn.id;
-//   entity.transactionHash = event.transaction.hash;
-//   entity.setToken = setTokenAddress;
-//   entity.rebalanceDetails = rebalanceDetailsEntity.id;
-//   entity.save();
-// }
-
-export function handleRebalance(event: Rebalanced): void {
+export function handleRebalanceIteratedEvent(
+  event: RebalanceIteratedEvent
+): void {
   const id = createGenericId(event);
-  let c = FlexibleLeverageStrategyExtension.bind(dataSource.address());
 
-  log.debug('DataSource Address V3:: ', [dataSource.address().toHexString()]);
+  let c = FlexibleLeverageStrategyAdapter.bind(dataSource.address());
+  let baseManager = c.manager();
+  let setTokenAddress = fetchBaseManagerSetToken(baseManager);
+
+  let entity = new Rebalance(`${id}--${event.block.timestamp.toHexString()}`);
+  const txn = new Transaction(
+    event.transaction.hash.toHex() + '--' + 'rebalanceIterated-txn'
+  );
+  txn.timestamp = event.block.timestamp;
+  txn.gasLimit = event.transaction.gasLimit;
+  txn.gasPriceInGwei = event.transaction.gasPrice;
+  txn.save();
+  let rebalanceDetailsEntity = createRebalanceDetails(
+    id,
+    event.params._currentLeverageRatio,
+    event.params._newLeverageRatio,
+    event.params._totalRebalanceNotional,
+    event.params._chunkRebalanceNotional
+  );
+  rebalanceDetailsEntity.save();
+  entity.transaction = txn.id;
+  entity.transactionHash = event.transaction.hash;
+  entity.rebalanceDetails = rebalanceDetailsEntity.id;
+  entity.setToken = setTokenAddress;
+  entity.save();
+}
+
+export function handleRebalanceEvent(event: RebalancedEvent): void {
+  const id = createGenericId(event);
+  let c = FlexibleLeverageStrategyAdapter.bind(dataSource.address());
   let baseManager = c.manager();
   let setTokenAddress = fetchBaseManagerSetToken(baseManager);
   let entity = new Rebalance(`${id}--${event.block.timestamp.toHexString()}`);
   const txn = new Transaction(
-    event.transaction.hash.toHex() + '--' + 'rebalanceV3-txn'
+    event.transaction.hash.toHex() + '--' + 'rebalance-txn'
   );
   txn.timestamp = event.block.timestamp;
   txn.gasLimit = event.transaction.gasLimit;
@@ -244,6 +180,8 @@ export function handleRebalance(event: Rebalanced): void {
   entity.rebalanceDetails = rebalanceDetailsEntity.id;
   entity.save();
 }
+
+
 
 // export function handleRipcordCalled(event: RipcordCalledEvent): void {
 //   let entity = new RipcordCalled(

@@ -2,28 +2,28 @@ specVersion: 0.0.2
 schema:
   file: ./schema.graphql
 dataSources:
-  # - kind: ethereum/contract
-  #   name: FlexibleLeverageStrategyAdapter
-  #   network: mainnet
-  #   source:
-  #     address: '0x1335d01a4b572c37f800f45d9a4b36a53a898a9b'
-  #     abi: FlexibleLeverageStrategyAdapter
-  #     startBlock: 12035541
-  #   mapping:
-  #     kind: ethereum/events
-  #     apiVersion: 0.0.5
-  #     language: wasm/assemblyscript
-  #     entities:
-  #       - Rebalance
-  #       - RipcordCalled
-  #     abis:
-  #       - name: SetToken
-  #         file: ./abis/SetToken.json
-  #       - name: FlexibleLeverageStrategyAdapter
-  #         file: ./abis/FlexibleLeverageStrategyAdapter.json
-  #       - name: BaseManagerEth
-  #         file: ./abis/BaseManagerEth.json
-  #     eventHandlers:
+  - kind: ethereum/contract
+    name: FlexibleLeverageStrategyAdapter
+    network: mainnet
+    source:
+      address: '0x1335d01a4b572c37f800f45d9a4b36a53a898a9b'
+      abi: FlexibleLeverageStrategyAdapter
+      startBlock: 12035541
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.5
+      language: wasm/assemblyscript
+      entities:
+        - Rebalance
+        - RipcordCalled
+      abis:
+        - name: SetToken
+          file: ./abis/SetToken.json
+        - name: FlexibleLeverageStrategyAdapter
+          file: ./abis/FlexibleLeverageStrategyAdapter.json
+        - name: BaseManagerEth
+          file: ./abis/BaseManagerEth.json
+      eventHandlers:
   #       - event: Disengaged(uint256,uint256,uint256,uint256)
   #         handler: handleDisengaged
   #       - event: Engaged(uint256,uint256,uint256,uint256)
@@ -34,13 +34,13 @@ dataSources:
   #         handler: handleIncentiveSettingsUpdated
   #       - event: MethodologySettingsUpdated(uint256,uint256,uint256,uint256,uint256)
   #         handler: handleMethodologySettingsUpdated
-  #       - event: RebalanceIterated(uint256,uint256,uint256,uint256)
-  #         handler: handleRebalanceIteratedEvent
-  #       - event: Rebalanced(uint256,uint256,uint256,uint256)
-  #         handler: handleRebalanceEvent
-  #       - event: RipcordCalled(uint256,uint256,uint256,uint256)
-  #         handler: handleRipcordCalled
-  #     file: ./src/mappings/setTokenEvents.ts
+        - event: RebalanceIterated(uint256,uint256,uint256,uint256)
+          handler: handleRebalanceIterated
+        - event: Rebalanced(uint256,uint256,uint256,uint256)
+          handler: handleRebalance
+        # - event: RipcordCalled(uint256,uint256,uint256,uint256)
+        #   handler: handleRipcordCalled
+      file: ./src/mappings/setTokenEvents.ts
   - kind: ethereum/contract
     network: mainnet
     name: FlexibleLeverageStrategyExtension
@@ -84,12 +84,12 @@ dataSources:
         # - event: 'MethodologySettingsUpdated(uint256,uint256,uint256,uint256,uint256)'
         #   handler: handleMethodologySettingsUpdated
         - event: RebalanceIterated(uint256,uint256,uint256,uint256)
-          handler: handleRebalanceIteratedV3
+          handler: handleRebalanceIterated
         - event: Rebalanced(uint256,uint256,uint256,uint256)
           handler: handleRebalance
         # - event: 'RipcordCalled(uint256,uint256,uint256,uint256)'
         #   handler: handleRipcordCalled
-      file: ./src/mappings/setTokenEvents.ts
+      file: ./src/mappings/fli_EventsV3.ts
   - kind: ethereum/contract
     network: mainnet
     name: SetToken
