@@ -28,6 +28,8 @@ dataSources:
           handler: handleRebalanceIterated
         - event: Rebalanced(uint256,uint256,uint256,uint256)
           handler: handleRebalance
+        - event: RipcordCalled(uint256,uint256,uint256,uint256)
+          handler: handleRipcordCalled
       file: FlexibleLeverageStrategyAdapter/FlexibleLeverageStrategyAdapter.wasm
   - kind: ethereum/contract
     name: FlexibleLeverageStrategyAdapterV2
@@ -55,6 +57,8 @@ dataSources:
           handler: handleRebalanceIterated
         - event: Rebalanced(uint256,uint256,uint256,uint256)
           handler: handleRebalance
+        - event: RipcordCalled(uint256,uint256,uint256,uint256)
+          handler: handleRipcordCalled
       file: FlexibleLeverageStrategyAdapterV2/FlexibleLeverageStrategyAdapterV2.wasm
   - kind: ethereum/contract
     network: mainnet
@@ -78,16 +82,12 @@ dataSources:
         - Rebalance
         - RipcordCalled
       eventHandlers:
-        - event: ExchangeAdded(string,uint256,uint256,uint256,bytes,bytes)
-          handler: handleExchangeAdded
-        - event: ExchangeRemoved(string)
-          handler: handleExchangeRemoved
-        - event: ExchangeUpdated(string,uint256,uint256,uint256,bytes,bytes)
-          handler: handleExchangeUpdated
         - event: RebalanceIterated(uint256,uint256,uint256,uint256)
           handler: handleRebalanceIterated
         - event: Rebalanced(uint256,uint256,uint256,uint256)
           handler: handleRebalance
+        - event: RipcordCalled(uint256,uint256,uint256,uint256)
+          handler: handleRipcordCalled
       file: FlexibleLeverageStrategyExtension/FlexibleLeverageStrategyExtension.wasm
   - kind: ethereum/contract
     network: mainnet
@@ -172,3 +172,90 @@ dataSources:
         - event: FeeActualized(indexed address,uint256,uint256)
           handler: handleFeeActualized
       file: StreamingFeeModule/StreamingFeeModule.wasm
+  - kind: ethereum/contract
+    name: FlexibleLeverageStrategyAdapterBTC
+    network: mainnet
+    source:
+      address: "0x4a99733458349505A6FCbcF6CD0a0eD18666586A"
+      abi: FlexibleLeverageStrategyAdapterBTC
+      startBlock: 12375884
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.5
+      language: wasm/assemblyscript
+      entities:
+        - Rebalance
+        - RipcordCalled
+      abis:
+        - name: SetToken
+          file: FlexibleLeverageStrategyAdapterBTC/abis/SetToken.json
+        - name: FlexibleLeverageStrategyAdapterBTC
+          file: FlexibleLeverageStrategyAdapterBTC/abis/FlexibleLeverageStrategyAdapter.json
+        - name: BaseManagerEth
+          file: FlexibleLeverageStrategyAdapterBTC/abis/BaseManagerEth.json
+      eventHandlers:
+        - event: RebalanceIterated(uint256,uint256,uint256,uint256)
+          handler: handleRebalanceIteratedBTC
+        - event: Rebalanced(uint256,uint256,uint256,uint256)
+          handler: handleRebalanceBTC
+        - event: RipcordCalled(uint256,uint256,uint256,uint256)
+          handler: handleRipcordCalledBTC
+      file: FlexibleLeverageStrategyAdapter/FlexibleLeverageStrategyAdapter.wasm
+  - kind: ethereum/contract
+    name: FlexibleLeverageStrategyAdapterBTCV2
+    network: mainnet
+    source:
+      address: "0x6B351cdd65704D86134c183aa4BBfFb0833e4A8c"
+      abi: FlexibleLeverageStrategyAdapterBTCV2
+      startBlock: 12611631
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.5
+      language: wasm/assemblyscript
+      entities:
+        - Rebalance
+        - RipcordCalled
+      abis:
+        - name: SetToken
+          file: FlexibleLeverageStrategyAdapterBTCV2/abis/SetToken.json
+        - name: FlexibleLeverageStrategyAdapterBTCV2
+          file: FlexibleLeverageStrategyAdapterBTCV2/abis/FlexibleLeverageStrategyAdapterV2.json
+        - name: BaseManagerEth
+          file: FlexibleLeverageStrategyAdapterBTCV2/abis/BaseManagerEth.json
+      eventHandlers:
+        - event: RebalanceIterated(uint256,uint256,uint256,uint256)
+          handler: handleRebalanceIteratedBTC
+        - event: Rebalanced(uint256,uint256,uint256,uint256)
+          handler: handleRebalanceBTC
+        - event: RipcordCalled(uint256,uint256,uint256,uint256)
+          handler: handleRipcordCalledBTC
+      file: FlexibleLeverageStrategyAdapterV2/FlexibleLeverageStrategyAdapterV2.wasm
+  - kind: ethereum/contract
+    network: mainnet
+    name: FlexibleLeverageStrategyExtensionBTC
+    source:
+      abi: FlexibleLeverageStrategyExtensionBTC
+      address: "0x2612fA1E336cb248ee00eFD02f1C941a7A015e76"
+      startBlock: 12743478
+    mapping:
+      kind: ethereum/events
+      language: wasm/assemblyscript
+      abis:
+        - name: FlexibleLeverageStrategyExtensionBTC
+          file: FlexibleLeverageStrategyExtensionBTC/abis/FlexibleLeverageStrategyExtension.json
+        - name: SetToken
+          file: FlexibleLeverageStrategyExtensionBTC/abis/SetToken.json
+        - name: BaseManagerEth
+          file: FlexibleLeverageStrategyExtensionBTC/abis/BaseManagerEth.json
+      apiVersion: 0.0.5
+      entities:
+        - Rebalance
+        - RipcordCalled
+      eventHandlers:
+        - event: RebalanceIterated(uint256,uint256,uint256,uint256)
+          handler: handleRebalanceIteratedBTC
+        - event: Rebalanced(uint256,uint256,uint256,uint256)
+          handler: handleRebalanceBTC
+        - event: RipcordCalled(uint256,uint256,uint256,uint256)
+          handler: handleRipcordCalledBTC
+      file: FlexibleLeverageStrategyExtension/FlexibleLeverageStrategyExtension.wasm

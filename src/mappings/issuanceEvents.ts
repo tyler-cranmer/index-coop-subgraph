@@ -6,7 +6,6 @@ import {
   SetTokenRedeemed as SetTokenRedeemedEvent,
 } from '../../generated/DebtIssuanceModule/DebtIssuanceModule';
 
-import { SetTokenIssued as BasicSetTokenIssuedEvent } from '../../generated/DebtIssuanceModule/BasicIssuanceModule';
 import {
   FeeRecipientUpdated,
   IssueFeeUpdated,
