@@ -25,10 +25,37 @@ dataSources:
           file: FlexibleLeverageStrategyAdapter/abis/BaseManagerEth.json
       eventHandlers:
         - event: RebalanceIterated(uint256,uint256,uint256,uint256)
-          handler: handleRebalanceIteratedEvent
+          handler: handleRebalanceIterated
         - event: Rebalanced(uint256,uint256,uint256,uint256)
-          handler: handleRebalanceEvent
+          handler: handleRebalance
       file: FlexibleLeverageStrategyAdapter/FlexibleLeverageStrategyAdapter.wasm
+  - kind: ethereum/contract
+    name: FlexibleLeverageStrategyAdapterV2
+    network: mainnet
+    source:
+      address: "0x90A17826C80Ea4917BBD64b281d92aAF2bBb0024"
+      abi: FlexibleLeverageStrategyAdapterV2
+      startBlock: 12633951
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.5
+      language: wasm/assemblyscript
+      entities:
+        - Rebalance
+        - RipcordCalled
+      abis:
+        - name: SetToken
+          file: FlexibleLeverageStrategyAdapterV2/abis/SetToken.json
+        - name: FlexibleLeverageStrategyAdapterV2
+          file: FlexibleLeverageStrategyAdapterV2/abis/FlexibleLeverageStrategyAdapterV2.json
+        - name: BaseManagerEth
+          file: FlexibleLeverageStrategyAdapterV2/abis/BaseManagerEth.json
+      eventHandlers:
+        - event: RebalanceIterated(uint256,uint256,uint256,uint256)
+          handler: handleRebalanceIterated
+        - event: Rebalanced(uint256,uint256,uint256,uint256)
+          handler: handleRebalance
+      file: FlexibleLeverageStrategyAdapterV2/FlexibleLeverageStrategyAdapterV2.wasm
   - kind: ethereum/contract
     network: mainnet
     name: FlexibleLeverageStrategyExtension
@@ -51,11 +78,17 @@ dataSources:
         - Rebalance
         - RipcordCalled
       eventHandlers:
+        - event: ExchangeAdded(string,uint256,uint256,uint256,bytes,bytes)
+          handler: handleExchangeAdded
+        - event: ExchangeRemoved(string)
+          handler: handleExchangeRemoved
+        - event: ExchangeUpdated(string,uint256,uint256,uint256,bytes,bytes)
+          handler: handleExchangeUpdated
         - event: RebalanceIterated(uint256,uint256,uint256,uint256)
-          handler: handleRebalanceIteratedV3
+          handler: handleRebalanceIterated
         - event: Rebalanced(uint256,uint256,uint256,uint256)
           handler: handleRebalance
-      file: FlexibleLeverageStrategyAdapter/FlexibleLeverageStrategyAdapter.wasm
+      file: FlexibleLeverageStrategyExtension/FlexibleLeverageStrategyExtension.wasm
   - kind: ethereum/contract
     network: mainnet
     name: SetToken

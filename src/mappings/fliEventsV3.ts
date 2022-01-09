@@ -8,16 +8,15 @@ import {
   FlexibleLeverageStrategyExtension,
 } from '../../generated/FlexibleLeverageStrategyExtension/FlexibleLeverageStrategyExtension';
 import {
-  Disengaged,
-  Engaged,
+  // Disengaged,
+  // Engaged,
   ExchangeAdded,
   ExchangeRemoved,
   ExchangeUpdated,
-  ExecutionSettingsUpdated,
-  IncentiveSettingsUpdated,
-  MethodologySettingsUpdated,
-  RipcordCalled,
-  Transfer as TransferEntity,
+  // ExecutionSettingsUpdated,
+  // IncentiveSettingsUpdated,
+  // MethodologySettingsUpdated,
+  // RipcordCalled,
   Rebalance,
   Transaction,
 } from '../../generated/schema';

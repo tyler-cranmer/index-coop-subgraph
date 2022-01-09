@@ -19,15 +19,15 @@ import {
 //   FlexibleLeverageStrategyExtension,
 // } from '../../generated/FlexibleLeverageStrategyExtension/FlexibleLeverageStrategyExtension';
 import {
-  Disengaged,
-  Engaged,
-  ExchangeAdded,
-  ExchangeRemoved,
-  ExchangeUpdated,
-  ExecutionSettingsUpdated,
-  IncentiveSettingsUpdated,
-  MethodologySettingsUpdated,
-  RipcordCalled,
+  // Disengaged,
+  // Engaged,
+  // ExchangeAdded,
+  // ExchangeRemoved,
+  // ExchangeUpdated,
+  // ExecutionSettingsUpdated,
+  // IncentiveSettingsUpdated,
+  // MethodologySettingsUpdated,
+  // RipcordCalled,
   Transfer as TransferEntity,
   Rebalance,
   Transaction,
@@ -121,7 +121,7 @@ export function handleTransfer(event: Transfer): void {
 //   entity.save();
 // }
 
-export function handleRebalanceIteratedEvent(
+export function handleRebalanceIterated(
   event: RebalanceIteratedEvent
 ): void {
   const id = createGenericId(event);
@@ -153,7 +153,7 @@ export function handleRebalanceIteratedEvent(
   entity.save();
 }
 
-export function handleRebalanceEvent(event: RebalancedEvent): void {
+export function handleRebalance(event: RebalancedEvent): void {
   const id = createGenericId(event);
   let c = FlexibleLeverageStrategyAdapter.bind(dataSource.address());
   let baseManager = c.manager();
