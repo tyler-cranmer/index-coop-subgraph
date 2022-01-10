@@ -172,8 +172,8 @@ dataSources:
       eventHandlers:
         - event: SetTokenIssued(indexed address,indexed address,indexed address,address,uint256)
           handler: handleSimpleIndexTokenIssued
-        # - event: SetTokenRedeemed(indexed address,indexed address,indexed address,uint256)
-        #   handler: handleSimpleIndexTokenRedeemed
+        - event: SetTokenRedeemed(indexed address,indexed address,indexed address,uint256)
+          handler: handleSimpleIndexTokenRedeemed
       file: ./src/mappings/issuanceEvents.ts
   - kind: ethereum/contract
     name: StreamingFeeModule

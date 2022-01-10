@@ -1,5 +1,4 @@
 
-
 type Transaction @entity {
   id: ID!
   from: Bytes
@@ -73,6 +72,7 @@ type SetToken @entity {
   totalSupply: BigInt!
   rebalances: [Rebalance!]! @derivedFrom(field: "setToken")
   redemptions: [TokenRedemption!]! @derivedFrom(field: "setToken")
+  streamingFee: [StreamingFee!]! @derivedFrom(field: "setToken")
   components: [Component!]! # @derivedFrom(field: "setToken")
 }
 
@@ -140,7 +140,7 @@ type RipcordCalled @entity {
 type StreamingFee @entity {
   id: ID!
   timestamp: BigInt!
-  setToken: Bytes! # address indexed
+  setToken: SetToken! 
   managerFee: BigInt # uint256
   protocolFee: BigInt # uint256
   newStreamingFee: BigInt # uint256
@@ -152,13 +152,12 @@ type StreamingFee @entity {
 ###########################################
 type SimpleIndexTokenIssuance @entity {
   id: ID!
-  # buyerAddress is the Issuer
   buyerAddress: Bytes!
   SimpleIndexToken: SimpleIndexToken!
   quantity: BigInt!
   issuer: Issuer!
   transaction: Transaction!
-  # fee: Fee!
+  fee: Fee!
 }
 
 
@@ -166,17 +165,17 @@ type SimpleIndexToken @entity {
   id: ID!
   address: Bytes!
   name: String!
-  # manager: Manager!
+  manager: Manager!
   issuances: [SimpleIndexTokenIssuance!]!
     @derivedFrom(field: "SimpleIndexToken")
   totalSupply: BigInt!
 }
 
-# type SimpleIndexTokenRedeemed @entity {
-#   id: ID!
-#   SimpleIndexToken: Bytes! # address
-#   redeemer: Bytes! # address
-#   to: Bytes! # address
-#   transaction: Transaction!
-#   quantity: BigInt!
-# }
+type SimpleIndexTokenRedeemed @entity {
+  id: ID!
+  SimpleIndexToken: Bytes! # address
+  redeemer: Bytes! # address
+  to: Bytes! # address
+  transaction: Transaction!
+  quantity: BigInt!
+}

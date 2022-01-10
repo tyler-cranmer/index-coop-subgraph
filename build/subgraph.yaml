@@ -174,6 +174,8 @@ dataSources:
       eventHandlers:
         - event: SetTokenIssued(indexed address,indexed address,indexed address,address,uint256)
           handler: handleSimpleIndexTokenIssued
+        - event: SetTokenRedeemed(indexed address,indexed address,indexed address,uint256)
+          handler: handleSimpleIndexTokenRedeemed
       file: DebtIssuanceModule/DebtIssuanceModule.wasm
   - kind: ethereum/contract
     name: StreamingFeeModule
@@ -189,6 +191,7 @@ dataSources:
       entities:
         - Fee
         - Manager
+        - StreamingFee
       abis:
         - name: StreamingFeeModule
           file: StreamingFeeModule/abis/StreamingFeeModule.json

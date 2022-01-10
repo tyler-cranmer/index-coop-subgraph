@@ -19,7 +19,6 @@ import {
   Manager,
   Component,
   SimpleIndexToken,
-  // SimpleIndexTokenRedeemed,
 } from '../../generated/schema';
 import { SetToken as SetTokenContract } from '../../generated/SetToken/SetToken';
 
@@ -86,7 +85,7 @@ export function handleSetTokenIssued(event: SetTokenIssuedEvent): void {
 
   txn.save();
 
-  log.debug('txnData:: saved', [txn.id]);
+  log.debug('txnData:: saved {}', [txn.id]);
   let feeEntity = createFee(
     createGenericId(event),
     timestamp,
@@ -191,23 +190,34 @@ export function handleSetTokenRedeemed(event: SetTokenRedeemedEvent): void {
   entity.save();
 }
 
+/*****************************************************/
+/********** Simple Index Set Token Events ************/
+/*****************************************************/
+
 export function handleSimpleIndexTokenIssued(
   event: SimpleIndexTokenIssuedEvent
 ): void {
-  const BED = Address.fromString('0x2af1df3ab0ab157e1e2ad8f88a7d04fbea0c7dc6');
-  const DATA = Address.fromString('0x33d63ba1e57e54779f7ddaeaa7109349344cf5f1');
-  const DPI = Address.fromString('0x1494CA1F11D487c2bBe4543E90080AeBa4BA3C2b');
-  const MVI = Address.fromString('0x72e364F2ABdC788b7E918bc238B21f109Cd634D7');
-  let setTokenAddress = event.params._setToken;
+  const BED: Address = Address.fromString(
+    '0x2af1df3ab0ab157e1e2ad8f88a7d04fbea0c7dc6'
+  );
+  const DATA: Address = Address.fromString(
+    '0x33d63ba1e57e54779f7ddaeaa7109349344cf5f1'
+  );
+  const DPI: Address = Address.fromString(
+    '0x1494CA1F11D487c2bBe4543E90080AeBa4BA3C2b'
+  );
+  const MVI: Address = Address.fromString(
+    '0x72e364F2ABdC788b7E918bc238B21f109Cd634D7'
+  );
+  let setTokenAddress: Address = event.params._setToken;
 
-  log.debug(`SetTOKENADDRESS:: {}`, [setTokenAddress.toHexString()]);
   if (
     setTokenAddress == DPI ||
     setTokenAddress == BED ||
     setTokenAddress == DATA ||
     setTokenAddress == MVI
   ) {
-    let timestamp = event.block.timestamp;
+    let timestamp: BigInt = event.block.timestamp;
     let eventTxnData = event.transaction;
 
     const txn = createTxn(
@@ -221,6 +231,13 @@ export function handleSimpleIndexTokenIssued(
 
     txn.save();
 
+    let feeEntity = createFee(
+      createGenericId(event),
+      timestamp,
+      BigInt.fromI32(0), // Basic Issuance SetToken Issued has no Manager Fee
+      BigInt.fromI32(0) // Basic Issuance SetToken Issued has no Protocol Fee
+    );
+
     let issuanceEntity = createSimpleIssuance(
       createGenericId(event),
       event.params._to,
@@ -232,14 +249,16 @@ export function handleSimpleIndexTokenIssued(
     issuanceEntity.save();
 
     let currentSimpleIndexContract = bindTokenAddress(setTokenAddress);
-    // let currentManager = Manager.load(currentSimpleIndexContract.manager.toString());
-    // if (currentManager == null) {
-    //   currentManager = createManager(
-    //     fetchManager(setTokenAddress),
-    //     setTokenAddress
-    //   );
-    // }
-    // currentManager.save();
+    let currentManager = Manager.load(currentSimpleIndexContract.manager.toString());
+    if (currentManager == null) {
+      currentManager = createManager(
+        fetchManager(setTokenAddress),
+        setTokenAddress
+      );
+    }
+    currentManager.save();
+    feeEntity.manager = currentManager.id;
+    feeEntity.save();
 
     let simpleIndexTokenEntity = SimpleIndexToken.load(
       setTokenAddress.toHexString()
@@ -251,27 +270,42 @@ export function handleSimpleIndexTokenIssued(
     }
     simpleIndexTokenEntity.address = setTokenAddress;
     simpleIndexTokenEntity.name = currentSimpleIndexContract.name();
-    // THIS IS WHERE MANAGER WOULD GO
+    simpleIndexTokenEntity.manager = currentManager.id;
     simpleIndexTokenEntity.totalSupply = currentSimpleIndexContract.totalSupply();
     simpleIndexTokenEntity.save();
-  } 
+  }
 }
 
-// export function handleSimpleIndexTokenRedeemed(
-//   event: SimpleIndexTokenRedeemedEvent
-// ): void {
-//   const setTokenAddress = event.params._setToken;
-//   const txn = createTxn(
-//     createGenericId(event),
-//     event.block.timestamp,
-//     event.params._redeemer,
-//     event.params._to,
-//     event.transaction.gasLimit,
-//     event.transaction.gasPrice
-//   );
+export function handleSimpleIndexTokenRedeemed(
+  event: SimpleIndexTokenRedeemedEvent
+): void {
+  const setTokenAddress = event.params._setToken;
+  const txn = createTxn(
+    createGenericId(event),
+    event.block.timestamp,
+    event.params._redeemer,
+    event.params._to,
+    event.transaction.gasLimit,
+    event.transaction.gasPrice
+  );
 
-//   txn.save();
+  txn.save();
 
-//   let entity = createSim
+  let redeemFee = createFee(
+    createGenericId(event),
+    event.block.timestamp,
+    BigInt.fromI32(0), // Basic Issuance SetToken Redeem has no Manager Fee
+    BigInt.fromI32(0) // Basic Issuance SetToken Redeem has no Protocol Fee
+  );
+  redeemFee.transaction = txn.id;
+  redeemFee.save();
 
-// };
+  let entity = createSimpleIssuance(
+    createGenericId(event),
+    event.params._redeemer,
+    event.params._quantity
+  );
+  entity.SimpleIndexToken = setTokenAddress.toHexString();
+  entity.quantity = event.params._quantity;
+  entity.save();
+}

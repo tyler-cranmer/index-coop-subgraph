@@ -700,6 +700,15 @@ export class SetToken extends Entity {
     this.set("redemptions", Value.fromStringArray(value));
   }
 
+  get streamingFee(): Array<string> {
+    let value = this.get("streamingFee");
+    return value!.toStringArray();
+  }
+
+  set streamingFee(value: Array<string>) {
+    this.set("streamingFee", Value.fromStringArray(value));
+  }
+
   get components(): Array<string> {
     let value = this.get("components");
     return value!.toStringArray();
@@ -1288,7 +1297,7 @@ export class StreamingFee extends Entity {
     this.set("id", Value.fromString(id));
 
     this.set("timestamp", Value.fromBigInt(BigInt.zero()));
-    this.set("setToken", Value.fromBytes(Bytes.empty()));
+    this.set("setToken", Value.fromString(""));
   }
 
   save(): void {
@@ -1326,13 +1335,13 @@ export class StreamingFee extends Entity {
     this.set("timestamp", Value.fromBigInt(value));
   }
 
-  get setToken(): Bytes {
+  get setToken(): string {
     let value = this.get("setToken");
-    return value!.toBytes();
+    return value!.toString();
   }
 
-  set setToken(value: Bytes) {
-    this.set("setToken", Value.fromBytes(value));
+  set setToken(value: string) {
+    this.set("setToken", Value.fromString(value));
   }
 
   get managerFee(): BigInt | null {
@@ -1414,6 +1423,7 @@ export class SimpleIndexTokenIssuance extends Entity {
     this.set("quantity", Value.fromBigInt(BigInt.zero()));
     this.set("issuer", Value.fromString(""));
     this.set("transaction", Value.fromString(""));
+    this.set("fee", Value.fromString(""));
   }
 
   save(): void {
@@ -1491,6 +1501,15 @@ export class SimpleIndexTokenIssuance extends Entity {
   set transaction(value: string) {
     this.set("transaction", Value.fromString(value));
   }
+
+  get fee(): string {
+    let value = this.get("fee");
+    return value!.toString();
+  }
+
+  set fee(value: string) {
+    this.set("fee", Value.fromString(value));
+  }
 }
 
 export class SimpleIndexToken extends Entity {
@@ -1500,6 +1519,7 @@ export class SimpleIndexToken extends Entity {
 
     this.set("address", Value.fromBytes(Bytes.empty()));
     this.set("name", Value.fromString(""));
+    this.set("manager", Value.fromString(""));
     this.set("totalSupply", Value.fromBigInt(BigInt.zero()));
   }
 
@@ -1549,6 +1569,15 @@ export class SimpleIndexToken extends Entity {
     this.set("name", Value.fromString(value));
   }
 
+  get manager(): string {
+    let value = this.get("manager");
+    return value!.toString();
+  }
+
+  set manager(value: string) {
+    this.set("manager", Value.fromString(value));
+  }
+
   get issuances(): Array<string> {
     let value = this.get("issuances");
     return value!.toStringArray();
@@ -1565,5 +1594,94 @@ export class SimpleIndexToken extends Entity {
 
   set totalSupply(value: BigInt) {
     this.set("totalSupply", Value.fromBigInt(value));
+  }
+}
+
+export class SimpleIndexTokenRedeemed extends Entity {
+  constructor(id: string) {
+    super();
+    this.set("id", Value.fromString(id));
+
+    this.set("SimpleIndexToken", Value.fromBytes(Bytes.empty()));
+    this.set("redeemer", Value.fromBytes(Bytes.empty()));
+    this.set("to", Value.fromBytes(Bytes.empty()));
+    this.set("transaction", Value.fromString(""));
+    this.set("quantity", Value.fromBigInt(BigInt.zero()));
+  }
+
+  save(): void {
+    let id = this.get("id");
+    assert(
+      id != null,
+      "Cannot save SimpleIndexTokenRedeemed entity without an ID"
+    );
+    if (id) {
+      assert(
+        id.kind == ValueKind.STRING,
+        "Cannot save SimpleIndexTokenRedeemed entity with non-string ID. " +
+          'Considering using .toHex() to convert the "id" to a string.'
+      );
+      store.set("SimpleIndexTokenRedeemed", id.toString(), this);
+    }
+  }
+
+  static load(id: string): SimpleIndexTokenRedeemed | null {
+    return changetype<SimpleIndexTokenRedeemed | null>(
+      store.get("SimpleIndexTokenRedeemed", id)
+    );
+  }
+
+  get id(): string {
+    let value = this.get("id");
+    return value!.toString();
+  }
+
+  set id(value: string) {
+    this.set("id", Value.fromString(value));
+  }
+
+  get SimpleIndexToken(): Bytes {
+    let value = this.get("SimpleIndexToken");
+    return value!.toBytes();
+  }
+
+  set SimpleIndexToken(value: Bytes) {
+    this.set("SimpleIndexToken", Value.fromBytes(value));
+  }
+
+  get redeemer(): Bytes {
+    let value = this.get("redeemer");
+    return value!.toBytes();
+  }
+
+  set redeemer(value: Bytes) {
+    this.set("redeemer", Value.fromBytes(value));
+  }
+
+  get to(): Bytes {
+    let value = this.get("to");
+    return value!.toBytes();
+  }
+
+  set to(value: Bytes) {
+    this.set("to", Value.fromBytes(value));
+  }
+
+  get transaction(): string {
+    let value = this.get("transaction");
+    return value!.toString();
+  }
+
+  set transaction(value: string) {
+    this.set("transaction", Value.fromString(value));
+  }
+
+  get quantity(): BigInt {
+    let value = this.get("quantity");
+    return value!.toBigInt();
+  }
+
+  set quantity(value: BigInt) {
+    this.set("quantity", Value.fromBigInt(value));
   }
 }

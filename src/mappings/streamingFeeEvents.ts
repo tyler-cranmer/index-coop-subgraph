@@ -32,13 +32,14 @@ export function handleFeeActualized(event: FeeActualized): void {
   const managerFee: BigInt = event.params._managerFee;
   const protocolFee: BigInt = event.params._protocolFee;
   
-  let streamingFeeEntity: StreamingFee = StreamingFee.load(id);
-  if (streamingFeeEntity == null) {
-    streamingFeeEntity = new StreamingFee(id);
-  }
+  // let streamingFeeEntity: StreamingFee = StreamingFee.load(id);
+  // if (streamingFeeEntity == null) {
+  //   streamingFeeEntity = new StreamingFee(id);
+  // }
+  let streamingFeeEntity: StreamingFee = new StreamingFee(id)
 
   streamingFeeEntity.timestamp = timestamp;
-  streamingFeeEntity.setToken = setTokenAddress;
+  streamingFeeEntity.setToken = setTokenAddress.toHexString();
   streamingFeeEntity.managerFee = managerFee;
   streamingFeeEntity.protocolFee = protocolFee;
   streamingFeeEntity.save();
