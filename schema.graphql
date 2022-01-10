@@ -1,5 +1,4 @@
 
-
 type Transaction @entity {
   id: ID!
   from: Bytes
@@ -73,6 +72,7 @@ type SetToken @entity {
   totalSupply: BigInt!
   rebalances: [Rebalance!]! @derivedFrom(field: "setToken")
   redemptions: [TokenRedemption!]! @derivedFrom(field: "setToken")
+  # streamingFee: [StreamingFee!]! @derivedFrom(field: "setToken")
   components: [Component!]! # @derivedFrom(field: "setToken")
 }
 

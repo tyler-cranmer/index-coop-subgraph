@@ -189,6 +189,7 @@ dataSources:
       entities:
         - Fee
         - Manager
+        - StreamingFee
       abis:
         - name: StreamingFeeModule
           file: ./abis/StreamingFeeModule.json
