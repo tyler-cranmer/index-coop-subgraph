@@ -90,9 +90,9 @@ export class OperatorChanged__Params {
   }
 }
 
-export class BaseManagerEth extends ethereum.SmartContract {
-  static bind(address: Address): BaseManagerEth {
-    return new BaseManagerEth("BaseManagerEth", address);
+export class BaseManagerV1 extends ethereum.SmartContract {
+  static bind(address: Address): BaseManagerV1 {
+    return new BaseManagerV1("BaseManagerV1", address);
   }
 
   getAdapters(): Array<Address> {

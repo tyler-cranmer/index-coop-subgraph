@@ -21,19 +21,9 @@ dataSources:
           file: ./abis/SetToken.json
         - name: FlexibleLeverageStrategyAdapter
           file: ./abis/FlexibleLeverageStrategyAdapter.json
-        - name: BaseManagerEth
-          file: ./abis/BaseManagerEth.json
+        - name: BaseManagerV1
+          file: ./abis/BaseManagerV1.json
       eventHandlers:
-  #       - event: Disengaged(uint256,uint256,uint256,uint256)
-  #         handler: handleDisengaged
-  #       - event: Engaged(uint256,uint256,uint256,uint256)
-  #         handler: handleEngaged
-  #       - event: ExecutionSettingsUpdated(uint256,uint256,uint256,uint256,string,bytes)
-  #         handler: handleExecutionSettingsUpdated
-  #       - event: IncentiveSettingsUpdated(uint256,uint256,uint256,uint256,uint256)
-  #         handler: handleIncentiveSettingsUpdated
-  #       - event: MethodologySettingsUpdated(uint256,uint256,uint256,uint256,uint256)
-  #         handler: handleMethodologySettingsUpdated
         - event: RebalanceIterated(uint256,uint256,uint256,uint256)
           handler: handleRebalanceIterated
         - event: Rebalanced(uint256,uint256,uint256,uint256)
@@ -60,19 +50,9 @@ dataSources:
           file: ./abis/SetToken.json
         - name: FlexibleLeverageStrategyAdapterV2
           file: ./abis/FlexibleLeverageStrategyAdapterV2.json
-        - name: BaseManagerEth
-          file: ./abis/BaseManagerEth.json
+        - name: BaseManagerV1
+          file: ./abis/BaseManagerV1.json
       eventHandlers:
-  #       - event: Disengaged(uint256,uint256,uint256,uint256)
-  #         handler: handleDisengaged
-  #       - event: Engaged(uint256,uint256,uint256,uint256)
-  #         handler: handleEngaged
-  #       - event: ExecutionSettingsUpdated(uint256,uint256,uint256,uint256,string,bytes)
-  #         handler: handleExecutionSettingsUpdated
-  #       - event: IncentiveSettingsUpdated(uint256,uint256,uint256,uint256,uint256)
-  #         handler: handleIncentiveSettingsUpdated
-  #       - event: MethodologySettingsUpdated(uint256,uint256,uint256,uint256,uint256)
-  #         handler: handleMethodologySettingsUpdated
         - event: RebalanceIterated(uint256,uint256,uint256,uint256)
           handler: handleRebalanceIterated
         - event: Rebalanced(uint256,uint256,uint256,uint256)
@@ -95,38 +75,18 @@ dataSources:
           file: ./abis/FlexibleLeverageStrategyExtension.json
         - name: SetToken
           file: ./abis/SetToken.json
-        - name: BaseManagerEth
-          file: ./abis/BaseManagerEth.json
+        - name: BaseManagerV1
+          file: ./abis/BaseManagerV1.json
       apiVersion: 0.0.5
       entities:
         - Rebalance
         - RipcordCalled
       eventHandlers:
-        # - event: AnyoneCallableUpdated(indexed bool)
-        #   handler: handleAnyoneCallableUpdated
-        # - event: 'CallerStatusUpdated(indexed address,bool)'
-        #   handler: handleCallerStatusUpdated
-        # - event: 'Disengaged(uint256,uint256,uint256,uint256)'
-        #   handler: handleDisengaged
-        # - event: 'Engaged(uint256,uint256,uint256,uint256)'
-        #   handler: handleEngaged
-        # - event: 'ExchangeAdded(string,uint256,uint256,uint256,bytes,bytes)'
-        #   handler: handleExchangeAdded
-        # - event: ExchangeRemoved(string)
-        #   handler: handleExchangeRemoved
-        # - event: 'ExchangeUpdated(string,uint256,uint256,uint256,bytes,bytes)'
-        #   handler: handleExchangeUpdated
-        # # - event: 'ExecutionSettingsUpdated(uint256,uint256,uint256)'
-        #   handler: handleExecutionSettingsUpdated
-        # - event: 'IncentiveSettingsUpdated(uint256,uint256,uint256,uint256)'
-        #   handler: handleIncentiveSettingsUpdated
-        # - event: 'MethodologySettingsUpdated(uint256,uint256,uint256,uint256,uint256)'
-        #   handler: handleMethodologySettingsUpdated
         - event: RebalanceIterated(uint256,uint256,uint256,uint256)
           handler: handleRebalanceIterated
         - event: Rebalanced(uint256,uint256,uint256,uint256)
           handler: handleRebalance
-        - event: 'RipcordCalled(uint256,uint256,uint256,uint256)'
+        - event: RipcordCalled(uint256,uint256,uint256,uint256)
           handler: handleRipcordCalled
       file: ./src/mappings/fliEventsV3.ts
   - kind: ethereum/contract
@@ -187,31 +147,34 @@ dataSources:
         - event: SetTokenRedeemed(indexed address,indexed address,indexed address,uint256,uint256,uint256)
           handler: handleSetTokenRedeemed
       file: ./src/mappings/issuanceEvents.ts
-  # - kind: ethereum/contract
-  #   name: BasicIssuanceModule
-  #   network: mainnet
-  #   source:
-  #     address: '0xd8EF3cACe8b4907117a45B0b125c68560532F94D'
-  #     abi: BasicIssuanceModule
-  #     startBlock: 10830505
-  #   mapping:
-  #     kind: ethereum/events
-  #     apiVersion: 0.0.5
-  #     language: wasm/assemblyscript
-  #     entities:
-  #       - SimpleIndexTokenRedeemed
-  #       - SimpleIndexToken
-  #       - Issuer
-  #       - SimpleIndexTokenIssuance
-  #     abis:
-  #       - name: BasicIssuanceModule
-  #         file: ./abis/BasicIssuanceModule.json
-  #     eventHandlers:
-  #       - event: SetTokenIssued(indexed address,indexed address,indexed address,address,uint256)
-  #         handler: handleSimpleIndexTokenIssued
-  #       - event: SetTokenRedeemed(indexed address,indexed address,indexed address,uint256)
-  #         handler: handleSimpleIndexTokenRedeemed
-  #     file: ./src/mappings/issuanceEvents.ts
+  - kind: ethereum/contract
+    name: BasicIssuanceModule
+    network: mainnet
+    source:
+      address: '0xd8EF3cACe8b4907117a45B0b125c68560532F94D'
+      abi: BasicIssuanceModule
+      startBlock: 10830505
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.5
+      language: wasm/assemblyscript
+      entities:
+        - SimpleIndexTokenRedeemed
+        - SimpleIndexToken
+        - Issuer
+        - SimpleIndexTokenIssuance
+        - Transaction
+      abis:
+        - name: BasicIssuanceModule
+          file: ./abis/BasicIssuanceModule.json
+        - name: SetToken
+          file: ./abis/SetToken.json
+      eventHandlers:
+        - event: SetTokenIssued(indexed address,indexed address,indexed address,address,uint256)
+          handler: handleSimpleIndexTokenIssued
+        # - event: SetTokenRedeemed(indexed address,indexed address,indexed address,uint256)
+        #   handler: handleSimpleIndexTokenRedeemed
+      file: ./src/mappings/issuanceEvents.ts
   - kind: ethereum/contract
     name: StreamingFeeModule
     network: mainnet
@@ -254,19 +217,9 @@ dataSources:
           file: ./abis/SetToken.json
         - name: FlexibleLeverageStrategyAdapterBTC
           file: ./abis/FlexibleLeverageStrategyAdapter.json
-        - name: BaseManagerEth
-          file: ./abis/BaseManagerEth.json
+        - name: BaseManagerV1
+          file: ./abis/BaseManagerV1.json
       eventHandlers:
-  #       - event: Disengaged(uint256,uint256,uint256,uint256)
-  #         handler: handleDisengaged
-  #       - event: Engaged(uint256,uint256,uint256,uint256)
-  #         handler: handleEngaged
-  #       - event: ExecutionSettingsUpdated(uint256,uint256,uint256,uint256,string,bytes)
-  #         handler: handleExecutionSettingsUpdated
-  #       - event: IncentiveSettingsUpdated(uint256,uint256,uint256,uint256,uint256)
-  #         handler: handleIncentiveSettingsUpdated
-  #       - event: MethodologySettingsUpdated(uint256,uint256,uint256,uint256,uint256)
-  #         handler: handleMethodologySettingsUpdated
         - event: RebalanceIterated(uint256,uint256,uint256,uint256)
           handler: handleRebalanceIteratedBTC
         - event: Rebalanced(uint256,uint256,uint256,uint256)
@@ -293,19 +246,9 @@ dataSources:
           file: ./abis/SetToken.json
         - name: FlexibleLeverageStrategyAdapterBTCV2
           file: ./abis/FlexibleLeverageStrategyAdapterV2.json
-        - name: BaseManagerEth
-          file: ./abis/BaseManagerEth.json
+        - name: BaseManagerV1
+          file: ./abis/BaseManagerV1.json
       eventHandlers:
-  #       - event: Disengaged(uint256,uint256,uint256,uint256)
-  #         handler: handleDisengaged
-  #       - event: Engaged(uint256,uint256,uint256,uint256)
-  #         handler: handleEngaged
-  #       - event: ExecutionSettingsUpdated(uint256,uint256,uint256,uint256,string,bytes)
-  #         handler: handleExecutionSettingsUpdated
-  #       - event: IncentiveSettingsUpdated(uint256,uint256,uint256,uint256,uint256)
-  #         handler: handleIncentiveSettingsUpdated
-  #       - event: MethodologySettingsUpdated(uint256,uint256,uint256,uint256,uint256)
-  #         handler: handleMethodologySettingsUpdated
         - event: RebalanceIterated(uint256,uint256,uint256,uint256)
           handler: handleRebalanceIteratedBTC
         - event: Rebalanced(uint256,uint256,uint256,uint256)
@@ -328,37 +271,17 @@ dataSources:
           file: ./abis/FlexibleLeverageStrategyExtension.json
         - name: SetToken
           file: ./abis/SetToken.json
-        - name: BaseManagerEth
-          file: ./abis/BaseManagerEth.json
+        - name: BaseManagerV1
+          file: ./abis/BaseManagerV1.json
       apiVersion: 0.0.5
       entities:
         - Rebalance
         - RipcordCalled
       eventHandlers:
-        # - event: AnyoneCallableUpdated(indexed bool)
-        #   handler: handleAnyoneCallableUpdated
-        # - event: 'CallerStatusUpdated(indexed address,bool)'
-        #   handler: handleCallerStatusUpdated
-        # - event: 'Disengaged(uint256,uint256,uint256,uint256)'
-        #   handler: handleDisengaged
-        # - event: 'Engaged(uint256,uint256,uint256,uint256)'
-        #   handler: handleEngaged
-        # - event: 'ExchangeAdded(string,uint256,uint256,uint256,bytes,bytes)'
-        #   handler: handleExchangeAddedBTC
-        # - event: ExchangeRemoved(string)
-        #   handler: handleExchangeRemovedBTC
-        # - event: 'ExchangeUpdated(string,uint256,uint256,uint256,bytes,bytes)'
-        #   handler: handleExchangeUpdatedBTC
-        # - event: 'ExecutionSettingsUpdated(uint256,uint256,uint256)'
-        #   handler: handleExecutionSettingsUpdated
-        # - event: 'IncentiveSettingsUpdated(uint256,uint256,uint256,uint256)'
-        #   handler: handleIncentiveSettingsUpdated
-        # - event: 'MethodologySettingsUpdated(uint256,uint256,uint256,uint256,uint256)'
-        #   handler: handleMethodologySettingsUpdated
         - event: RebalanceIterated(uint256,uint256,uint256,uint256)
           handler: handleRebalanceIteratedBTC
         - event: Rebalanced(uint256,uint256,uint256,uint256)
           handler: handleRebalanceBTC
-        - event: 'RipcordCalled(uint256,uint256,uint256,uint256)'
+        - event: RipcordCalled(uint256,uint256,uint256,uint256)
           handler: handleRipcordCalledBTC
       file: ./src/mappings/fliEventsV3.ts

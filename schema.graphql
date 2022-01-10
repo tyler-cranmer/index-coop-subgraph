@@ -49,7 +49,7 @@ type TokenIssuance @entity {
   id: ID!
   # buyerAddress is the Issuer
   buyerAddress: Bytes!
-  setToken: setToken!
+  setToken: SetToken!
   quantity: BigInt!
   issuer: Issuer!
   transaction: Transaction!
@@ -118,7 +118,6 @@ type TokenRedemption @entity {
   fee: Fee!
 }
 
-
 type SetTokenRedeemed @entity {
   id: ID!
   setToken: Bytes! # address
@@ -128,78 +127,6 @@ type SetTokenRedeemed @entity {
   managerFee: BigInt! # uint256
   protocolFee: BigInt! # uint256
 }
-
-type Disengaged @entity {
-  id: ID!
-  timestamp: BigInt!
-  currentLeverageRatio: BigInt! # uint256
-  newLeverageRatio: BigInt! # uint25
-  chunkRebalanceNotional: BigInt! # uint256
-  totalRebalanceNotional: BigInt! # uint256
-}
-
-type Engaged @entity {
-  id: ID!
-  timestamp: BigInt!
-  currentLeverageRatio: BigInt! # uint256
-  newLeverageRatio: BigInt! # uint256
-  chunkRebalanceNotional: BigInt! # uint256
-  totalRebalanceNotional: BigInt! # uint256
-}
-
-type ExchangeAdded @entity {
-  id: ID!
-  exchangeName: String! # string
-  twapMaxTradeSize: BigInt! # uint256
-  exchangeLastTradeTimestamp: BigInt! # uint256
-  incentivizedTwapMaxTradeSize: BigInt! # uint256
-  leverExchangeData: Bytes! # bytes
-  deleverExchangeData: Bytes! # bytes
-}
-
-type ExchangeRemoved @entity {
-  id: ID!
-  exchangeName: String! # string
-}
-
-type ExchangeUpdated @entity {
-  id: ID!
-  exchangeName: String! # string
-  twapMaxTradeSize: BigInt! # uint256
-  exchangeLastTradeTimestamp: BigInt! # uint256
-  incentivizedTwapMaxTradeSize: BigInt! # uint256
-  leverExchangeData: Bytes! # bytes
-  deleverExchangeData: Bytes! # bytes
-}
-
-type ExecutionSettingsUpdated @entity {
-  id: ID!
-  unutilizedLeveragePercentage: BigInt! # uint256
-  twapMaxTradeSize: BigInt! # uint256
-  twapCooldownPeriod: BigInt! # uint256
-  slippageTolerance: BigInt! # uint256
-  exchangeName: String! # string
-  exchangeData: Bytes! # bytes
-}
-
-type IncentiveSettingsUpdated @entity {
-  id: ID!
-  etherReward: BigInt! # uint256
-  incentivizedLeverageRatio: BigInt! # uint256
-  incentivizedSlippageTolerance: BigInt! # uint256
-  incentivizedTwapCooldownPeriod: BigInt! # uint256
-  incentivizedTwapMaxTradeSize: BigInt! # uint256
-}
-
-type MethodologySettingsUpdated @entity {
-  id: ID!
-  targetLeverageRatio: BigInt! # uint256
-  minLeverageRatio: BigInt! # uint25
-  maxLeverageRatio: BigInt! # uint256
-  recenteringSpeed: BigInt! # uint256
-  rebalanceInterval: BigInt! # uint256
-}
-
 
 type RipcordCalled @entity {
   id: ID!
@@ -223,27 +150,27 @@ type StreamingFee @entity {
 ###########################################
 ###########################################
 ###########################################
-# type SimpleIndexTokenIssuance @entity {
-#   id: ID!
-#   # buyerAddress is the Issuer
-#   buyerAddress: Bytes!
-#   SimpleIndexToken: SimpleIndexToken!
-#   quantity: BigInt!
-#   issuer: Issuer!
-#   transaction: Transaction!
-#   # fee: Fee!
-# }
+type SimpleIndexTokenIssuance @entity {
+  id: ID!
+  # buyerAddress is the Issuer
+  buyerAddress: Bytes!
+  SimpleIndexToken: SimpleIndexToken!
+  quantity: BigInt!
+  issuer: Issuer!
+  transaction: Transaction!
+  # fee: Fee!
+}
 
 
-# type SimpleIndexToken @entity {
-#   id: ID!
-#   address: Bytes!
-#   name: string!
-#   manager: Manager!
-#   issuances: [SimpleIndexTokenIssuance!]!
-#     @derivedFrom(field: "SimpleIndexToken")
-#   totalSupply: BigInt!
-# }
+type SimpleIndexToken @entity {
+  id: ID!
+  address: Bytes!
+  name: String!
+  # manager: Manager!
+  issuances: [SimpleIndexTokenIssuance!]!
+    @derivedFrom(field: "SimpleIndexToken")
+  totalSupply: BigInt!
+}
 
 # type SimpleIndexTokenRedeemed @entity {
 #   id: ID!

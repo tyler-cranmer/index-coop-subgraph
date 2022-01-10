@@ -1198,683 +1198,6 @@ export class SetTokenRedeemed extends Entity {
   }
 }
 
-export class Disengaged extends Entity {
-  constructor(id: string) {
-    super();
-    this.set("id", Value.fromString(id));
-
-    this.set("timestamp", Value.fromBigInt(BigInt.zero()));
-    this.set("currentLeverageRatio", Value.fromBigInt(BigInt.zero()));
-    this.set("newLeverageRatio", Value.fromBigInt(BigInt.zero()));
-    this.set("chunkRebalanceNotional", Value.fromBigInt(BigInt.zero()));
-    this.set("totalRebalanceNotional", Value.fromBigInt(BigInt.zero()));
-  }
-
-  save(): void {
-    let id = this.get("id");
-    assert(id != null, "Cannot save Disengaged entity without an ID");
-    if (id) {
-      assert(
-        id.kind == ValueKind.STRING,
-        "Cannot save Disengaged entity with non-string ID. " +
-          'Considering using .toHex() to convert the "id" to a string.'
-      );
-      store.set("Disengaged", id.toString(), this);
-    }
-  }
-
-  static load(id: string): Disengaged | null {
-    return changetype<Disengaged | null>(store.get("Disengaged", id));
-  }
-
-  get id(): string {
-    let value = this.get("id");
-    return value!.toString();
-  }
-
-  set id(value: string) {
-    this.set("id", Value.fromString(value));
-  }
-
-  get timestamp(): BigInt {
-    let value = this.get("timestamp");
-    return value!.toBigInt();
-  }
-
-  set timestamp(value: BigInt) {
-    this.set("timestamp", Value.fromBigInt(value));
-  }
-
-  get currentLeverageRatio(): BigInt {
-    let value = this.get("currentLeverageRatio");
-    return value!.toBigInt();
-  }
-
-  set currentLeverageRatio(value: BigInt) {
-    this.set("currentLeverageRatio", Value.fromBigInt(value));
-  }
-
-  get newLeverageRatio(): BigInt {
-    let value = this.get("newLeverageRatio");
-    return value!.toBigInt();
-  }
-
-  set newLeverageRatio(value: BigInt) {
-    this.set("newLeverageRatio", Value.fromBigInt(value));
-  }
-
-  get chunkRebalanceNotional(): BigInt {
-    let value = this.get("chunkRebalanceNotional");
-    return value!.toBigInt();
-  }
-
-  set chunkRebalanceNotional(value: BigInt) {
-    this.set("chunkRebalanceNotional", Value.fromBigInt(value));
-  }
-
-  get totalRebalanceNotional(): BigInt {
-    let value = this.get("totalRebalanceNotional");
-    return value!.toBigInt();
-  }
-
-  set totalRebalanceNotional(value: BigInt) {
-    this.set("totalRebalanceNotional", Value.fromBigInt(value));
-  }
-}
-
-export class Engaged extends Entity {
-  constructor(id: string) {
-    super();
-    this.set("id", Value.fromString(id));
-
-    this.set("timestamp", Value.fromBigInt(BigInt.zero()));
-    this.set("currentLeverageRatio", Value.fromBigInt(BigInt.zero()));
-    this.set("newLeverageRatio", Value.fromBigInt(BigInt.zero()));
-    this.set("chunkRebalanceNotional", Value.fromBigInt(BigInt.zero()));
-    this.set("totalRebalanceNotional", Value.fromBigInt(BigInt.zero()));
-  }
-
-  save(): void {
-    let id = this.get("id");
-    assert(id != null, "Cannot save Engaged entity without an ID");
-    if (id) {
-      assert(
-        id.kind == ValueKind.STRING,
-        "Cannot save Engaged entity with non-string ID. " +
-          'Considering using .toHex() to convert the "id" to a string.'
-      );
-      store.set("Engaged", id.toString(), this);
-    }
-  }
-
-  static load(id: string): Engaged | null {
-    return changetype<Engaged | null>(store.get("Engaged", id));
-  }
-
-  get id(): string {
-    let value = this.get("id");
-    return value!.toString();
-  }
-
-  set id(value: string) {
-    this.set("id", Value.fromString(value));
-  }
-
-  get timestamp(): BigInt {
-    let value = this.get("timestamp");
-    return value!.toBigInt();
-  }
-
-  set timestamp(value: BigInt) {
-    this.set("timestamp", Value.fromBigInt(value));
-  }
-
-  get currentLeverageRatio(): BigInt {
-    let value = this.get("currentLeverageRatio");
-    return value!.toBigInt();
-  }
-
-  set currentLeverageRatio(value: BigInt) {
-    this.set("currentLeverageRatio", Value.fromBigInt(value));
-  }
-
-  get newLeverageRatio(): BigInt {
-    let value = this.get("newLeverageRatio");
-    return value!.toBigInt();
-  }
-
-  set newLeverageRatio(value: BigInt) {
-    this.set("newLeverageRatio", Value.fromBigInt(value));
-  }
-
-  get chunkRebalanceNotional(): BigInt {
-    let value = this.get("chunkRebalanceNotional");
-    return value!.toBigInt();
-  }
-
-  set chunkRebalanceNotional(value: BigInt) {
-    this.set("chunkRebalanceNotional", Value.fromBigInt(value));
-  }
-
-  get totalRebalanceNotional(): BigInt {
-    let value = this.get("totalRebalanceNotional");
-    return value!.toBigInt();
-  }
-
-  set totalRebalanceNotional(value: BigInt) {
-    this.set("totalRebalanceNotional", Value.fromBigInt(value));
-  }
-}
-
-export class ExchangeAdded extends Entity {
-  constructor(id: string) {
-    super();
-    this.set("id", Value.fromString(id));
-
-    this.set("exchangeName", Value.fromString(""));
-    this.set("twapMaxTradeSize", Value.fromBigInt(BigInt.zero()));
-    this.set("exchangeLastTradeTimestamp", Value.fromBigInt(BigInt.zero()));
-    this.set("incentivizedTwapMaxTradeSize", Value.fromBigInt(BigInt.zero()));
-    this.set("leverExchangeData", Value.fromBytes(Bytes.empty()));
-    this.set("deleverExchangeData", Value.fromBytes(Bytes.empty()));
-  }
-
-  save(): void {
-    let id = this.get("id");
-    assert(id != null, "Cannot save ExchangeAdded entity without an ID");
-    if (id) {
-      assert(
-        id.kind == ValueKind.STRING,
-        "Cannot save ExchangeAdded entity with non-string ID. " +
-          'Considering using .toHex() to convert the "id" to a string.'
-      );
-      store.set("ExchangeAdded", id.toString(), this);
-    }
-  }
-
-  static load(id: string): ExchangeAdded | null {
-    return changetype<ExchangeAdded | null>(store.get("ExchangeAdded", id));
-  }
-
-  get id(): string {
-    let value = this.get("id");
-    return value!.toString();
-  }
-
-  set id(value: string) {
-    this.set("id", Value.fromString(value));
-  }
-
-  get exchangeName(): string {
-    let value = this.get("exchangeName");
-    return value!.toString();
-  }
-
-  set exchangeName(value: string) {
-    this.set("exchangeName", Value.fromString(value));
-  }
-
-  get twapMaxTradeSize(): BigInt {
-    let value = this.get("twapMaxTradeSize");
-    return value!.toBigInt();
-  }
-
-  set twapMaxTradeSize(value: BigInt) {
-    this.set("twapMaxTradeSize", Value.fromBigInt(value));
-  }
-
-  get exchangeLastTradeTimestamp(): BigInt {
-    let value = this.get("exchangeLastTradeTimestamp");
-    return value!.toBigInt();
-  }
-
-  set exchangeLastTradeTimestamp(value: BigInt) {
-    this.set("exchangeLastTradeTimestamp", Value.fromBigInt(value));
-  }
-
-  get incentivizedTwapMaxTradeSize(): BigInt {
-    let value = this.get("incentivizedTwapMaxTradeSize");
-    return value!.toBigInt();
-  }
-
-  set incentivizedTwapMaxTradeSize(value: BigInt) {
-    this.set("incentivizedTwapMaxTradeSize", Value.fromBigInt(value));
-  }
-
-  get leverExchangeData(): Bytes {
-    let value = this.get("leverExchangeData");
-    return value!.toBytes();
-  }
-
-  set leverExchangeData(value: Bytes) {
-    this.set("leverExchangeData", Value.fromBytes(value));
-  }
-
-  get deleverExchangeData(): Bytes {
-    let value = this.get("deleverExchangeData");
-    return value!.toBytes();
-  }
-
-  set deleverExchangeData(value: Bytes) {
-    this.set("deleverExchangeData", Value.fromBytes(value));
-  }
-}
-
-export class ExchangeRemoved extends Entity {
-  constructor(id: string) {
-    super();
-    this.set("id", Value.fromString(id));
-
-    this.set("exchangeName", Value.fromString(""));
-  }
-
-  save(): void {
-    let id = this.get("id");
-    assert(id != null, "Cannot save ExchangeRemoved entity without an ID");
-    if (id) {
-      assert(
-        id.kind == ValueKind.STRING,
-        "Cannot save ExchangeRemoved entity with non-string ID. " +
-          'Considering using .toHex() to convert the "id" to a string.'
-      );
-      store.set("ExchangeRemoved", id.toString(), this);
-    }
-  }
-
-  static load(id: string): ExchangeRemoved | null {
-    return changetype<ExchangeRemoved | null>(store.get("ExchangeRemoved", id));
-  }
-
-  get id(): string {
-    let value = this.get("id");
-    return value!.toString();
-  }
-
-  set id(value: string) {
-    this.set("id", Value.fromString(value));
-  }
-
-  get exchangeName(): string {
-    let value = this.get("exchangeName");
-    return value!.toString();
-  }
-
-  set exchangeName(value: string) {
-    this.set("exchangeName", Value.fromString(value));
-  }
-}
-
-export class ExchangeUpdated extends Entity {
-  constructor(id: string) {
-    super();
-    this.set("id", Value.fromString(id));
-
-    this.set("exchangeName", Value.fromString(""));
-    this.set("twapMaxTradeSize", Value.fromBigInt(BigInt.zero()));
-    this.set("exchangeLastTradeTimestamp", Value.fromBigInt(BigInt.zero()));
-    this.set("incentivizedTwapMaxTradeSize", Value.fromBigInt(BigInt.zero()));
-    this.set("leverExchangeData", Value.fromBytes(Bytes.empty()));
-    this.set("deleverExchangeData", Value.fromBytes(Bytes.empty()));
-  }
-
-  save(): void {
-    let id = this.get("id");
-    assert(id != null, "Cannot save ExchangeUpdated entity without an ID");
-    if (id) {
-      assert(
-        id.kind == ValueKind.STRING,
-        "Cannot save ExchangeUpdated entity with non-string ID. " +
-          'Considering using .toHex() to convert the "id" to a string.'
-      );
-      store.set("ExchangeUpdated", id.toString(), this);
-    }
-  }
-
-  static load(id: string): ExchangeUpdated | null {
-    return changetype<ExchangeUpdated | null>(store.get("ExchangeUpdated", id));
-  }
-
-  get id(): string {
-    let value = this.get("id");
-    return value!.toString();
-  }
-
-  set id(value: string) {
-    this.set("id", Value.fromString(value));
-  }
-
-  get exchangeName(): string {
-    let value = this.get("exchangeName");
-    return value!.toString();
-  }
-
-  set exchangeName(value: string) {
-    this.set("exchangeName", Value.fromString(value));
-  }
-
-  get twapMaxTradeSize(): BigInt {
-    let value = this.get("twapMaxTradeSize");
-    return value!.toBigInt();
-  }
-
-  set twapMaxTradeSize(value: BigInt) {
-    this.set("twapMaxTradeSize", Value.fromBigInt(value));
-  }
-
-  get exchangeLastTradeTimestamp(): BigInt {
-    let value = this.get("exchangeLastTradeTimestamp");
-    return value!.toBigInt();
-  }
-
-  set exchangeLastTradeTimestamp(value: BigInt) {
-    this.set("exchangeLastTradeTimestamp", Value.fromBigInt(value));
-  }
-
-  get incentivizedTwapMaxTradeSize(): BigInt {
-    let value = this.get("incentivizedTwapMaxTradeSize");
-    return value!.toBigInt();
-  }
-
-  set incentivizedTwapMaxTradeSize(value: BigInt) {
-    this.set("incentivizedTwapMaxTradeSize", Value.fromBigInt(value));
-  }
-
-  get leverExchangeData(): Bytes {
-    let value = this.get("leverExchangeData");
-    return value!.toBytes();
-  }
-
-  set leverExchangeData(value: Bytes) {
-    this.set("leverExchangeData", Value.fromBytes(value));
-  }
-
-  get deleverExchangeData(): Bytes {
-    let value = this.get("deleverExchangeData");
-    return value!.toBytes();
-  }
-
-  set deleverExchangeData(value: Bytes) {
-    this.set("deleverExchangeData", Value.fromBytes(value));
-  }
-}
-
-export class ExecutionSettingsUpdated extends Entity {
-  constructor(id: string) {
-    super();
-    this.set("id", Value.fromString(id));
-
-    this.set("unutilizedLeveragePercentage", Value.fromBigInt(BigInt.zero()));
-    this.set("twapMaxTradeSize", Value.fromBigInt(BigInt.zero()));
-    this.set("twapCooldownPeriod", Value.fromBigInt(BigInt.zero()));
-    this.set("slippageTolerance", Value.fromBigInt(BigInt.zero()));
-    this.set("exchangeName", Value.fromString(""));
-    this.set("exchangeData", Value.fromBytes(Bytes.empty()));
-  }
-
-  save(): void {
-    let id = this.get("id");
-    assert(
-      id != null,
-      "Cannot save ExecutionSettingsUpdated entity without an ID"
-    );
-    if (id) {
-      assert(
-        id.kind == ValueKind.STRING,
-        "Cannot save ExecutionSettingsUpdated entity with non-string ID. " +
-          'Considering using .toHex() to convert the "id" to a string.'
-      );
-      store.set("ExecutionSettingsUpdated", id.toString(), this);
-    }
-  }
-
-  static load(id: string): ExecutionSettingsUpdated | null {
-    return changetype<ExecutionSettingsUpdated | null>(
-      store.get("ExecutionSettingsUpdated", id)
-    );
-  }
-
-  get id(): string {
-    let value = this.get("id");
-    return value!.toString();
-  }
-
-  set id(value: string) {
-    this.set("id", Value.fromString(value));
-  }
-
-  get unutilizedLeveragePercentage(): BigInt {
-    let value = this.get("unutilizedLeveragePercentage");
-    return value!.toBigInt();
-  }
-
-  set unutilizedLeveragePercentage(value: BigInt) {
-    this.set("unutilizedLeveragePercentage", Value.fromBigInt(value));
-  }
-
-  get twapMaxTradeSize(): BigInt {
-    let value = this.get("twapMaxTradeSize");
-    return value!.toBigInt();
-  }
-
-  set twapMaxTradeSize(value: BigInt) {
-    this.set("twapMaxTradeSize", Value.fromBigInt(value));
-  }
-
-  get twapCooldownPeriod(): BigInt {
-    let value = this.get("twapCooldownPeriod");
-    return value!.toBigInt();
-  }
-
-  set twapCooldownPeriod(value: BigInt) {
-    this.set("twapCooldownPeriod", Value.fromBigInt(value));
-  }
-
-  get slippageTolerance(): BigInt {
-    let value = this.get("slippageTolerance");
-    return value!.toBigInt();
-  }
-
-  set slippageTolerance(value: BigInt) {
-    this.set("slippageTolerance", Value.fromBigInt(value));
-  }
-
-  get exchangeName(): string {
-    let value = this.get("exchangeName");
-    return value!.toString();
-  }
-
-  set exchangeName(value: string) {
-    this.set("exchangeName", Value.fromString(value));
-  }
-
-  get exchangeData(): Bytes {
-    let value = this.get("exchangeData");
-    return value!.toBytes();
-  }
-
-  set exchangeData(value: Bytes) {
-    this.set("exchangeData", Value.fromBytes(value));
-  }
-}
-
-export class IncentiveSettingsUpdated extends Entity {
-  constructor(id: string) {
-    super();
-    this.set("id", Value.fromString(id));
-
-    this.set("etherReward", Value.fromBigInt(BigInt.zero()));
-    this.set("incentivizedLeverageRatio", Value.fromBigInt(BigInt.zero()));
-    this.set("incentivizedSlippageTolerance", Value.fromBigInt(BigInt.zero()));
-    this.set("incentivizedTwapCooldownPeriod", Value.fromBigInt(BigInt.zero()));
-    this.set("incentivizedTwapMaxTradeSize", Value.fromBigInt(BigInt.zero()));
-  }
-
-  save(): void {
-    let id = this.get("id");
-    assert(
-      id != null,
-      "Cannot save IncentiveSettingsUpdated entity without an ID"
-    );
-    if (id) {
-      assert(
-        id.kind == ValueKind.STRING,
-        "Cannot save IncentiveSettingsUpdated entity with non-string ID. " +
-          'Considering using .toHex() to convert the "id" to a string.'
-      );
-      store.set("IncentiveSettingsUpdated", id.toString(), this);
-    }
-  }
-
-  static load(id: string): IncentiveSettingsUpdated | null {
-    return changetype<IncentiveSettingsUpdated | null>(
-      store.get("IncentiveSettingsUpdated", id)
-    );
-  }
-
-  get id(): string {
-    let value = this.get("id");
-    return value!.toString();
-  }
-
-  set id(value: string) {
-    this.set("id", Value.fromString(value));
-  }
-
-  get etherReward(): BigInt {
-    let value = this.get("etherReward");
-    return value!.toBigInt();
-  }
-
-  set etherReward(value: BigInt) {
-    this.set("etherReward", Value.fromBigInt(value));
-  }
-
-  get incentivizedLeverageRatio(): BigInt {
-    let value = this.get("incentivizedLeverageRatio");
-    return value!.toBigInt();
-  }
-
-  set incentivizedLeverageRatio(value: BigInt) {
-    this.set("incentivizedLeverageRatio", Value.fromBigInt(value));
-  }
-
-  get incentivizedSlippageTolerance(): BigInt {
-    let value = this.get("incentivizedSlippageTolerance");
-    return value!.toBigInt();
-  }
-
-  set incentivizedSlippageTolerance(value: BigInt) {
-    this.set("incentivizedSlippageTolerance", Value.fromBigInt(value));
-  }
-
-  get incentivizedTwapCooldownPeriod(): BigInt {
-    let value = this.get("incentivizedTwapCooldownPeriod");
-    return value!.toBigInt();
-  }
-
-  set incentivizedTwapCooldownPeriod(value: BigInt) {
-    this.set("incentivizedTwapCooldownPeriod", Value.fromBigInt(value));
-  }
-
-  get incentivizedTwapMaxTradeSize(): BigInt {
-    let value = this.get("incentivizedTwapMaxTradeSize");
-    return value!.toBigInt();
-  }
-
-  set incentivizedTwapMaxTradeSize(value: BigInt) {
-    this.set("incentivizedTwapMaxTradeSize", Value.fromBigInt(value));
-  }
-}
-
-export class MethodologySettingsUpdated extends Entity {
-  constructor(id: string) {
-    super();
-    this.set("id", Value.fromString(id));
-
-    this.set("targetLeverageRatio", Value.fromBigInt(BigInt.zero()));
-    this.set("minLeverageRatio", Value.fromBigInt(BigInt.zero()));
-    this.set("maxLeverageRatio", Value.fromBigInt(BigInt.zero()));
-    this.set("recenteringSpeed", Value.fromBigInt(BigInt.zero()));
-    this.set("rebalanceInterval", Value.fromBigInt(BigInt.zero()));
-  }
-
-  save(): void {
-    let id = this.get("id");
-    assert(
-      id != null,
-      "Cannot save MethodologySettingsUpdated entity without an ID"
-    );
-    if (id) {
-      assert(
-        id.kind == ValueKind.STRING,
-        "Cannot save MethodologySettingsUpdated entity with non-string ID. " +
-          'Considering using .toHex() to convert the "id" to a string.'
-      );
-      store.set("MethodologySettingsUpdated", id.toString(), this);
-    }
-  }
-
-  static load(id: string): MethodologySettingsUpdated | null {
-    return changetype<MethodologySettingsUpdated | null>(
-      store.get("MethodologySettingsUpdated", id)
-    );
-  }
-
-  get id(): string {
-    let value = this.get("id");
-    return value!.toString();
-  }
-
-  set id(value: string) {
-    this.set("id", Value.fromString(value));
-  }
-
-  get targetLeverageRatio(): BigInt {
-    let value = this.get("targetLeverageRatio");
-    return value!.toBigInt();
-  }
-
-  set targetLeverageRatio(value: BigInt) {
-    this.set("targetLeverageRatio", Value.fromBigInt(value));
-  }
-
-  get minLeverageRatio(): BigInt {
-    let value = this.get("minLeverageRatio");
-    return value!.toBigInt();
-  }
-
-  set minLeverageRatio(value: BigInt) {
-    this.set("minLeverageRatio", Value.fromBigInt(value));
-  }
-
-  get maxLeverageRatio(): BigInt {
-    let value = this.get("maxLeverageRatio");
-    return value!.toBigInt();
-  }
-
-  set maxLeverageRatio(value: BigInt) {
-    this.set("maxLeverageRatio", Value.fromBigInt(value));
-  }
-
-  get recenteringSpeed(): BigInt {
-    let value = this.get("recenteringSpeed");
-    return value!.toBigInt();
-  }
-
-  set recenteringSpeed(value: BigInt) {
-    this.set("recenteringSpeed", Value.fromBigInt(value));
-  }
-
-  get rebalanceInterval(): BigInt {
-    let value = this.get("rebalanceInterval");
-    return value!.toBigInt();
-  }
-
-  set rebalanceInterval(value: BigInt) {
-    this.set("rebalanceInterval", Value.fromBigInt(value));
-  }
-}
-
 export class RipcordCalled extends Entity {
   constructor(id: string) {
     super();
@@ -2078,5 +1401,169 @@ export class StreamingFee extends Entity {
     } else {
       this.set("newFeeRecipient", Value.fromBytes(<Bytes>value));
     }
+  }
+}
+
+export class SimpleIndexTokenIssuance extends Entity {
+  constructor(id: string) {
+    super();
+    this.set("id", Value.fromString(id));
+
+    this.set("buyerAddress", Value.fromBytes(Bytes.empty()));
+    this.set("SimpleIndexToken", Value.fromString(""));
+    this.set("quantity", Value.fromBigInt(BigInt.zero()));
+    this.set("issuer", Value.fromString(""));
+    this.set("transaction", Value.fromString(""));
+  }
+
+  save(): void {
+    let id = this.get("id");
+    assert(
+      id != null,
+      "Cannot save SimpleIndexTokenIssuance entity without an ID"
+    );
+    if (id) {
+      assert(
+        id.kind == ValueKind.STRING,
+        "Cannot save SimpleIndexTokenIssuance entity with non-string ID. " +
+          'Considering using .toHex() to convert the "id" to a string.'
+      );
+      store.set("SimpleIndexTokenIssuance", id.toString(), this);
+    }
+  }
+
+  static load(id: string): SimpleIndexTokenIssuance | null {
+    return changetype<SimpleIndexTokenIssuance | null>(
+      store.get("SimpleIndexTokenIssuance", id)
+    );
+  }
+
+  get id(): string {
+    let value = this.get("id");
+    return value!.toString();
+  }
+
+  set id(value: string) {
+    this.set("id", Value.fromString(value));
+  }
+
+  get buyerAddress(): Bytes {
+    let value = this.get("buyerAddress");
+    return value!.toBytes();
+  }
+
+  set buyerAddress(value: Bytes) {
+    this.set("buyerAddress", Value.fromBytes(value));
+  }
+
+  get SimpleIndexToken(): string {
+    let value = this.get("SimpleIndexToken");
+    return value!.toString();
+  }
+
+  set SimpleIndexToken(value: string) {
+    this.set("SimpleIndexToken", Value.fromString(value));
+  }
+
+  get quantity(): BigInt {
+    let value = this.get("quantity");
+    return value!.toBigInt();
+  }
+
+  set quantity(value: BigInt) {
+    this.set("quantity", Value.fromBigInt(value));
+  }
+
+  get issuer(): string {
+    let value = this.get("issuer");
+    return value!.toString();
+  }
+
+  set issuer(value: string) {
+    this.set("issuer", Value.fromString(value));
+  }
+
+  get transaction(): string {
+    let value = this.get("transaction");
+    return value!.toString();
+  }
+
+  set transaction(value: string) {
+    this.set("transaction", Value.fromString(value));
+  }
+}
+
+export class SimpleIndexToken extends Entity {
+  constructor(id: string) {
+    super();
+    this.set("id", Value.fromString(id));
+
+    this.set("address", Value.fromBytes(Bytes.empty()));
+    this.set("name", Value.fromString(""));
+    this.set("totalSupply", Value.fromBigInt(BigInt.zero()));
+  }
+
+  save(): void {
+    let id = this.get("id");
+    assert(id != null, "Cannot save SimpleIndexToken entity without an ID");
+    if (id) {
+      assert(
+        id.kind == ValueKind.STRING,
+        "Cannot save SimpleIndexToken entity with non-string ID. " +
+          'Considering using .toHex() to convert the "id" to a string.'
+      );
+      store.set("SimpleIndexToken", id.toString(), this);
+    }
+  }
+
+  static load(id: string): SimpleIndexToken | null {
+    return changetype<SimpleIndexToken | null>(
+      store.get("SimpleIndexToken", id)
+    );
+  }
+
+  get id(): string {
+    let value = this.get("id");
+    return value!.toString();
+  }
+
+  set id(value: string) {
+    this.set("id", Value.fromString(value));
+  }
+
+  get address(): Bytes {
+    let value = this.get("address");
+    return value!.toBytes();
+  }
+
+  set address(value: Bytes) {
+    this.set("address", Value.fromBytes(value));
+  }
+
+  get name(): string {
+    let value = this.get("name");
+    return value!.toString();
+  }
+
+  set name(value: string) {
+    this.set("name", Value.fromString(value));
+  }
+
+  get issuances(): Array<string> {
+    let value = this.get("issuances");
+    return value!.toStringArray();
+  }
+
+  set issuances(value: Array<string>) {
+    this.set("issuances", Value.fromStringArray(value));
+  }
+
+  get totalSupply(): BigInt {
+    let value = this.get("totalSupply");
+    return value!.toBigInt();
+  }
+
+  set totalSupply(value: BigInt) {
+    this.set("totalSupply", Value.fromBigInt(value));
   }
 }

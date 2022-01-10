@@ -21,8 +21,8 @@ dataSources:
           file: FlexibleLeverageStrategyAdapter/abis/SetToken.json
         - name: FlexibleLeverageStrategyAdapter
           file: FlexibleLeverageStrategyAdapter/abis/FlexibleLeverageStrategyAdapter.json
-        - name: BaseManagerEth
-          file: FlexibleLeverageStrategyAdapter/abis/BaseManagerEth.json
+        - name: BaseManagerV1
+          file: FlexibleLeverageStrategyAdapter/abis/BaseManagerV1.json
       eventHandlers:
         - event: RebalanceIterated(uint256,uint256,uint256,uint256)
           handler: handleRebalanceIterated
@@ -50,8 +50,8 @@ dataSources:
           file: FlexibleLeverageStrategyAdapterV2/abis/SetToken.json
         - name: FlexibleLeverageStrategyAdapterV2
           file: FlexibleLeverageStrategyAdapterV2/abis/FlexibleLeverageStrategyAdapterV2.json
-        - name: BaseManagerEth
-          file: FlexibleLeverageStrategyAdapterV2/abis/BaseManagerEth.json
+        - name: BaseManagerV1
+          file: FlexibleLeverageStrategyAdapterV2/abis/BaseManagerV1.json
       eventHandlers:
         - event: RebalanceIterated(uint256,uint256,uint256,uint256)
           handler: handleRebalanceIterated
@@ -75,8 +75,8 @@ dataSources:
           file: FlexibleLeverageStrategyExtension/abis/FlexibleLeverageStrategyExtension.json
         - name: SetToken
           file: FlexibleLeverageStrategyExtension/abis/SetToken.json
-        - name: BaseManagerEth
-          file: FlexibleLeverageStrategyExtension/abis/BaseManagerEth.json
+        - name: BaseManagerV1
+          file: FlexibleLeverageStrategyExtension/abis/BaseManagerV1.json
       apiVersion: 0.0.5
       entities:
         - Rebalance
@@ -150,6 +150,32 @@ dataSources:
           handler: handleSetTokenRedeemed
       file: DebtIssuanceModule/DebtIssuanceModule.wasm
   - kind: ethereum/contract
+    name: BasicIssuanceModule
+    network: mainnet
+    source:
+      address: "0xd8EF3cACe8b4907117a45B0b125c68560532F94D"
+      abi: BasicIssuanceModule
+      startBlock: 10830505
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.5
+      language: wasm/assemblyscript
+      entities:
+        - SimpleIndexTokenRedeemed
+        - SimpleIndexToken
+        - Issuer
+        - SimpleIndexTokenIssuance
+        - Transaction
+      abis:
+        - name: BasicIssuanceModule
+          file: BasicIssuanceModule/abis/BasicIssuanceModule.json
+        - name: SetToken
+          file: BasicIssuanceModule/abis/SetToken.json
+      eventHandlers:
+        - event: SetTokenIssued(indexed address,indexed address,indexed address,address,uint256)
+          handler: handleSimpleIndexTokenIssued
+      file: DebtIssuanceModule/DebtIssuanceModule.wasm
+  - kind: ethereum/contract
     name: StreamingFeeModule
     network: mainnet
     source:
@@ -191,8 +217,8 @@ dataSources:
           file: FlexibleLeverageStrategyAdapterBTC/abis/SetToken.json
         - name: FlexibleLeverageStrategyAdapterBTC
           file: FlexibleLeverageStrategyAdapterBTC/abis/FlexibleLeverageStrategyAdapter.json
-        - name: BaseManagerEth
-          file: FlexibleLeverageStrategyAdapterBTC/abis/BaseManagerEth.json
+        - name: BaseManagerV1
+          file: FlexibleLeverageStrategyAdapterBTC/abis/BaseManagerV1.json
       eventHandlers:
         - event: RebalanceIterated(uint256,uint256,uint256,uint256)
           handler: handleRebalanceIteratedBTC
@@ -220,8 +246,8 @@ dataSources:
           file: FlexibleLeverageStrategyAdapterBTCV2/abis/SetToken.json
         - name: FlexibleLeverageStrategyAdapterBTCV2
           file: FlexibleLeverageStrategyAdapterBTCV2/abis/FlexibleLeverageStrategyAdapterV2.json
-        - name: BaseManagerEth
-          file: FlexibleLeverageStrategyAdapterBTCV2/abis/BaseManagerEth.json
+        - name: BaseManagerV1
+          file: FlexibleLeverageStrategyAdapterBTCV2/abis/BaseManagerV1.json
       eventHandlers:
         - event: RebalanceIterated(uint256,uint256,uint256,uint256)
           handler: handleRebalanceIteratedBTC
@@ -245,8 +271,8 @@ dataSources:
           file: FlexibleLeverageStrategyExtensionBTC/abis/FlexibleLeverageStrategyExtension.json
         - name: SetToken
           file: FlexibleLeverageStrategyExtensionBTC/abis/SetToken.json
-        - name: BaseManagerEth
-          file: FlexibleLeverageStrategyExtensionBTC/abis/BaseManagerEth.json
+        - name: BaseManagerV1
+          file: FlexibleLeverageStrategyExtensionBTC/abis/BaseManagerV1.json
       apiVersion: 0.0.5
       entities:
         - Rebalance

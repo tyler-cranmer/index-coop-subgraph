@@ -8,6 +8,7 @@ import {
   Component,
   TokenRedemption,
   RebalanceDetails,
+  SimpleIndexTokenIssuance,
 } from '../../generated/schema';
 
 export const createFee = (
@@ -50,6 +51,7 @@ export const createIssuance = (
   issuanceEntity.quantity = quantity;
   return issuanceEntity;
 };
+
 
 export const createTxn = (
   id: string,
@@ -110,4 +112,17 @@ export const createRebalanceDetails = (
   entity.chunkRebalanceNotional = _chunkRebalanceNotional;
   entity.totalRebalanceNotional = _totalRebalanceNotional;
   return entity;
+};
+
+
+/* Simple Index Token Helper Functions */
+export const createSimpleIssuance = (
+  id: string,
+  buyerAddress: Bytes,
+  quantity: BigInt
+): SimpleIndexTokenIssuance => {
+  let issuanceEntity = new SimpleIndexTokenIssuance(id);
+  issuanceEntity.buyerAddress = buyerAddress;
+  issuanceEntity.quantity = quantity;
+  return issuanceEntity;
 };

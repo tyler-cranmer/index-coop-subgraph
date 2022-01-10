@@ -6,13 +6,12 @@ import {
   Bytes,
   log,
 } from '@graphprotocol/graph-ts';
-import { Manager } from '../../generated/schema';
 import { SetToken } from '../../generated/SetToken/SetToken';
-import { BaseManagerEth } from '../../generated/FlexibleLeverageStrategyExtension/BaseManagerEth';
+import { BaseManagerV1 } from '../../generated/FlexibleLeverageStrategyExtension/BaseManagerV1';
 
 // fetches the basemanager token address for FLIadapters"
 export function fetchBaseManagerSetToken(baseManagerAddress: Address): string {
-  let baseMan = BaseManagerEth.bind(baseManagerAddress);
+  let baseMan = BaseManagerV1.bind(baseManagerAddress);
   let token = baseMan.setToken();
 
   return token.toHexString();
