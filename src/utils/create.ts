@@ -4,12 +4,25 @@ import {
   Fee,
   TokenIssuance,
   Transaction,
-  Issuer,
   Component,
   TokenRedemption,
   RebalanceDetails,
   SimpleIndexTokenIssuance,
+  TotalSupply
 } from '../../generated/schema';
+
+export const createTotalSupply = (
+  id: string,
+  timestamp: BigInt,
+  quantity: BigInt,
+  setToken: string
+): TotalSupply => {
+  let totalSupply = new TotalSupply(id);
+  totalSupply.timestamp = timestamp;
+  totalSupply.quantity = quantity;
+  totalSupply.setToken = setToken;
+  return totalSupply;
+};
 
 export const createFee = (
   id: string,
@@ -68,12 +81,6 @@ export const createTxn = (
   txnObject.gasLimit = gasLimit;
   txnObject.gasPriceInGwei = gasPrice;
   return txnObject;
-};
-
-export const createIssuer = (address: Address): Issuer => {
-  let newIssuer = new Issuer(address.toHexString());
-  newIssuer.address = address;
-  return newIssuer;
 };
 
 export const createRedemption = (

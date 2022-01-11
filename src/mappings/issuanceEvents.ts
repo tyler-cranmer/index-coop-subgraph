@@ -37,6 +37,7 @@ import {
   createRedemption,
   createComponent,
   createSimpleIssuance,
+  createTotalSupply
 } from '../utils/create';
 
 export function handleFeeRecipientUpdated(
@@ -120,6 +121,14 @@ export function handleSetTokenIssued(event: SetTokenIssuedEvent): void {
   feeEntity.manager = currentManager.id;
   feeEntity.save();
 
+  let currentTotalSupplyEntity = createTotalSupply(
+    createGenericId(event),
+    timestamp,
+    currentSetTokenContract.totalSupply(),
+    setTokenAddress.toHexString()
+  );
+  currentTotalSupplyEntity.save();
+
   let setTokenEntity = SetToken.load(setTokenAddress.toHexString());
   if (setTokenEntity == null) {
     setTokenEntity = new SetToken(setTokenAddress.toHexString());
@@ -128,7 +137,6 @@ export function handleSetTokenIssued(event: SetTokenIssuedEvent): void {
     // NESTED ENTITY --> set using entity.id
     setTokenEntity.manager = currentManager.id;
     // NESTED ENTITY --> set using entity.id
-    setTokenEntity.totalSupply = BigInt.fromI32(0);
     setTokenEntity.components = [];
   }
 

@@ -123,7 +123,8 @@ dataSources:
       entities:
         - SetTokenRedeemed
         - SetToken
-        - Issuer
+        - TokenIssuance
+        - TotalSupply
       abis:
         - name: BasicIssuanceModule
           file: ./abis/BasicIssuanceModule.json
@@ -161,7 +162,6 @@ dataSources:
       entities:
         - SimpleIndexTokenRedeemed
         - SimpleIndexToken
-        - Issuer
         - SimpleIndexTokenIssuance
         - Transaction
       abis:
