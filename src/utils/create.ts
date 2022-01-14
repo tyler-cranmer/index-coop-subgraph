@@ -8,7 +8,8 @@ import {
   TokenRedemption,
   RebalanceDetails,
   SimpleIndexTokenIssuance,
-  TotalSupply
+  TotalSupply,
+  TotalSupplySI
 } from '../../generated/schema';
 
 export const createTotalSupply = (
@@ -39,7 +40,7 @@ export const createFee = (
 
 export const createManager = (id: string, address: Address): Manager => {
   let manager = new Manager(id);
-  manager.address = address;
+  manager.setTokenAddress = address;
   manager.totalFees = BigInt.fromI32(0);
   // manager.setToken = address.toHexString();
   return manager;
@@ -132,4 +133,18 @@ export const createSimpleIssuance = (
   issuanceEntity.buyerAddress = buyerAddress;
   issuanceEntity.quantity = quantity;
   return issuanceEntity;
+};
+
+
+export const createTotalSupplySI = (
+  id: string,
+  timestamp: BigInt,
+  quantity: BigInt,
+  setToken: string
+): TotalSupplySI => {
+  let totalSupply = new TotalSupplySI(id);
+  totalSupply.timestamp = timestamp;
+  totalSupply.quantity = quantity;
+  totalSupply.setToken = setToken;
+  return totalSupply;
 };

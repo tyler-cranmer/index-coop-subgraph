@@ -199,7 +199,7 @@ export class Manager extends Entity {
     super();
     this.set("id", Value.fromString(id));
 
-    this.set("address", Value.fromBytes(Bytes.empty()));
+    this.set("setTokenAddress", Value.fromBytes(Bytes.empty()));
   }
 
   save(): void {
@@ -228,13 +228,13 @@ export class Manager extends Entity {
     this.set("id", Value.fromString(value));
   }
 
-  get address(): Bytes {
-    let value = this.get("address");
+  get setTokenAddress(): Bytes {
+    let value = this.get("setTokenAddress");
     return value!.toBytes();
   }
 
-  set address(value: Bytes) {
-    this.set("address", Value.fromBytes(value));
+  set setTokenAddress(value: Bytes) {
+    this.set("setTokenAddress", Value.fromBytes(value));
   }
 
   get feeAccrualHistory(): Array<string> {
@@ -1418,7 +1418,7 @@ export class SimpleIndexTokenIssuance extends Entity {
     this.set("id", Value.fromString(id));
 
     this.set("buyerAddress", Value.fromBytes(Bytes.empty()));
-    this.set("SimpleIndexToken", Value.fromString(""));
+    this.set("setToken", Value.fromString(""));
     this.set("quantity", Value.fromBigInt(BigInt.zero()));
     this.set("transaction", Value.fromString(""));
     this.set("fee", Value.fromString(""));
@@ -1464,13 +1464,13 @@ export class SimpleIndexTokenIssuance extends Entity {
     this.set("buyerAddress", Value.fromBytes(value));
   }
 
-  get SimpleIndexToken(): string {
-    let value = this.get("SimpleIndexToken");
+  get setToken(): string {
+    let value = this.get("setToken");
     return value!.toString();
   }
 
-  set SimpleIndexToken(value: string) {
-    this.set("SimpleIndexToken", Value.fromString(value));
+  set setToken(value: string) {
+    this.set("setToken", Value.fromString(value));
   }
 
   get quantity(): BigInt {
@@ -1509,7 +1509,6 @@ export class SimpleIndexToken extends Entity {
     this.set("address", Value.fromBytes(Bytes.empty()));
     this.set("name", Value.fromString(""));
     this.set("manager", Value.fromString(""));
-    this.set("totalSupply", Value.fromBigInt(BigInt.zero()));
   }
 
   save(): void {
@@ -1576,13 +1575,30 @@ export class SimpleIndexToken extends Entity {
     this.set("issuances", Value.fromStringArray(value));
   }
 
-  get totalSupply(): BigInt {
+  get totalSupply(): Array<string> {
     let value = this.get("totalSupply");
-    return value!.toBigInt();
+    return value!.toStringArray();
   }
 
-  set totalSupply(value: BigInt) {
-    this.set("totalSupply", Value.fromBigInt(value));
+  set totalSupply(value: Array<string>) {
+    this.set("totalSupply", Value.fromStringArray(value));
+  }
+
+  get rebalances(): Array<string> | null {
+    let value = this.get("rebalances");
+    if (!value || value.kind == ValueKind.NULL) {
+      return null;
+    } else {
+      return value.toStringArray();
+    }
+  }
+
+  set rebalances(value: Array<string> | null) {
+    if (!value) {
+      this.unset("rebalances");
+    } else {
+      this.set("rebalances", Value.fromStringArray(<Array<string>>value));
+    }
   }
 }
 
@@ -1591,7 +1607,7 @@ export class SimpleIndexTokenRedeemed extends Entity {
     super();
     this.set("id", Value.fromString(id));
 
-    this.set("SimpleIndexToken", Value.fromBytes(Bytes.empty()));
+    this.set("setToken", Value.fromBytes(Bytes.empty()));
     this.set("redeemer", Value.fromBytes(Bytes.empty()));
     this.set("to", Value.fromBytes(Bytes.empty()));
     this.set("transaction", Value.fromString(""));
@@ -1629,13 +1645,13 @@ export class SimpleIndexTokenRedeemed extends Entity {
     this.set("id", Value.fromString(value));
   }
 
-  get SimpleIndexToken(): Bytes {
-    let value = this.get("SimpleIndexToken");
+  get setToken(): Bytes {
+    let value = this.get("setToken");
     return value!.toBytes();
   }
 
-  set SimpleIndexToken(value: Bytes) {
-    this.set("SimpleIndexToken", Value.fromBytes(value));
+  set setToken(value: Bytes) {
+    this.set("setToken", Value.fromBytes(value));
   }
 
   get redeemer(): Bytes {
@@ -1672,5 +1688,214 @@ export class SimpleIndexTokenRedeemed extends Entity {
 
   set quantity(value: BigInt) {
     this.set("quantity", Value.fromBigInt(value));
+  }
+}
+
+export class SimpleIndexRebalance extends Entity {
+  constructor(id: string) {
+    super();
+    this.set("id", Value.fromString(id));
+
+    this.set("setToken", Value.fromString(""));
+    this.set("rebalanceDetails", Value.fromString(""));
+    this.set("transaction", Value.fromString(""));
+    this.set("transactionHash", Value.fromBytes(Bytes.empty()));
+  }
+
+  save(): void {
+    let id = this.get("id");
+    assert(id != null, "Cannot save SimpleIndexRebalance entity without an ID");
+    if (id) {
+      assert(
+        id.kind == ValueKind.STRING,
+        "Cannot save SimpleIndexRebalance entity with non-string ID. " +
+          'Considering using .toHex() to convert the "id" to a string.'
+      );
+      store.set("SimpleIndexRebalance", id.toString(), this);
+    }
+  }
+
+  static load(id: string): SimpleIndexRebalance | null {
+    return changetype<SimpleIndexRebalance | null>(
+      store.get("SimpleIndexRebalance", id)
+    );
+  }
+
+  get id(): string {
+    let value = this.get("id");
+    return value!.toString();
+  }
+
+  set id(value: string) {
+    this.set("id", Value.fromString(value));
+  }
+
+  get setToken(): string {
+    let value = this.get("setToken");
+    return value!.toString();
+  }
+
+  set setToken(value: string) {
+    this.set("setToken", Value.fromString(value));
+  }
+
+  get rebalanceDetails(): string {
+    let value = this.get("rebalanceDetails");
+    return value!.toString();
+  }
+
+  set rebalanceDetails(value: string) {
+    this.set("rebalanceDetails", Value.fromString(value));
+  }
+
+  get transaction(): string {
+    let value = this.get("transaction");
+    return value!.toString();
+  }
+
+  set transaction(value: string) {
+    this.set("transaction", Value.fromString(value));
+  }
+
+  get transactionHash(): Bytes {
+    let value = this.get("transactionHash");
+    return value!.toBytes();
+  }
+
+  set transactionHash(value: Bytes) {
+    this.set("transactionHash", Value.fromBytes(value));
+  }
+}
+
+export class SimpleIndexRebalanceDetails extends Entity {
+  constructor(id: string) {
+    super();
+    this.set("id", Value.fromString(id));
+
+    this.set("components", Value.fromBytesArray(new Array(0)));
+    this.set("targetUnits", Value.fromBigIntArray(new Array(0)));
+    this.set("positionMultiplier", Value.fromBigInt(BigInt.zero()));
+  }
+
+  save(): void {
+    let id = this.get("id");
+    assert(
+      id != null,
+      "Cannot save SimpleIndexRebalanceDetails entity without an ID"
+    );
+    if (id) {
+      assert(
+        id.kind == ValueKind.STRING,
+        "Cannot save SimpleIndexRebalanceDetails entity with non-string ID. " +
+          'Considering using .toHex() to convert the "id" to a string.'
+      );
+      store.set("SimpleIndexRebalanceDetails", id.toString(), this);
+    }
+  }
+
+  static load(id: string): SimpleIndexRebalanceDetails | null {
+    return changetype<SimpleIndexRebalanceDetails | null>(
+      store.get("SimpleIndexRebalanceDetails", id)
+    );
+  }
+
+  get id(): string {
+    let value = this.get("id");
+    return value!.toString();
+  }
+
+  set id(value: string) {
+    this.set("id", Value.fromString(value));
+  }
+
+  get components(): Array<Bytes> {
+    let value = this.get("components");
+    return value!.toBytesArray();
+  }
+
+  set components(value: Array<Bytes>) {
+    this.set("components", Value.fromBytesArray(value));
+  }
+
+  get targetUnits(): Array<BigInt> {
+    let value = this.get("targetUnits");
+    return value!.toBigIntArray();
+  }
+
+  set targetUnits(value: Array<BigInt>) {
+    this.set("targetUnits", Value.fromBigIntArray(value));
+  }
+
+  get positionMultiplier(): BigInt {
+    let value = this.get("positionMultiplier");
+    return value!.toBigInt();
+  }
+
+  set positionMultiplier(value: BigInt) {
+    this.set("positionMultiplier", Value.fromBigInt(value));
+  }
+}
+
+export class TotalSupplySI extends Entity {
+  constructor(id: string) {
+    super();
+    this.set("id", Value.fromString(id));
+
+    this.set("timestamp", Value.fromBigInt(BigInt.zero()));
+    this.set("quantity", Value.fromBigInt(BigInt.zero()));
+    this.set("setToken", Value.fromString(""));
+  }
+
+  save(): void {
+    let id = this.get("id");
+    assert(id != null, "Cannot save TotalSupplySI entity without an ID");
+    if (id) {
+      assert(
+        id.kind == ValueKind.STRING,
+        "Cannot save TotalSupplySI entity with non-string ID. " +
+          'Considering using .toHex() to convert the "id" to a string.'
+      );
+      store.set("TotalSupplySI", id.toString(), this);
+    }
+  }
+
+  static load(id: string): TotalSupplySI | null {
+    return changetype<TotalSupplySI | null>(store.get("TotalSupplySI", id));
+  }
+
+  get id(): string {
+    let value = this.get("id");
+    return value!.toString();
+  }
+
+  set id(value: string) {
+    this.set("id", Value.fromString(value));
+  }
+
+  get timestamp(): BigInt {
+    let value = this.get("timestamp");
+    return value!.toBigInt();
+  }
+
+  set timestamp(value: BigInt) {
+    this.set("timestamp", Value.fromBigInt(value));
+  }
+
+  get quantity(): BigInt {
+    let value = this.get("quantity");
+    return value!.toBigInt();
+  }
+
+  set quantity(value: BigInt) {
+    this.set("quantity", Value.fromBigInt(value));
+  }
+
+  get setToken(): string {
+    let value = this.get("setToken");
+    return value!.toString();
+  }
+
+  set setToken(value: string) {
+    this.set("setToken", Value.fromString(value));
   }
 }

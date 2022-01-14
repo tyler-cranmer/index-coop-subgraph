@@ -37,7 +37,8 @@ import {
   createRedemption,
   createComponent,
   createSimpleIssuance,
-  createTotalSupply
+  createTotalSupply,
+  createTotalSupplySI
 } from '../utils/create';
 
 export function handleFeeRecipientUpdated(
@@ -218,7 +219,6 @@ export function handleSimpleIndexTokenIssued(
     '0x72e364F2ABdC788b7E918bc238B21f109Cd634D7'
   );
   let setTokenAddress: Address = event.params._setToken;
-
   if (
     setTokenAddress == DPI ||
     setTokenAddress == BED ||
@@ -253,7 +253,7 @@ export function handleSimpleIndexTokenIssued(
     );
 
     issuanceEntity.transaction = txn.id;
-    issuanceEntity.SimpleIndexToken = setTokenAddress.toHexString();
+    issuanceEntity.setToken = setTokenAddress.toHexString();
     issuanceEntity.save();
 
     let currentSimpleIndexContract = bindTokenAddress(setTokenAddress);
@@ -268,6 +268,14 @@ export function handleSimpleIndexTokenIssued(
     feeEntity.manager = currentManager.id;
     feeEntity.save();
 
+    let currentTotalSupplyEntity = createTotalSupplySI(
+      createGenericId(event),
+      timestamp,
+      currentSimpleIndexContract.totalSupply(),
+      setTokenAddress.toHexString()
+    );
+    currentTotalSupplyEntity.save();
+
     let simpleIndexTokenEntity = SimpleIndexToken.load(
       setTokenAddress.toHexString()
     );
@@ -279,7 +287,6 @@ export function handleSimpleIndexTokenIssued(
     simpleIndexTokenEntity.address = setTokenAddress;
     simpleIndexTokenEntity.name = currentSimpleIndexContract.name();
     simpleIndexTokenEntity.manager = currentManager.id;
-    simpleIndexTokenEntity.totalSupply = currentSimpleIndexContract.totalSupply();
     simpleIndexTokenEntity.save();
   }
 }
@@ -313,7 +320,7 @@ export function handleSimpleIndexTokenRedeemed(
     event.params._redeemer,
     event.params._quantity
   );
-  entity.SimpleIndexToken = setTokenAddress.toHexString();
+  entity.setToken = setTokenAddress.toHexString();
   entity.quantity = event.params._quantity;
   entity.save();
 }

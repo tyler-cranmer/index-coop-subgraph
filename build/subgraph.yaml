@@ -288,3 +288,27 @@ dataSources:
         - event: RipcordCalled(uint256,uint256,uint256,uint256)
           handler: handleRipcordCalledBTC
       file: FlexibleLeverageStrategyExtension/FlexibleLeverageStrategyExtension.wasm
+  - kind: ethereum/contract
+    network: mainnet
+    name: GeneralIndexModule
+    source:
+      abi: GeneralIndexModule
+      address: "0x84cE03AE547330f61584aD6103743732B1AE97C5"
+      startBlock: 12928622
+    mapping:
+      kind: ethereum/events
+      language: wasm/assemblyscript
+      abis:
+        - name: GeneralIndexModule
+          file: GeneralIndexModule/abis/GeneralIndexModule.json
+        - name: SetToken
+          file: GeneralIndexModule/abis/SetToken.json
+        - name: BaseManagerV2
+          file: GeneralIndexModule/abis/BaseManagerV2.json
+      apiVersion: 0.0.5
+      entities:
+        - SimpleIndexRebalance
+      eventHandlers:
+        - event: RebalanceStarted(indexed address,address[],uint256[],indexed uint256)
+          handler: handleRebalanceStarted
+      file: FlexibleLeverageStrategyAdapter/FlexibleLeverageStrategyAdapter.wasm

@@ -1,4 +1,4 @@
-import { dataSource, log } from '@graphprotocol/graph-ts';
+import { dataSource, Address , Bytes, ByteArray } from '@graphprotocol/graph-ts';
 import {
   RebalanceIterated as RebalanceIteratedEvent,
   Rebalanced as RebalancedEvent,
@@ -13,11 +13,17 @@ import {
   FlexibleLeverageStrategyAdapterBTC,
 } from '../../generated/FlexibleLeverageStrategyAdapterBTC/FlexibleLeverageStrategyAdapterBTC';
 
+import { RebalanceStarted as RebalanceStartedEvent} from '../../generated/GeneralIndexModule/GeneralIndexModule';
+
 import {
   RipcordCalled,
   Transfer as TransferEntity,
   Rebalance,
   Transaction,
+  SimpleIndexTokenRedeemed,
+  SimpleIndexRebalance,
+  SimpleIndexRebalanceDetails,
+  SimpleIndexToken
 } from '../../generated/schema';
 import { Transfer } from '../../generated/SetToken/SetToken';
 import { createGenericId } from '../utils/index';
@@ -150,6 +156,7 @@ export function handleRebalanceIteratedBTC(
          entity.save();
        }
 
+
 export function handleRebalanceBTC(event: RebalancedEventBTC): void {
          const id = createGenericId(event);
          let c = FlexibleLeverageStrategyAdapterBTC.bind(dataSource.address());
@@ -190,4 +197,46 @@ export function handleRipcordCalledBTC(event: RipcordCalledEventBTC): void {
          entity.rebalanceNotional = event.params._rebalanceNotional;
          entity.etherIncentive = event.params._etherIncentive;
          entity.save();
-       }
+}
+       
+
+/******************************************************************/
+/*************** Simple Index Rebalance Events ************************/
+/******************************************************************/
+
+export function handleRebalanceStarted(event: RebalanceStartedEvent): void {
+  const id = createGenericId(event);
+  const setTokenAddress = event.params._setToken
+  const SimpleIndexTokenEntity = SimpleIndexToken.load(setTokenAddress.toHexString())
+
+  if (SimpleIndexTokenEntity !== null) {
+    let entity = new SimpleIndexRebalance(
+      `${id}--${event.block.timestamp.toHexString()}`
+    );
+
+    const txn = new Transaction(
+      event.transaction.hash.toHex() + '--' + 'rebalance-txn'
+    );
+    txn.timestamp = event.block.timestamp;
+    txn.gasLimit = event.transaction.gasLimit;
+    txn.gasPriceInGwei = event.transaction.gasPrice;
+    txn.save();
+
+    let rebalanceDetailsEntity = new SimpleIndexRebalanceDetails(id);
+    rebalanceDetailsEntity.targetUnits = event.params.aggregateTargetUnits;
+    rebalanceDetailsEntity.positionMultiplier = event.params.positionMultiplier;
+    
+    // rebalanceDetailsEntity.components = event.params
+    //   .aggregateComponents as Array<Address>;
+
+    rebalanceDetailsEntity.save();
+    entity.transaction = txn.id;
+    entity.transactionHash = event.transaction.hash;
+    entity.setToken = setTokenAddress.toHexString();
+    entity.rebalanceDetails = rebalanceDetailsEntity.id;
+    entity.save();
+
+  }
+  
+
+}

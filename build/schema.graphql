@@ -21,7 +21,7 @@ type TotalSupply @entity {
 
 type Manager @entity {
   id: ID!
-  address: Bytes! #currently set to the settoken address....
+  setTokenAddress: Bytes! #currently set to the settoken address....
   feeAccrualHistory: [Fee!]! @derivedFrom(field: "manager")
   totalFees: BigInt
   # setToken: SetToken! # might want to take out. creates infinite loop from setToken
@@ -144,15 +144,13 @@ type RipcordCalled @entity {
   etherIncentive: BigInt! # uint256
 }
 
-
-
 ###########################################
 ###########################################
 ###########################################
 type SimpleIndexTokenIssuance @entity {
   id: ID!
   buyerAddress: Bytes!
-  SimpleIndexToken: SimpleIndexToken!
+  setToken: SimpleIndexToken!
   quantity: BigInt!
   transaction: Transaction!
   fee: Fee!
@@ -164,15 +162,38 @@ type SimpleIndexToken @entity {
   name: String!
   manager: Manager!
   issuances: [SimpleIndexTokenIssuance!]!
-    @derivedFrom(field: "SimpleIndexToken")
-  totalSupply: BigInt!
+    @derivedFrom(field: "setToken")
+  totalSupply: [TotalSupplySI!]! @derivedFrom(field:"setToken")
+  rebalances: [SimpleIndexRebalance!] @derivedFrom(field:"setToken")
 }
 
 type SimpleIndexTokenRedeemed @entity {
   id: ID!
-  SimpleIndexToken: Bytes! # address
+  setToken: Bytes! # address
   redeemer: Bytes! # address
   to: Bytes! # address
   transaction: Transaction!
   quantity: BigInt!
+}
+
+type SimpleIndexRebalance @entity {
+  id: ID!
+  setToken: SimpleIndexToken!
+  rebalanceDetails: SimpleIndexRebalanceDetails!
+  transaction: Transaction!
+  transactionHash: Bytes!
+}
+
+type SimpleIndexRebalanceDetails @entity {
+  id: ID!
+  components: [Bytes!]!
+  targetUnits: [BigInt!]!
+  positionMultiplier: BigInt!
+}
+
+type TotalSupplySI @entity {
+  id: ID!
+  timestamp: BigInt!
+  quantity: BigInt!
+  setToken: SimpleIndexToken!
 }
