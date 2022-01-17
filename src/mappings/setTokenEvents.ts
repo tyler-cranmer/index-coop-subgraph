@@ -1,4 +1,4 @@
-import { dataSource, Address , Bytes, ByteArray } from '@graphprotocol/graph-ts';
+import { dataSource, Address, Bytes, ByteArray } from '@graphprotocol/graph-ts';
 import {
   RebalanceIterated as RebalanceIteratedEvent,
   Rebalanced as RebalancedEvent,
@@ -13,7 +13,7 @@ import {
   FlexibleLeverageStrategyAdapterBTC,
 } from '../../generated/FlexibleLeverageStrategyAdapterBTC/FlexibleLeverageStrategyAdapterBTC';
 
-import { RebalanceStarted as RebalanceStartedEvent} from '../../generated/GeneralIndexModule/GeneralIndexModule';
+import { RebalanceStarted as RebalanceStartedEvent } from '../../generated/GeneralIndexModule/GeneralIndexModule';
 
 import {
   RipcordCalled,
@@ -23,7 +23,7 @@ import {
   SimpleIndexTokenRedeemed,
   SimpleIndexRebalance,
   SimpleIndexRebalanceDetails,
-  SimpleIndexToken
+  SimpleIndexToken,
 } from '../../generated/schema';
 import { Transfer } from '../../generated/SetToken/SetToken';
 import { createGenericId } from '../utils/index';
@@ -115,99 +115,92 @@ export function handleRipcordCalled(event: RipcordCalledEvent): void {
   entity.save();
 }
 
-
-
 /******************************************************************/
 /*************** BTC 2xFli Version 1 Events ************************/
 /******************************************************************/
 
-
 export function handleRebalanceIteratedBTC(
-         event: RebalanceIteratedEventBTC
-       ): void {
-         const id = createGenericId(event);
+  event: RebalanceIteratedEventBTC
+): void {
+  const id = createGenericId(event);
 
-         let c = FlexibleLeverageStrategyAdapterBTC.bind(dataSource.address());
-         let baseManager = c.manager();
-         let setTokenAddress = fetchBaseManagerSetToken(baseManager);
+  let c = FlexibleLeverageStrategyAdapterBTC.bind(dataSource.address());
+  let baseManager = c.manager();
+  let setTokenAddress = fetchBaseManagerSetToken(baseManager);
 
-         let entity = new Rebalance(
-           `${id}--${event.block.timestamp.toHexString()}`
-         );
-         const txn = new Transaction(
-           event.transaction.hash.toHex() + '--' + 'rebalanceIteratedBTC-txn'
-         );
-         txn.timestamp = event.block.timestamp;
-         txn.gasLimit = event.transaction.gasLimit;
-         txn.gasPriceInGwei = event.transaction.gasPrice;
-         txn.save();
-         let rebalanceDetailsEntity = createRebalanceDetails(
-           id,
-           event.params._currentLeverageRatio,
-           event.params._newLeverageRatio,
-           event.params._totalRebalanceNotional,
-           event.params._chunkRebalanceNotional
-         );
-         rebalanceDetailsEntity.save();
-         entity.transaction = txn.id;
-         entity.transactionHash = event.transaction.hash;
-         entity.rebalanceDetails = rebalanceDetailsEntity.id;
-         entity.setToken = setTokenAddress;
-         entity.save();
-       }
-
+  let entity = new Rebalance(`${id}--${event.block.timestamp.toHexString()}`);
+  const txn = new Transaction(
+    event.transaction.hash.toHex() + '--' + 'rebalanceIteratedBTC-txn'
+  );
+  txn.timestamp = event.block.timestamp;
+  txn.gasLimit = event.transaction.gasLimit;
+  txn.gasPriceInGwei = event.transaction.gasPrice;
+  txn.save();
+  let rebalanceDetailsEntity = createRebalanceDetails(
+    id,
+    event.params._currentLeverageRatio,
+    event.params._newLeverageRatio,
+    event.params._totalRebalanceNotional,
+    event.params._chunkRebalanceNotional
+  );
+  rebalanceDetailsEntity.save();
+  entity.transaction = txn.id;
+  entity.transactionHash = event.transaction.hash;
+  entity.rebalanceDetails = rebalanceDetailsEntity.id;
+  entity.setToken = setTokenAddress;
+  entity.save();
+}
 
 export function handleRebalanceBTC(event: RebalancedEventBTC): void {
-         const id = createGenericId(event);
-         let c = FlexibleLeverageStrategyAdapterBTC.bind(dataSource.address());
-         let baseManager = c.manager();
-         let setTokenAddress = fetchBaseManagerSetToken(baseManager);
-         let entity = new Rebalance(
-           `${id}--${event.block.timestamp.toHexString()}`
-         );
-         const txn = new Transaction(
-           event.transaction.hash.toHex() + '--' + 'rebalanceBTC-txn'
-         );
-         txn.timestamp = event.block.timestamp;
-         txn.gasLimit = event.transaction.gasLimit;
-         txn.gasPriceInGwei = event.transaction.gasPrice;
-         txn.save();
-         let rebalanceDetailsEntity = createRebalanceDetails(
-           id,
-           event.params._currentLeverageRatio,
-           event.params._newLeverageRatio,
-           event.params._totalRebalanceNotional,
-           event.params._chunkRebalanceNotional
-         );
-         rebalanceDetailsEntity.save();
-         entity.transaction = txn.id;
-         entity.transactionHash = event.transaction.hash;
-         entity.setToken = setTokenAddress;
-         entity.rebalanceDetails = rebalanceDetailsEntity.id;
-         entity.save();
-       }
+  const id = createGenericId(event);
+  let c = FlexibleLeverageStrategyAdapterBTC.bind(dataSource.address());
+  let baseManager = c.manager();
+  let setTokenAddress = fetchBaseManagerSetToken(baseManager);
+  let entity = new Rebalance(`${id}--${event.block.timestamp.toHexString()}`);
+  const txn = new Transaction(
+    event.transaction.hash.toHex() + '--' + 'rebalanceBTC-txn'
+  );
+  txn.timestamp = event.block.timestamp;
+  txn.gasLimit = event.transaction.gasLimit;
+  txn.gasPriceInGwei = event.transaction.gasPrice;
+  txn.save();
+  let rebalanceDetailsEntity = createRebalanceDetails(
+    id,
+    event.params._currentLeverageRatio,
+    event.params._newLeverageRatio,
+    event.params._totalRebalanceNotional,
+    event.params._chunkRebalanceNotional
+  );
+  rebalanceDetailsEntity.save();
+  entity.transaction = txn.id;
+  entity.transactionHash = event.transaction.hash;
+  entity.setToken = setTokenAddress;
+  entity.rebalanceDetails = rebalanceDetailsEntity.id;
+  entity.save();
+}
 
 export function handleRipcordCalledBTC(event: RipcordCalledEventBTC): void {
-         let entity = new RipcordCalled(
-           event.transaction.hash.toHex() + '-RC-' + event.logIndex.toString()
-         );
-         entity.timestamp = event.block.timestamp;
-         entity.currentLeverageRatio = event.params._currentLeverageRatio;
-         entity.newLeverageRatio = event.params._newLeverageRatio;
-         entity.rebalanceNotional = event.params._rebalanceNotional;
-         entity.etherIncentive = event.params._etherIncentive;
-         entity.save();
+  let entity = new RipcordCalled(
+    event.transaction.hash.toHex() + '-RC-' + event.logIndex.toString()
+  );
+  entity.timestamp = event.block.timestamp;
+  entity.currentLeverageRatio = event.params._currentLeverageRatio;
+  entity.newLeverageRatio = event.params._newLeverageRatio;
+  entity.rebalanceNotional = event.params._rebalanceNotional;
+  entity.etherIncentive = event.params._etherIncentive;
+  entity.save();
 }
-       
 
-/******************************************************************/
-/*************** Simple Index Rebalance Events ************************/
-/******************************************************************/
+/**********************************************************************/
+/*************** Simple Index Rebalance Events ***********************/
+/*********************************************************************/
 
 export function handleRebalanceStarted(event: RebalanceStartedEvent): void {
   const id = createGenericId(event);
-  const setTokenAddress = event.params._setToken
-  const SimpleIndexTokenEntity = SimpleIndexToken.load(setTokenAddress.toHexString())
+  const setTokenAddress = event.params._setToken;
+  const SimpleIndexTokenEntity = SimpleIndexToken.load(
+    setTokenAddress.toHexString()
+  );
 
   if (SimpleIndexTokenEntity !== null) {
     let entity = new SimpleIndexRebalance(
@@ -225,9 +218,16 @@ export function handleRebalanceStarted(event: RebalanceStartedEvent): void {
     let rebalanceDetailsEntity = new SimpleIndexRebalanceDetails(id);
     rebalanceDetailsEntity.targetUnits = event.params.aggregateTargetUnits;
     rebalanceDetailsEntity.positionMultiplier = event.params.positionMultiplier;
-    
-    // rebalanceDetailsEntity.components = event.params
-    //   .aggregateComponents as Array<Address>;
+
+    let components = event.params.aggregateComponents;
+    let temp: Bytes[] = []
+    for (let i=0; i < components.length; i++){
+      let hexS = components[i].toHexString()
+      let BS = ByteArray.fromHexString(hexS) as Bytes
+      temp.push(BS)
+    }
+
+    rebalanceDetailsEntity.components = temp
 
     rebalanceDetailsEntity.save();
     entity.transaction = txn.id;
@@ -235,8 +235,5 @@ export function handleRebalanceStarted(event: RebalanceStartedEvent): void {
     entity.setToken = setTokenAddress.toHexString();
     entity.rebalanceDetails = rebalanceDetailsEntity.id;
     entity.save();
-
   }
-  
-
 }
