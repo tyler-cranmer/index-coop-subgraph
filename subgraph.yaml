@@ -25,7 +25,11 @@ dataSources:
           file: ./abis/BaseManagerV1.json
       eventHandlers:
         - event: RebalanceIterated(uint256,uint256,uint256,uint256)
+<<<<<<< HEAD
           handler: handleRebalanceIterated
+=======
+          handler: handleRebalanceIteratedEvent
+>>>>>>> ff51b26
         - event: Rebalanced(uint256,uint256,uint256,uint256)
           handler: handleRebalance
         - event: RipcordCalled(uint256,uint256,uint256,uint256)
@@ -82,11 +86,39 @@ dataSources:
         - Rebalance
         - RipcordCalled
       eventHandlers:
+<<<<<<< HEAD
         - event: RebalanceIterated(uint256,uint256,uint256,uint256)
           handler: handleRebalanceIterated
         - event: Rebalanced(uint256,uint256,uint256,uint256)
           handler: handleRebalance
         - event: RipcordCalled(uint256,uint256,uint256,uint256)
+=======
+        - event: AnyoneCallableUpdated(indexed bool)
+          handler: handleAnyoneCallableUpdated
+        - event: 'CallerStatusUpdated(indexed address,bool)'
+          handler: handleCallerStatusUpdated
+        - event: 'Disengaged(uint256,uint256,uint256,uint256)'
+          handler: handleDisengaged
+        - event: 'Engaged(uint256,uint256,uint256,uint256)'
+          handler: handleEngaged
+        - event: 'ExchangeAdded(string,uint256,uint256,uint256,bytes,bytes)'
+          handler: handleExchangeAdded
+        - event: ExchangeRemoved(string)
+          handler: handleExchangeRemoved
+        - event: 'ExchangeUpdated(string,uint256,uint256,uint256,bytes,bytes)'
+          handler: handleExchangeUpdated
+        - event: 'ExecutionSettingsUpdated(uint256,uint256,uint256)'
+          handler: handleExecutionSettingsUpdated
+        - event: 'IncentiveSettingsUpdated(uint256,uint256,uint256,uint256)'
+          handler: handleIncentiveSettingsUpdated
+        - event: 'MethodologySettingsUpdated(uint256,uint256,uint256,uint256,uint256)'
+          handler: handleMethodologySettingsUpdated
+        - event: 'RebalanceIterated(uint256,uint256,uint256,uint256)'
+          handler: handleRebalanceIteratedEvent
+        - event: 'Rebalanced(uint256,uint256,uint256,uint256)'
+          handler: handleRebalanceEvent
+        - event: 'RipcordCalled(uint256,uint256,uint256,uint256)'
+>>>>>>> ff51b26
           handler: handleRipcordCalled
       file: ./src/mappings/fliEventsV3.ts
   - kind: ethereum/contract

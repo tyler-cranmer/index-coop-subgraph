@@ -25,7 +25,11 @@ dataSources:
           file: FlexibleLeverageStrategyAdapter/abis/BaseManagerV1.json
       eventHandlers:
         - event: RebalanceIterated(uint256,uint256,uint256,uint256)
+<<<<<<< HEAD
           handler: handleRebalanceIterated
+=======
+          handler: handleRebalanceIteratedEvent
+>>>>>>> ff51b26
         - event: Rebalanced(uint256,uint256,uint256,uint256)
           handler: handleRebalance
         - event: RipcordCalled(uint256,uint256,uint256,uint256)
@@ -83,7 +87,11 @@ dataSources:
         - RipcordCalled
       eventHandlers:
         - event: RebalanceIterated(uint256,uint256,uint256,uint256)
+<<<<<<< HEAD
           handler: handleRebalanceIterated
+=======
+          handler: handleRebalanceIteratedEvent
+>>>>>>> ff51b26
         - event: Rebalanced(uint256,uint256,uint256,uint256)
           handler: handleRebalance
         - event: RipcordCalled(uint256,uint256,uint256,uint256)

@@ -1,4 +1,5 @@
 /* eslint-disable prefer-const */
+<<<<<<< HEAD
 import {
   Address,
   BigInt,
@@ -16,6 +17,11 @@ export function fetchBaseManagerSetToken(baseManagerAddress: Address): string {
 
   return token.toHexString();
 }
+=======
+import { Address, BigInt, ByteArray, Bytes, DataSourceTemplate, log } from "@graphprotocol/graph-ts"
+import { Manager } from "../../generated/schema"
+import { SetToken } from "../../generated/SetToken/SetToken"
+>>>>>>> ff51b26
 
 export function fetchTokenTotalSupply(tokenAddress: Address): BigInt {
   let contract = SetToken.bind(tokenAddress);
@@ -29,6 +35,7 @@ export function fetchTokenTotalSupply(tokenAddress: Address): BigInt {
 export const bindTokenAddress = (address: Address): SetToken =>
   SetToken.bind(address);
 
+<<<<<<< HEAD
 export function fetchUnderlyingComponents(tokenAddress: Address): Address[] {
   let contract = SetToken.bind(tokenAddress);
   let tokenComponentsResult = contract.getComponents(); // returns Address []
@@ -54,3 +61,31 @@ export function getIssuerAddress(tokenAddress: Address): string {
   // TODO: !result.reverted ? result.value : fallback hex string
   return result.value.toHexString();
 }
+=======
+
+  export function fetchUnderlyingComponents(tokenAddress: Address): Address []{
+    let contract = SetToken.bind(tokenAddress)
+    let tokenComponentsResult = contract.getComponents() // returns Address []
+    return tokenComponentsResult;
+  }
+
+  export function fetchManager(tokenAddress: Address): string {
+    let contract = SetToken.bind(tokenAddress)
+    // msg below is shown in vscode. reading it we can infer the result t
+    // intellisence: (method) SetToken.try_manager(): ethereum.CallResult<Address>
+    let result = contract.manager()
+    // convert from Address to string so it can be used within Manager.load(string)
+    return result.toHexString();
+  }
+
+  export function getIssuerAddress(tokenAddress: Address): string {
+    let contract = SetToken.bind(tokenAddress)
+    // msg below is shown in vscode. reading it we can infer the result t
+    // intellisence: (method) SetToken.try_manager(): ethereum.CallResult<Address>
+    let result = contract.try_controller()
+    // convert from Address to string so it can be used within Manager.load(string)
+    // toHexString() needed for UTF character reasons
+    // TODO: !result.reverted ? result.value : fallback hex string
+    return result.value.toHexString()
+  }
+>>>>>>> ff51b26

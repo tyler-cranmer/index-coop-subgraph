@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 import { Address, BigInt, Bytes, log, ethereum } from '@graphprotocol/graph-ts';
 import {
   Manager,
@@ -24,6 +25,17 @@ export const createTotalSupply = (
   totalSupply.setToken = setToken;
   return totalSupply;
 };
+=======
+import {
+  Address,
+  BigInt,
+  Bytes,
+    log,
+  ethereum
+} from '@graphprotocol/graph-ts';
+import { Manager, Fee, TokenIssuance, Transaction, Issuer } from '../../generated/schema';
+
+>>>>>>> ff51b26
 
 export const createFee = (
   id: string,
@@ -35,14 +47,24 @@ export const createFee = (
   fee.timestamp = timestamp;
   fee.managerPayout = managerPayout;
   fee.protocolPayout = protocolPayout;
+<<<<<<< HEAD
+=======
+  fee.transaction = id;
+>>>>>>> ff51b26
   return fee;
 };
 
 export const createManager = (id: string, address: Address): Manager => {
   let manager = new Manager(id);
+<<<<<<< HEAD
   manager.setTokenAddress = address;
   manager.totalFees = BigInt.fromI32(0);
   // manager.setToken = address.toHexString();
+=======
+  manager.address = address;
+  manager.feeAccrualHistory = [];
+  manager.totalFees = BigInt.fromI32(0);
+>>>>>>> ff51b26
   return manager;
 };
 
@@ -66,6 +88,7 @@ export const createIssuance = (
   return issuanceEntity;
 };
 
+<<<<<<< HEAD
 
 export const createTxn = (
   id: string,
@@ -148,3 +171,21 @@ export const createTotalSupplySI = (
   totalSupply.setToken = setToken;
   return totalSupply;
 };
+=======
+export const createGenericId = (event: ethereum.Event): string =>
+  '' + event.transaction.hash.toHex() + '-' + event.logIndex.toString() + '';
+
+export const createTxn = (id: string, timestamp: BigInt): Transaction => {
+  let txnObject = new Transaction(id);
+  txnObject.timestamp = timestamp;
+  return txnObject;
+};
+
+export const createIssuer = (address: Address): Issuer => {
+  let newIssuer = new Issuer(address.toHexString());
+  newIssuer.address = address;
+  newIssuer.setTokensIssued = [];
+  return newIssuer;
+};
+
+>>>>>>> ff51b26
